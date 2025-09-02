@@ -20,5 +20,6 @@ mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.
 .then(()=> console.log("Connected to MongoDB"))
 .then(()=>{
     app.listen(5001);
+    app.listen(5000);
 })
 .catch((err)=> console.log((err)));
