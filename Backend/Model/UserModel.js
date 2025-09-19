@@ -28,6 +28,11 @@ const userSchema = new Schema({
         type:Date,
         required:true,
     },
+    status:{ 
+        type: String, 
+        enum: ["Pending", "Active", "Rejected"], 
+        default: "Pending" 
+    }
     
 });
 
