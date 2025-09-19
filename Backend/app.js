@@ -10,7 +10,7 @@ app.use("/", (req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://vihigumchirath_db_user:93UQXuxJtn248xK2@cluster0.sp3lpkf.mongodb.net/test?retryWrites=true&w=majority"
+    "mongodb+srv://vihigum:cVcYE2YOBTmozQ44@cluster0.sp3lpkf.mongodb.net/test?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to MongoDB");
