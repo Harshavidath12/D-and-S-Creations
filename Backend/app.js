@@ -11,7 +11,7 @@ const app=express();
 const cors=require("cors");//calling the cors package which was installed
 
 //to parse json request bodies
-app.use(express.json());
+app.use(express.json());//use json data
 
 
 //Middleware
