@@ -1,24 +1,21 @@
-console.log("Byeeeeee");   
-//E1gMihrKg842U8Sd
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-const mongoose=require("mongoose");
-const express = require("express");
+const designerRoutes = require('./Routes/designerRoutes');
+const complaintRoutes = require('./Routes/complaintRoutes');
 
+const app = express();
+const PORT = process.env.PORT || 5000;
 
+app.use(cors());
+app.use(express.json());
 
-const app=express(); 
+mongoose.connect("mongodb+srv://rashalividyanjani_db_user:jIPJXpoG3NuFgKVf@cluster0.sp3lpkf.mongodb.net/test")
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
 
+app.use('/api/designers', designerRoutes);
+app.use('/api/complaints', complaintRoutes);
 
-
-//Middleware
-app.use("/",(req,res,next)=>{
-    res.send("Hello from express");
-});
-
-
-mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
-.then(()=> console.log("Connected to MongoDB"))
-.then(()=>{
-    app.listen(5000);
-})
-.catch((err)=> console.log((err)));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
