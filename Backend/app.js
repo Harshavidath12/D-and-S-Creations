@@ -1,19 +1,24 @@
+//E1gMihrKg842U8Sd
+
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose=require("mongoose");
+const router = require("./Routes/UserRoutes");
 
-const app = express();
 
-// Middleware
-app.use("/", (req, res, next) => {
-  res.send("Hello from express");
-});
 
-mongoose
-  .connect(
-    "mongodb+srv://vihigum:cVcYE2YOBTmozQ44@cluster0.sp3lpkf.mongodb.net/test?retryWrites=true&w=majority"
-  )
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(5000, () => console.log("Server running on port 5000"));
-  })
-  .catch((err) => console.error(err));
+const app=express(); 
+
+
+
+//Middleware
+app.use(express.json());
+app.use("/users",router)
+
+
+
+mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
+.then(()=> console.log("Connected to MongoDB"))
+.then(()=>{
+    app.listen(5000);
+})
+.catch((err)=> console.log((err)));
