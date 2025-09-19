@@ -1,4 +1,4 @@
-console.log("Byeeeeee");   
+console.log("Connected to MongoDB");   
 //E1gMihrKg842U8Sd
 
 const mongoose=require("mongoose");
