@@ -16,7 +16,7 @@ app.use("/users",router)
 
 
 
-mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
+mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster0.sp3lpkf.mongodb.net/")
 .then(()=> console.log("Connected to MongoDB"))
 .then(()=>{
     app.listen(5000);
