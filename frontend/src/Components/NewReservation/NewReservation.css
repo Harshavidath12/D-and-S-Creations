@@ -29,7 +29,7 @@
 }
 
 .select-cinema-btn {
-  background: #28a745;
+  background: var(--dark-bg);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -40,7 +40,7 @@
 }
 
 .select-cinema-btn:hover {
-  background: #218838;
+  background: var(--dark-secondary);
 }
 
 .selected-cinema-info {
@@ -48,7 +48,7 @@
   padding: 20px;
   border-radius: 8px;
   margin-top: 20px;
-  border: 2px solid #28a745;
+  border: 2px solid var(--dark-bg);
 }
 
 .movies-list {
@@ -177,7 +177,7 @@
 
 .slot-item:hover {
   border-color: var(--primary-blue);
-  background: var(--accent-neutral);
+  background: var(--light-gray);
 }
 
 .slot-item.selected {
@@ -201,7 +201,7 @@
 }
 
 .selected-slots-summary {
-  background: var(--accent-neutral);
+  background: var(--light-gray);
   padding: 20px;
   border-radius: 8px;
   margin-top: 20px;
@@ -220,7 +220,7 @@
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 14px;
-  border: 1px solid #28a745;
+  border: 1px solid var(--dark-bg);
 }
 
 .total-price {
@@ -264,7 +264,7 @@
 }
 
 .selected-info {
-  background: var(--accent-neutral);
+  background: var(--light-gray);
   padding: 15px;
   border-radius: 8px;
   margin: 0 auto 20px auto;
@@ -274,14 +274,13 @@
 }
 
 .selected-cinema-info {
-  background: var(--accent-neutral);
+  background: white;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
   margin: 0 auto 30px auto;
-  border-left: 4px solid var(--primary-blue);
+  border: 2px solid var(--dark-bg);
   max-width: 500px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .selected-cinema-info h3 {
@@ -323,7 +322,7 @@
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -347,15 +346,14 @@
   font-size: 2rem;
 }
 
-/* Color Variables */
+/* Color Variables - Core Theme Colors */
 :root {
-  --primary-red: #e63946;
-  --primary-blue: #61dafb;
-  --dark-bg: #282c34;
-  --dark-secondary: #222;
-  --light-gray: #f7f7f7;
-  --light-gray-secondary: #f4f4f4;
-  --accent-neutral: #f1dac4;
+  --primary-red: #e63946;        /* grabs attention for buttons / CTAs */
+  --primary-blue: #61dafb;       /* good for interactive elements / links */
+  --dark-bg: #282c34;            /* contrasts with white text for nav/footer */
+  --dark-secondary: #222;        /* darker variant for text */
+  --light-gray: #f7f7f7;         /* give breathing space for content */
+  --light-gray-secondary: #f4f4f4; /* lighter variant for backgrounds */
 }
 
 /* Multi-steps progress bar */
@@ -528,14 +526,14 @@
 
 /* Compact Movie Cards */
 .movies-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 15px;
   margin-top: 20px;
   justify-items: center;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .movies-grid h3 {
@@ -546,21 +544,45 @@
   font-size: 1.5rem;
 }
 
+@media (max-width: 1400px) {
+  .movies-grid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
+  }
+}
+
 @media (max-width: 1200px) {
   .movies-grid {
     grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
   }
 }
 
 @media (max-width: 900px) {
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
   }
 }
 
 @media (max-width: 600px) {
   .movies-grid {
     grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+}
+
+/* Force 4 cards per row on larger screens */
+@media (min-width: 1200px) {
+  .movies-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 15px !important;
+  }
+  
+  .video-card {
+    max-width: 250px !important;
+    min-width: 200px !important;
   }
 }
 
@@ -609,35 +631,27 @@
   margin: 15px 0;
 }
 
-/* VideoCard Styling - Compact & Attractive Design */
+/* VideoCard Styling - Simple Design */
 .video-card {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(230, 57, 70, 0.1);
+  border-radius: 8px;
+  border: none;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
   width: 100%;
-  max-width: 300px;
-}
-
-.video-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
-  z-index: 1;
+  max-width: 250px;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  display: block;
+  margin: 20px;
 }
 
 .video-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border-color: var(--primary-red);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .video-thumbnail {
@@ -665,7 +679,7 @@
   transform: translate(-50%, -50%);
   width: 50px;
   height: 50px;
-  background: rgba(230, 57, 70, 0.95);
+  background: var(--primary-red);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -673,14 +687,11 @@
   color: white;
   font-size: 18px;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .video-card:hover .play-button {
-  transform: translate(-50%, -50%) scale(1.15);
-  background: var(--primary-red);
-  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+  transform: translate(-50%, -50%) scale(1.1);
+  background: #d62828;
 }
 
 .video-overlay {
@@ -688,7 +699,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
   padding: 16px 20px;
   color: white;
 }
@@ -700,98 +711,95 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1.2;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .video-subtitle {
   font-size: 0.8rem;
   margin: 0;
-  opacity: 0.9;
+  opacity: 1;
   font-weight: 500;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .video-content {
-  padding: 16px 20px 20px;
+  padding: 16px 20px 16px;
 }
 
 .slot-info {
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
 }
 
 .slot-categories {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0;
 }
 
 .slot-category {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: linear-gradient(135deg, var(--light-gray) 0%, #f9f9f9 100%);
-  border-radius: 8px;
-  border-left: 3px solid var(--primary-blue);
+  padding: 6px 10px;
+  background: var(--light-gray);
+  border-radius: 6px;
+  border: 1px solid var(--dark-bg);
   transition: all 0.2s ease;
 }
 
 .slot-category:hover {
-  background: linear-gradient(135deg, var(--accent-neutral) 0%, #f5f0e8 100%);
+  background: var(--light-gray-secondary);
   transform: translateX(2px);
 }
 
 .category-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .category-label {
   font-weight: 700;
   color: var(--dark-bg);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .slot-count {
   color: var(--dark-secondary);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
 .slot-price {
-  color: var(--primary-red);
-  font-weight: 700;
-  font-size: 0.9rem;
-  background: rgba(230, 57, 70, 0.1);
-  padding: 4px 8px;
-  border-radius: 12px;
-}
-
-.choose-video-btn {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, #4fa8d8 100%);
   color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 12px;
   font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 15px rgba(97, 218, 251, 0.3);
+  font-size: 0.85rem;
+  background: var(--primary-red);
+  padding: 3px 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.3);
 }
 
-.choose-video-btn:hover {
-  background: linear-gradient(135deg, #4fa8d8 0%, var(--primary-blue) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(97, 218, 251, 0.4);
+.video-content .choose-video-btn {
+  font-weight: 100 !important;
+  font-size: 18px !important;
+  color: var(--primary-blue) !important;
+  width: 100% !important;
+  height: 45px !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  border: none !important;
+  border-radius: 5px !important;
+  background-color: rgba(97, 218, 251, 0.15) !important;
+  transition: 0.2s ease-in-out !important;
+  cursor: pointer !important;
 }
 
 .choose-video-btn i {
@@ -961,7 +969,7 @@
 }
 
 .slot-category {
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .slot-category h5 {
@@ -991,7 +999,7 @@
 }
 
 .slot-item.available {
-  border-color: #28a745;
+  border-color: var(--dark-bg);
   background: #f8fff9;
 }
 
@@ -1023,7 +1031,7 @@
 
 .slot-price {
   font-weight: 700;
-  color: #28a745;
+  color: var(--dark-bg);
   font-size: 1.1rem;
   margin-bottom: 5px;
 }
@@ -1034,7 +1042,7 @@
 }
 
 .slot-item.available .slot-status {
-  color: #28a745;
+  color: var(--dark-bg);
 }
 
 .slot-item.reserved .slot-status {
@@ -1071,7 +1079,7 @@
 .total-price {
   text-align: center;
   font-size: 1.2rem;
-  color: #28a745;
+  color: var(--dark-bg);
   padding-top: 15px;
   border-top: 2px solid #e9ecef;
 }
