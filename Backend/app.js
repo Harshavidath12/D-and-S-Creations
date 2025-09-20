@@ -9,6 +9,7 @@ dotenv.config();
 
 // Import routes
 const cinemaRoutes = require("./routes/cinemaRoutes");
+const reservationRoutes = require("./routes/reservationRoutes");
 
 // Import middleware
 const { errorHandler, notFound } = require("./middleware/errorHandler");
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/cinemas", cinemaRoutes);
+app.use("/api/reservations", reservationRoutes);
 
 // Health check endpoint
 app.get("/", (req, res) => {

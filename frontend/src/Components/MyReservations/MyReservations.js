@@ -6,39 +6,62 @@ function MyReservations() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Mock data - replace with actual API call
+  // Fetch reservations from API
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setReservations([
-        {
-          id: 1,
-          movie: "The Dark Knight",
-          cinema: "Cineplex Downtown",
-          date: "2024-01-15",
-          time: "7:30 PM",
-          seats: "A12, A13",
-          status: "Confirmed",
-          total: 25.00
-        },
-        {
-          id: 2,
-          movie: "Inception",
-          cinema: "Mega Cinema",
-          date: "2024-01-20",
-          time: "9:00 PM",
-          seats: "B8, B9",
-          status: "Pending",
-          total: 30.00
+    const fetchReservations = async () => {
+      try {
+        setLoading(true);
+        // For demo purposes, we'll fetch all reservations
+        // In a real app, you'd filter by user email
+        const response = await fetch('http://localhost:5000/api/reservations');
+        const data = await response.json();
+        
+        if (data.success) {
+          setReservations(data.data);
+        } else {
+          console.error('Error fetching reservations:', data.message);
+          // Fallback to empty array if API fails
+          setReservations([]);
         }
-      ]);
-      setLoading(false);
-    }, 1000);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+        // Fallback to empty array if API fails
+        setReservations([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReservations();
   }, []);
 
-  const handleCancelReservation = (id) => {
-    setReservations(reservations.filter(res => res.id !== id));
-    alert("Reservation cancelled successfully!");
+  const handleCancelReservation = async (reservationId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/reservations/${reservationId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: 'cancelled' })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        // Update local state
+        setReservations(reservations.map(res => 
+          res._id === reservationId 
+            ? { ...res, status: 'cancelled' }
+            : res
+        ));
+        alert("Reservation cancelled successfully!");
+      } else {
+        alert('Error cancelling reservation: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Error cancelling reservation:', error);
+      alert('Error cancelling reservation. Please try again.');
+    }
   };
 
   return (
@@ -70,9 +93,9 @@ function MyReservations() {
           ) : (
             <div className="reservations-grid">
               {reservations.map((reservation) => (
-                <div key={reservation.id} className="reservation-card">
+                <div key={reservation._id} className="reservation-card">
                   <div className="reservation-header">
-                    <h3>{reservation.movie}</h3>
+                    <h3>{reservation.movie_name}</h3>
                     <span className={`status ${reservation.status.toLowerCase()}`}>
                       {reservation.status}
                     </span>
@@ -80,35 +103,53 @@ function MyReservations() {
                   
                   <div className="reservation-details">
                     <div className="detail-row">
+                      <span className="label">Reservation ID:</span>
+                      <span className="value">{reservation.reservation_id}</span>
+                    </div>
+                    <div className="detail-row">
                       <span className="label">Cinema:</span>
-                      <span className="value">{reservation.cinema}</span>
+                      <span className="value">{reservation.cinema_name}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="label">Location:</span>
+                      <span className="value">{reservation.cinema_location}</span>
                     </div>
                     <div className="detail-row">
                       <span className="label">Date:</span>
-                      <span className="value">{reservation.date}</span>
+                      <span className="value">{new Date(reservation.show_date).toLocaleDateString()}</span>
                     </div>
                     <div className="detail-row">
                       <span className="label">Time:</span>
-                      <span className="value">{reservation.time}</span>
+                      <span className="value">{reservation.show_time}</span>
                     </div>
                     <div className="detail-row">
-                      <span className="label">Seats:</span>
-                      <span className="value">{reservation.seats}</span>
+                      <span className="label">Advertisement Slots:</span>
+                      <span className="value">{reservation.advertisement_slots.length} slots</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="label">Duration:</span>
+                      <span className="value">{reservation.advertisement_duration} seconds</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="label">Company:</span>
+                      <span className="value">{reservation.company_name}</span>
                     </div>
                     <div className="detail-row">
                       <span className="label">Total:</span>
-                      <span className="value price">${reservation.total}</span>
+                      <span className="value price">₹{reservation.total_amount}</span>
                     </div>
                   </div>
                   
                   <div className="reservation-actions">
                     <button className="btn-secondary">View Details</button>
-                    <button 
-                      className="btn-danger"
-                      onClick={() => handleCancelReservation(reservation.id)}
-                    >
-                      Cancel
-                    </button>
+                    {reservation.status !== 'cancelled' && reservation.status !== 'completed' && (
+                      <button 
+                        className="btn-danger"
+                        onClick={() => handleCancelReservation(reservation._id)}
+                      >
+                        Cancel
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
