@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Nav from "../Nav/Nav";
+import { VideoCard } from "../Cinema/VideoCard";
 import "./NewReservation.css";
 
 function NewReservation() {
@@ -72,6 +73,22 @@ function NewReservation() {
     };
   };
 
+  const getMovieSlotInfo = (movieKey) => {
+    if (!selectedCinema) return null;
+    
+    const movieSlots = selectedCinema.movie_slot_pricing?.[movieKey]?.slots || [];
+    
+    const starting = movieSlots.filter(slot => slot.slot_type === 'starting');
+    const interval = movieSlots.filter(slot => slot.slot_type === 'interval');
+    const ending = movieSlots.filter(slot => slot.slot_type === 'ending');
+    
+    return {
+      starting: starting.length > 0 ? { count: starting.length, price: starting[0].price } : null,
+      interval: interval.length > 0 ? { count: interval.length, price: interval[0].price } : null,
+      ending: ending.length > 0 ? { count: ending.length, price: ending[0].price } : null
+    };
+  };
+
   const calculateTotal = () => {
     return selectedSlots.reduce((sum, slot) => sum + slot.price, 0);
   };
@@ -114,45 +131,38 @@ function NewReservation() {
                     <p>Loading cinemas...</p>
                   </div>
                 ) : (
-                  <div>
+                  <div className="cinemas-grid">
                     <h3>Available Cinemas ({cinemas.length})</h3>
-                    
-                    <table className="cinema-table">
-                      <thead>
-                        <tr>
-                          <th>Cinema Name</th>
-                          <th>Location</th>
-                          <th>Contact</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {cinemas.map((cinema) => (
-                          <tr key={cinema._id}>
-                            <td>
-                              <strong>{cinema.cinema_name}</strong>
-                            </td>
-                            <td>{cinema.cinema_location}</td>
-                            <td>
-                              {cinema.contact_info?.phone && (
-                                <div>Phone: {cinema.contact_info.phone}</div>
-                              )}
-                              {cinema.contact_info?.email && (
-                                <div>Email: {cinema.contact_info.email}</div>
-                              )}
-                            </td>
-                            <td>
-                              <button 
-                                className="select-cinema-btn"
-                                onClick={() => handleCinemaSelect(cinema)}
-                              >
-                                Select This Cinema
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                    <div className="cinema-cards">
+                      {cinemas.map((cinema) => (
+                        <div key={cinema._id} className="cinema-card">
+                          <div className="cinema-header">
+                            <h4>{cinema.cinema_name}</h4>
+                            <span className="cinema-location">{cinema.cinema_location}</span>
+                          </div>
+                          <div className="cinema-details">
+                            {cinema.contact_info?.phone && (
+                              <div className="contact-item">
+                                <i className="fa fa-phone"></i>
+                                <span>{cinema.contact_info.phone}</span>
+                              </div>
+                            )}
+                            {cinema.contact_info?.email && (
+                              <div className="contact-item">
+                                <i className="fa fa-envelope"></i>
+                                <span>{cinema.contact_info.email}</span>
+                              </div>
+                            )}
+                          </div>
+                          <button 
+                            className="select-cinema-btn"
+                            onClick={() => handleCinemaSelect(cinema)}
+                          >
+                            Select Cinema
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -167,26 +177,19 @@ function NewReservation() {
                   <p><strong>Location:</strong> {selectedCinema.cinema_location}</p>
                 </div>
                 
-                <h3>Available Movies:</h3>
-                <div className="movies-list">
+                <div className="movies-grid">
+                  <h3>Available Movies:</h3>
                   {selectedCinema.ongoing_movies && Object.entries(selectedCinema.ongoing_movies).map(([key, movie]) => (
                     movie && movie.name ? (
-                      <div key={key} className="movie-item">
-                        <h5>{movie.name}</h5>
-                        <p>Start: {new Date(movie.start_date).toLocaleDateString()}</p>
-                        <p>End: {new Date(movie.end_date).toLocaleDateString()}</p>
-                        {movie.trailer_link && (
-                          <a href={movie.trailer_link} target="_blank" rel="noopener noreferrer">
-                            Watch Trailer
-                          </a>
-                        )}
-                        <button 
-                          className="select-movie-btn"
-                          onClick={() => handleMovieSelect(key, movie.name)}
-                        >
-                          Select This Movie
-                        </button>
-                      </div>
+                      <VideoCard 
+                        key={key}
+                        video={{
+                          title: movie.name,
+                          youtubeUrl: movie.trailer_link,
+                          slotInfo: getMovieSlotInfo(key)
+                        }}
+                        onSelect={() => handleMovieSelect(key, movie.name)}
+                      />
                     ) : null
                   ))}
                 </div>
@@ -222,7 +225,7 @@ function NewReservation() {
                               })}
                             >
                               <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">₹{slot.price}</div>
+                              <div className="slot-price">LKR {slot.price}</div>
                             </div>
                           ))}
                         </div>
@@ -244,7 +247,7 @@ function NewReservation() {
                               })}
                             >
                               <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">₹{slot.price}</div>
+                              <div className="slot-price">LKR {slot.price}</div>
                             </div>
                           ))}
                         </div>
@@ -266,7 +269,7 @@ function NewReservation() {
                               })}
                             >
                               <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">₹{slot.price}</div>
+                              <div className="slot-price">LKR {slot.price}</div>
                             </div>
                           ))}
                         </div>
@@ -278,12 +281,12 @@ function NewReservation() {
                           <div className="selected-slots-list">
                             {selectedSlots.map(slot => (
                               <div key={slot.slot_id} className="selected-slot">
-                                {slot.slot_type.charAt(0).toUpperCase() + slot.slot_type.slice(1)} Slot {slot.slot_number} - ₹{slot.price}
+                                {slot.slot_type.charAt(0).toUpperCase() + slot.slot_type.slice(1)} Slot {slot.slot_number} - LKR {slot.price}
                               </div>
                             ))}
                           </div>
                           <div className="total-price">
-                            <strong>Total: ₹{calculateTotal()}</strong>
+                            <strong>Total: LKR {calculateTotal()}</strong>
                           </div>
                         </div>
                       )}
@@ -303,7 +306,7 @@ function NewReservation() {
                     <p><strong>Cinema:</strong> {selectedCinema?.cinema_name}</p>
                     <p><strong>Movie:</strong> {selectedMovie?.name}</p>
                     <p><strong>Selected Slots:</strong> {selectedSlots.length}</p>
-                    <p><strong>Total Amount:</strong> ₹{calculateTotal()}</p>
+                    <p><strong>Total Amount:</strong> LKR {calculateTotal()}</p>
                   </div>
                   <button className="confirm-reservation-btn">
                     Confirm Reservation
