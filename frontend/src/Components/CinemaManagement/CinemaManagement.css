@@ -179,6 +179,79 @@
   font-size: 0.8rem;
 }
 
+/* Movie Details in Table Cells */
+.movie-details-cell,
+.upcoming-details-cell {
+  max-width: 300px;
+}
+
+.movie-count-header,
+.upcoming-count-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.movie-count-header i,
+.upcoming-count-header i {
+  color: var(--primary-blue);
+  font-size: 0.8rem;
+}
+
+.movie-item,
+.upcoming-item {
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid var(--primary-blue);
+}
+
+.movie-item:last-child,
+.upcoming-item:last-child {
+  margin-bottom: 0;
+}
+
+.movie-name,
+.upcoming-name {
+  font-weight: 600;
+  color: var(--dark-bg);
+  font-size: 0.85rem;
+  margin-bottom: 3px;
+}
+
+.movie-dates {
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.trailer-link {
+  color: var(--primary-red);
+  text-decoration: none;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 3px;
+  transition: color 0.3s ease;
+}
+
+.trailer-link:hover {
+  color: var(--dark-bg);
+  text-decoration: underline;
+}
+
+.trailer-link i {
+  font-size: 0.8rem;
+}
+
 .status-badge {
   padding: 4px 12px;
   border-radius: 12px;
@@ -381,6 +454,29 @@
   
   .cinema-location {
     font-size: 0.8rem;
+  }
+  
+  .movie-details-cell,
+  .upcoming-details-cell {
+    max-width: 200px;
+  }
+  
+  .movie-item,
+  .upcoming-item {
+    padding: 4px 6px;
+  }
+  
+  .movie-name,
+  .upcoming-name {
+    font-size: 0.8rem;
+  }
+  
+  .movie-dates {
+    font-size: 0.7rem;
+  }
+  
+  .trailer-link {
+    font-size: 0.7rem;
   }
   
   .action-buttons {

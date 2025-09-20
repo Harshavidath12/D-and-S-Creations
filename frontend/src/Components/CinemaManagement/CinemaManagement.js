@@ -150,10 +150,6 @@ const CinemaManagement = () => {
     }
   };
 
-  const handleViewDetails = (cinema) => {
-    // You can implement a details modal here if needed
-    console.log('View details for:', cinema);
-  };
 
   // Validation functions
   const validateCinemaName = (name) => {
@@ -448,18 +444,48 @@ const CinemaManagement = () => {
                           )}
                         </div>
                       </td>
-                      <td>
-                        <span className="movie-count">
-                          <i className="fa fa-film"></i>
-                          {getMovieCount(cinema)}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="upcoming-count">
-                          <i className="fa fa-clock-o"></i>
-                          {getUpcomingCount(cinema)}
-                        </span>
-                      </td>
+                       <td>
+                         <div className="movie-details-cell">
+                           <div className="movie-count-header">
+                             <i className="fa fa-film"></i>
+                             {getMovieCount(cinema)} Movies
+                           </div>
+                           {cinema.ongoing_movies && Object.keys(cinema.ongoing_movies).map((movieKey, index) => {
+                             const movie = cinema.ongoing_movies[movieKey];
+                             if (!movie || !movie.name) return null;
+                             return (
+                               <div key={movieKey} className="movie-item">
+                                 <div className="movie-name">{movie.name}</div>
+                                 <div className="movie-dates">
+                                   {formatDate(movie.start_date)} - {formatDate(movie.end_date)}
+                                 </div>
+                               </div>
+                             );
+                           })}
+                         </div>
+                       </td>
+                       <td>
+                         <div className="upcoming-details-cell">
+                           <div className="upcoming-count-header">
+                             <i className="fa fa-clock-o"></i>
+                             {getUpcomingCount(cinema)} Upcoming
+                           </div>
+                           {cinema.upcoming_movies && Object.keys(cinema.upcoming_movies).map((movieKey, index) => {
+                             const movie = cinema.upcoming_movies[movieKey];
+                             if (!movie || !movie.name) return null;
+                             return (
+                               <div key={movieKey} className="upcoming-item">
+                                 <div className="upcoming-name">{movie.name}</div>
+                                 {movie.trailer_link && (
+                                   <a href={movie.trailer_link} target="_blank" rel="noopener noreferrer" className="trailer-link">
+                                     <i className="fa fa-play-circle"></i> Trailer
+                                   </a>
+                                 )}
+                               </div>
+                             );
+                           })}
+                         </div>
+                       </td>
                       <td>
                         <span className={`status-badge ${cinema.is_active ? 'active' : 'inactive'}`}>
                           {cinema.is_active ? 'Active' : 'Inactive'}
@@ -470,31 +496,24 @@ const CinemaManagement = () => {
                           {formatDate(cinema.createdAt)}
                         </span>
                       </td>
-                      <td>
-                        <div className="action-buttons">
-                          <button 
-                            className="btn btn-sm btn-info"
-                            onClick={() => handleViewDetails(cinema)}
-                            title="View Details"
-                          >
-                            <i className="fa fa-eye" aria-hidden="true"></i>
-                          </button>
-                          <button 
-                            className="btn btn-sm btn-warning"
-                            onClick={() => handleUpdate(cinema)}
-                            title="Update"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </button>
-                          <button 
-                            className="btn btn-sm btn-danger"
-                            onClick={() => handleDelete(cinema._id, cinema.cinema_name)}
-                            title="Delete"
-                          >
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </td>
+                       <td>
+                         <div className="action-buttons">
+                           <button 
+                             className="btn btn-sm btn-warning"
+                             onClick={() => handleUpdate(cinema)}
+                             title="Update"
+                           >
+                             <i className="fa fa-edit" aria-hidden="true"></i>
+                           </button>
+                           <button 
+                             className="btn btn-sm btn-danger"
+                             onClick={() => handleDelete(cinema._id, cinema.cinema_name)}
+                             title="Delete"
+                           >
+                             <i className="fa fa-trash" aria-hidden="true"></i>
+                           </button>
+                         </div>
+                       </td>
                     </tr>
                   ))}
                 </tbody>
