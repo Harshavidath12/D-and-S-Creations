@@ -463,26 +463,15 @@ const CinemaManagement = () => {
                             {cinema.cinema_location}
                           </div>
                           {cinema.google_maps_location && (
-                            <div className="map-preview">
-                              <iframe
-                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWWgU6xqjJjJY&q=${encodeURIComponent(cinema.cinema_location)}&zoom=15&maptype=roadmap`}
-                                width="100%"
-                                height="80"
-                                style={{ border: 0 }}
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                title={`Map of ${cinema.cinema_location}`}
-                              ></iframe>
-                              <a 
-                                href={cinema.google_maps_location} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="map-link"
-                              >
-                                <i className="fa fa-external-link"></i> Open in Maps
-                              </a>
-                            </div>
+                            <a 
+                              href={cinema.google_maps_location} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="location-link"
+                            >
+                              <i className="fa fa-map-marker-alt"></i>
+                              {cinema.cinema_location}
+                            </a>
                           )}
                         </div>
                       </td>

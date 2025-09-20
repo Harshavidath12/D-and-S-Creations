@@ -1666,3 +1666,108 @@
     transform: translateY(0);
   }
 }
+/* Static Map Styles */
+.static-map {
+  width: 100%;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.static-map:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+/* Map Placeholder Styles */
+.map-placeholder {
+  width: 100%;
+  height: 80px;
+  border-radius: 6px;
+  border: 2px dashed #e5e7eb;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--gray-600);
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.map-placeholder:hover {
+  border-color: var(--primary-blue);
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: var(--primary-blue);
+  transform: scale(1.02);
+}
+
+.map-placeholder i {
+  font-size: 1.5rem;
+  color: var(--primary-red);
+}
+
+.map-placeholder span {
+  text-align: center;
+  font-weight: 500;
+}
+/* Location Link Styles */
+.location-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: var(--primary-blue);
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #e3f2fd;
+  transition: all 0.3s ease;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-link:hover {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #1976d2 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+  text-decoration: none;
+}
+
+.location-link i {
+  font-size: 0.9rem;
+  color: var(--primary-red);
+  transition: color 0.3s ease;
+}
+
+.location-link:hover i {
+  color: white;
+}
+/* Responsive Location Link */
+@media (max-width: 768px) {
+  .location-link {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-link {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+    max-width: 120px;
+  }
+  
+  .location-link i {
+    font-size: 0.8rem;
+  }
+}
