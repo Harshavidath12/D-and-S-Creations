@@ -71,12 +71,41 @@ app.get("/api", (req, res) => {
                         cinema_name: "String (required, 2-100 chars)",
                         cinema_location: "String (required, 5-200 chars)",
                         ongoing_movies: {
-                            movie_1: "String (required, max 100 chars)",
-                            movie_2: "String (required, max 100 chars)",
-                            movie_3: "String (required, max 100 chars)",
-                            movie_4: "String (required, max 100 chars)"
+                            movie_1: {
+                                name: "String (required, max 100 chars)",
+                                start_date: "Date (required)",
+                                end_date: "Date (required)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            },
+                            movie_2: {
+                                name: "String (required, max 100 chars)",
+                                start_date: "Date (required)",
+                                end_date: "Date (required)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            },
+                            movie_3: {
+                                name: "String (required, max 100 chars)",
+                                start_date: "Date (required)",
+                                end_date: "Date (required)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            },
+                            movie_4: {
+                                name: "String (required, max 100 chars)",
+                                start_date: "Date (required)",
+                                end_date: "Date (required)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            }
                         },
-                        upcoming_movie: "String (required, max 100 chars)",
+                        upcoming_movies: {
+                            movie_1: {
+                                name: "String (required, max 100 chars)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            },
+                            movie_2: {
+                                name: "String (required, max 100 chars)",
+                                trailer_link: "String (optional, YouTube URL)"
+                            }
+                        },
                         contact_info: {
                             phone: "String (optional, valid phone format)",
                             email: "String (optional, valid email format)"
@@ -95,6 +124,17 @@ app.get("/api", (req, res) => {
                     description: "Delete cinema by ID",
                     params: {
                         id: "MongoDB ObjectId"
+                    }
+                },
+                "PUT /api/cinemas/:id/slot-prices": {
+                    description: "Update advertisement slot prices",
+                    params: {
+                        id: "MongoDB ObjectId"
+                    },
+                    body: {
+                        slotType: "String (required): 'start_slots', 'interval_slots', or 'end_slots'",
+                        slotNumber: "Number (required): Slot number (1-5)",
+                        price: "Number (required): New price (must be >= 0)"
                     }
                 },
                 "GET /api/cinemas/stats": {

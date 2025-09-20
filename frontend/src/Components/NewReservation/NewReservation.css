@@ -1,0 +1,388 @@
+/* NewReservation.css */
+
+.hero {
+  background: linear-gradient(135deg, var(--color-bright-blue) 0%, var(--color-deep-blue) 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.reservation-section {
+  padding: 60px 0;
+  background-color: var(--color-light-blue);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.reservation-form {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.form-header {
+  background: linear-gradient(135deg, var(--color-bright-blue) 0%, var(--color-deep-blue) 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.form-header h2 {
+  margin: 0 0 20px 0;
+  font-size: 2rem;
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.step {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.step.active {
+  background-color: white;
+  color: #667eea;
+}
+
+.step-content {
+  padding: 40px;
+}
+
+.step-content h3 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.form-actions {
+  padding: 30px 40px;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-bright-blue) 0%, var(--color-deep-blue) 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 76, 117, 0.3);
+}
+
+.btn-secondary {
+  background-color: var(--color-dark-navy);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-deep-blue);
+}
+
+/* Footer Styles */
+.footer {
+  background-color: var(--color-dark-navy);
+  color: white;
+  padding: 40px 0 20px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.footer-section h3, .footer-section h4 {
+  margin-bottom: 15px;
+  color: #61dafb;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #61dafb;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+  color: #ccc;
+}
+
+.help-text {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Advertisement Slots Styles */
+.advertisement-slots-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+}
+
+.advertisement-slots-section h4 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.slot-category {
+  margin-bottom: 25px;
+}
+
+.slot-category h5 {
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 5px;
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.slot-item {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.slot-item.available {
+  border-color: #28a745;
+  background: #f8fff9;
+}
+
+.slot-item.available:hover {
+  border-color: #1e7e34;
+  background: #e8f5e8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+}
+
+.slot-item.reserved {
+  border-color: #dc3545;
+  background: #fff5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.slot-item.selected {
+  border-color: #667eea;
+  background: #e8f0ff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.slot-number {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.slot-price {
+  font-weight: 700;
+  color: #28a745;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.slot-status {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.slot-item.available .slot-status {
+  color: #28a745;
+}
+
+.slot-item.reserved .slot-status {
+  color: #dc3545;
+}
+
+.selected-slots-summary {
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.selected-slots-summary h5 {
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.selected-slots-list {
+  margin-bottom: 15px;
+}
+
+.selected-slot {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border-left: 4px solid #667eea;
+  font-size: 0.9rem;
+}
+
+.total-price {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #28a745;
+  padding-top: 15px;
+  border-top: 2px solid #e9ecef;
+}
+
+.booking-summary {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.booking-summary h4 {
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.summary-details p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.summary-details strong {
+  color: #333;
+}
+
+.loading {
+  color: #666;
+  font-size: 0.9rem;
+  padding: 10px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .step-indicator {
+    gap: 10px;
+  }
+  
+  .step {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}

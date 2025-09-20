@@ -6,8 +6,10 @@ const {
     createCinema,
     updateCinema,
     deleteCinema,
-    getCinemaStats
-} = require("../controllers/cinemaController");
+    getCinemaStats,
+    updateSlotPrices,
+    updateMovieSlotPrices
+} = require("../Controllers/cinemaController");
 
 // @route   GET /api/cinemas/stats
 // @desc    Get cinema statistics
@@ -38,5 +40,15 @@ router.put("/:id", updateCinema);
 // @desc    Delete cinema by ID
 // @access  Public
 router.delete("/:id", deleteCinema);
+
+// @route   PUT /api/cinemas/:id/slot-prices
+// @desc    Update advertisement slot prices
+// @access  Public
+router.put("/:id/slot-prices", updateSlotPrices);
+
+// @route   PUT /api/cinemas/:id/movie-slot-prices
+// @desc    Update movie-wise slot pricing
+// @access  Public
+router.put("/:id/movie-slot-prices", updateMovieSlotPrices);
 
 module.exports = router;

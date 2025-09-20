@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './nav.css'
 import {Link} from "react-router-dom";
 
 function Nav() {
+  const [isCinemaDropdownOpen, setIsCinemaDropdownOpen] = useState(false);
+
+  const toggleCinemaDropdown = () => {
+    setIsCinemaDropdownOpen(!isCinemaDropdownOpen);
+  };
+
   return (
     <div>
       <ul className="home-url">
@@ -11,6 +17,36 @@ function Nav() {
             <h1>Home</h1>
             </Link>
         </li>
+        
+        {/* Cinema Dropdown */}
+        <li className="home-ll dropdown-container">
+          <div className="dropdown-trigger" onClick={toggleCinemaDropdown}>
+            <h1>Cinema</h1>
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {isCinemaDropdownOpen && (
+            <ul className="dropdown-menu">
+              <li className="dropdown-item">
+                <Link to="/my-reservations" className="dropdown-link">
+                  My Reservations
+                </Link>
+              </li>
+              <li className="dropdown-item">
+                <Link to="/new-reservation" className="dropdown-link">
+                  New Reservation
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+
+        {/* Cinema Management for Owners */}
+        <li className="home-ll">
+            <Link to="/cinema-management" className="active home-a">
+            <h1>Manage Cinemas</h1>
+            </Link>
+        </li>
+
         <li className="home-ll">
              <Link to="/adduser" className="active home-a">
             <h1>ADD user</h1>
@@ -28,34 +64,29 @@ function Nav() {
              </Link>
         </li> 
 
-          <li className="home-ll">
+        <li className="home-ll">
             <Link to="/imgpart" className="active home-a">
             <h1>Photos</h1>
              </Link>
-           </li>
+        </li>
 
-           <li className="home-ll">
-          
+        <li className="home-ll">
             <Link to="/ledboard" className="active home-a">
              <h1>LED Board</h1>
              </Link>
         </li>
 
         <li className="home-ll">
-          
             <Link to="/regi" className="active home-a">
             <button>Register</button>
              </Link>
         </li>
 
         <li className="home-ll">
-          
             <Link to="/log" className="active home-a">
             <button>Login</button>
              </Link>
         </li>
-
-        
       </ul>
     </div>
   )

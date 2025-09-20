@@ -18,40 +18,13 @@ const validateCinema = [
         .isLength({ min: 5, max: 200 })
         .withMessage('Cinema location must be between 5 and 200 characters'),
 
-    body('ongoing_movies.movie_1')
-        .trim()
-        .notEmpty()
-        .withMessage('First ongoing movie is required')
-        .isLength({ max: 100 })
-        .withMessage('Movie name cannot exceed 100 characters'),
+    body('ongoing_movies')
+        .isObject()
+        .withMessage('Ongoing movies must be an object'),
 
-    body('ongoing_movies.movie_2')
-        .trim()
-        .notEmpty()
-        .withMessage('Second ongoing movie is required')
-        .isLength({ max: 100 })
-        .withMessage('Movie name cannot exceed 100 characters'),
-
-    body('ongoing_movies.movie_3')
-        .trim()
-        .notEmpty()
-        .withMessage('Third ongoing movie is required')
-        .isLength({ max: 100 })
-        .withMessage('Movie name cannot exceed 100 characters'),
-
-    body('ongoing_movies.movie_4')
-        .trim()
-        .notEmpty()
-        .withMessage('Fourth ongoing movie is required')
-        .isLength({ max: 100 })
-        .withMessage('Movie name cannot exceed 100 characters'),
-
-    body('upcoming_movie')
-        .trim()
-        .notEmpty()
-        .withMessage('Upcoming movie is required')
-        .isLength({ max: 100 })
-        .withMessage('Movie name cannot exceed 100 characters'),
+    body('upcoming_movies')
+        .isObject()
+        .withMessage('Upcoming movies must be an object'),
 
     body('contact_info.phone')
         .optional()

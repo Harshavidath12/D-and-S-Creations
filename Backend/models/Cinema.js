@@ -18,47 +18,283 @@ const cinemaSchema = new Schema({
     },
     ongoing_movies: {
         movie_1: {
-            type: String,
-            required: [true, "First ongoing movie is required"],
-            trim: true,
-            maxlength: [100, "Movie name cannot exceed 100 characters"]
+            name: {
+                type: String,
+                required: [true, "First ongoing movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            start_date: {
+                type: Date,
+                required: [true, "First movie start date is required"]
+            },
+            end_date: {
+                type: Date,
+                required: [true, "First movie end date is required"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
         },
         movie_2: {
-            type: String,
-            required: [true, "Second ongoing movie is required"],
-            trim: true,
-            maxlength: [100, "Movie name cannot exceed 100 characters"]
+            name: {
+                type: String,
+                required: [true, "Second ongoing movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            start_date: {
+                type: Date,
+                required: [true, "Second movie start date is required"]
+            },
+            end_date: {
+                type: Date,
+                required: [true, "Second movie end date is required"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
         },
         movie_3: {
-            type: String,
-            required: [true, "Third ongoing movie is required"],
-            trim: true,
-            maxlength: [100, "Movie name cannot exceed 100 characters"]
+            name: {
+                type: String,
+                required: [true, "Third ongoing movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            start_date: {
+                type: Date,
+                required: [true, "Third movie start date is required"]
+            },
+            end_date: {
+                type: Date,
+                required: [true, "Third movie end date is required"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
         },
         movie_4: {
-            type: String,
-            required: [true, "Fourth ongoing movie is required"],
-            trim: true,
-            maxlength: [100, "Movie name cannot exceed 100 characters"]
+            name: {
+                type: String,
+                required: [true, "Fourth ongoing movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            start_date: {
+                type: Date,
+                required: [true, "Fourth movie start date is required"]
+            },
+            end_date: {
+                type: Date,
+                required: [true, "Fourth movie end date is required"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
         }
     },
-    upcoming_movie: {
+    upcoming_movies: {
+        movie_1: {
+            name: {
+                type: String,
+                required: [true, "First upcoming movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
+        },
+        movie_2: {
+            name: {
+                type: String,
+                required: [true, "Second upcoming movie name is required"],
+                trim: true,
+                maxlength: [100, "Movie name cannot exceed 100 characters"]
+            },
+            trailer_link: {
+                type: String,
+                trim: true,
+                validate: {
+                    validator: function(v) {
+                        if (!v) return true; // Allow empty trailer
+                        return /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/.test(v);
+                    },
+                    message: "Please enter a valid YouTube URL"
+                }
+            }
+        }
+    },
+    google_maps_location: {
         type: String,
-        required: [true, "Upcoming movie is required"],
         trim: true,
-        maxlength: [100, "Movie name cannot exceed 100 characters"]
+        validate: {
+            validator: function(v) {
+                if (!v) return true; // Allow empty location
+                return /^https?:\/\/(www\.)?(google\.com\/maps|maps\.google\.com)\/.+/.test(v);
+            },
+            message: "Please enter a valid Google Maps URL"
+        }
+    },
+    advertisement_slots: {
+        start_slots: [{
+            slot_number: { type: Number, required: true },
+            price: { type: Number, required: true, min: 0 },
+            is_reserved: { type: Boolean, default: false },
+            reserved_by: { type: String, default: "" },
+            reserved_at: { type: Date }
+        }],
+        interval_slots: [{
+            slot_number: { type: Number, required: true },
+            price: { type: Number, required: true, min: 0 },
+            is_reserved: { type: Boolean, default: false },
+            reserved_by: { type: String, default: "" },
+            reserved_at: { type: Date }
+        }],
+        end_slots: [{
+            slot_number: { type: Number, required: true },
+            price: { type: Number, required: true, min: 0 },
+            is_reserved: { type: Boolean, default: false },
+            reserved_by: { type: String, default: "" },
+            reserved_at: { type: Date }
+        }]
+    },
+    // Movie-wise slot pricing
+    movie_slot_pricing: {
+        movie_1: {
+            starting_price: { type: Number, min: 0 },
+            interval_price: { type: Number, min: 0 },
+            ending_price: { type: Number, min: 0 },
+            slots: [{
+                slot_number: { type: Number, required: true },
+                slot_type: { 
+                    type: String, 
+                    required: true, 
+                    enum: ['starting', 'interval', 'ending'] 
+                },
+                price: { type: Number, required: true, min: 0 },
+                is_reserved: { type: Boolean, default: false },
+                reserved_by: { type: String, default: "" },
+                reserved_at: { type: Date }
+            }]
+        },
+        movie_2: {
+            starting_price: { type: Number, min: 0 },
+            interval_price: { type: Number, min: 0 },
+            ending_price: { type: Number, min: 0 },
+            slots: [{
+                slot_number: { type: Number, required: true },
+                slot_type: { 
+                    type: String, 
+                    required: true, 
+                    enum: ['starting', 'interval', 'ending'] 
+                },
+                price: { type: Number, required: true, min: 0 },
+                is_reserved: { type: Boolean, default: false },
+                reserved_by: { type: String, default: "" },
+                reserved_at: { type: Date }
+            }]
+        },
+        movie_3: {
+            starting_price: { type: Number, min: 0 },
+            interval_price: { type: Number, min: 0 },
+            ending_price: { type: Number, min: 0 },
+            slots: [{
+                slot_number: { type: Number, required: true },
+                slot_type: { 
+                    type: String, 
+                    required: true, 
+                    enum: ['starting', 'interval', 'ending'] 
+                },
+                price: { type: Number, required: true, min: 0 },
+                is_reserved: { type: Boolean, default: false },
+                reserved_by: { type: String, default: "" },
+                reserved_at: { type: Date }
+            }]
+        },
+        movie_4: {
+            starting_price: { type: Number, min: 0 },
+            interval_price: { type: Number, min: 0 },
+            ending_price: { type: Number, min: 0 },
+            slots: [{
+                slot_number: { type: Number, required: true },
+                slot_type: { 
+                    type: String, 
+                    required: true, 
+                    enum: ['starting', 'interval', 'ending'] 
+                },
+                price: { type: Number, required: true, min: 0 },
+                is_reserved: { type: Boolean, default: false },
+                reserved_by: { type: String, default: "" },
+                reserved_at: { type: Date }
+            }]
+        }
     },
     contact_info: {
         phone: {
             type: String,
             trim: true,
-            match: [/^[\+]?[1-9][\d]{0,15}$/, "Please enter a valid phone number"]
+            validate: {
+                validator: function(v) {
+                    if (!v) return true; // Allow empty phone numbers
+                    // Very permissive phone validation - just check it has some digits
+                    return /\d/.test(v) && v.length >= 7 && v.length <= 25;
+                },
+                message: "Please enter a valid phone number (7-25 characters with at least some digits)"
+            }
         },
         email: {
             type: String,
             trim: true,
             lowercase: true,
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please enter a valid email"]
+            validate: {
+                validator: function(v) {
+                    if (!v) return true; // Allow empty email
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+                },
+                message: "Please enter a valid email address"
+            }
         }
     },
     is_active: {
@@ -91,8 +327,98 @@ cinemaSchema.pre('save', function(next) {
     if (this.cinema_name) {
         this.cinema_name = this.cinema_name.replace(/\b\w/g, l => l.toUpperCase());
     }
+    
+    // Initialize advertisement slots if not present (without default prices)
+    if (this.isNew && (!this.advertisement_slots || !this.advertisement_slots.start_slots.length)) {
+        this.advertisement_slots = {
+            start_slots: Array.from({ length: 5 }, (_, i) => ({
+                slot_number: i + 1,
+                price: 0, // User must set their own prices
+                is_reserved: false,
+                reserved_by: "",
+                reserved_at: null
+            })),
+            interval_slots: Array.from({ length: 5 }, (_, i) => ({
+                slot_number: i + 1,
+                price: 0, // User must set their own prices
+                is_reserved: false,
+                reserved_by: "",
+                reserved_at: null
+            })),
+            end_slots: Array.from({ length: 5 }, (_, i) => ({
+                slot_number: i + 1,
+                price: 0, // User must set their own prices
+                is_reserved: false,
+                reserved_by: "",
+                reserved_at: null
+            }))
+        };
+    }
+
+    // Initialize movie-wise slot pricing only if completely missing
+    if (this.isNew && (!this.movie_slot_pricing || !this.movie_slot_pricing.movie_1)) {
+        console.log("🔧 Initializing default movie slot pricing structure");
+        this.movie_slot_pricing = {
+            movie_1: { starting_price: 0, interval_price: 0, ending_price: 0, slots: [] },
+            movie_2: { starting_price: 0, interval_price: 0, ending_price: 0, slots: [] },
+            movie_3: { starting_price: 0, interval_price: 0, ending_price: 0, slots: [] },
+            movie_4: { starting_price: 0, interval_price: 0, ending_price: 0, slots: [] }
+        };
+    }
+    
+    // Generate slots for all movies based on their pricing
+    if (this.movie_slot_pricing && this.movie_slot_pricing.movie_1) {
+        console.log("🔍 Processing movie slot pricing:", JSON.stringify(this.movie_slot_pricing, null, 2));
+        const movies = ['movie_1', 'movie_2', 'movie_3', 'movie_4'];
+        
+        movies.forEach(movieKey => {
+            const movie = this.movie_slot_pricing[movieKey];
+            if (movie) {
+                const startingPrice = movie.starting_price || 0;
+                const intervalPrice = movie.interval_price || 0;
+                const endingPrice = movie.ending_price || 0;
+                
+                console.log(`💰 Generating slots for ${movieKey}:`, { startingPrice, intervalPrice, endingPrice });
+                
+                // Generate slots with the correct prices
+                movie.slots = [
+                    // Starting slots (1-5)
+                    ...Array.from({ length: 5 }, (_, i) => ({
+                        slot_number: i + 1,
+                        slot_type: 'starting',
+                        price: startingPrice,
+                        is_reserved: false,
+                        reserved_by: "",
+                        reserved_at: null
+                    })),
+                    // Interval slots (6-10)
+                    ...Array.from({ length: 5 }, (_, i) => ({
+                        slot_number: i + 6,
+                        slot_type: 'interval',
+                        price: intervalPrice,
+                        is_reserved: false,
+                        reserved_by: "",
+                        reserved_at: null
+                    })),
+                    // Ending slots (11-15)
+                    ...Array.from({ length: 5 }, (_, i) => ({
+                        slot_number: i + 11,
+                        slot_type: 'ending',
+                        price: endingPrice,
+                        is_reserved: false,
+                        reserved_by: "",
+                        reserved_at: null
+                    }))
+                ];
+                
+                console.log(`✅ Generated ${movie.slots.length} slots for ${movieKey}`);
+            }
+        });
+    }
+    
     next();
 });
+
 
 // Static method to find active cinemas
 cinemaSchema.statics.findActive = function() {
