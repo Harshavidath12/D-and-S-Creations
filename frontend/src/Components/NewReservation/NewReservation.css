@@ -775,19 +775,20 @@
 }
 
 .slot-price {
-  color: white;
+  color: var(--primary-red);
   font-weight: 700;
   font-size: 0.85rem;
-  background: var(--primary-red);
+  background: white;
   padding: 3px 8px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(230, 57, 70, 0.3);
+  border: 2px solid var(--primary-red);
 }
 
 .video-content .choose-video-btn {
-  font-weight: 100 !important;
+  font-weight: 700 !important;
   font-size: 18px !important;
-  color: var(--primary-blue) !important;
+  color: white !important;
   width: 100% !important;
   height: 45px !important;
   text-align: center !important;
@@ -795,9 +796,9 @@
   align-items: center !important;
   justify-content: center !important;
   text-decoration: none !important;
-  border: none !important;
+  border: 2px solid #e63946 !important;
   border-radius: 5px !important;
-  background-color: rgba(97, 218, 251, 0.15) !important;
+  background-color: #e63946 !important;
   transition: 0.2s ease-in-out !important;
   cursor: pointer !important;
 }

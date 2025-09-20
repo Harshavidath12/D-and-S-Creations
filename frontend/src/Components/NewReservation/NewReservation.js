@@ -193,7 +193,7 @@ function NewReservation() {
                           marginBottom: '30px',
                           fontWeight: '100',
                           fontSize: '18px',
-                          color: 'var(--primary-blue)',
+                          color: '#e63946',
                           width: '100%',
                           height: '45px',
                           textAlign: 'center',
@@ -203,7 +203,7 @@ function NewReservation() {
                           textDecoration: 'none',
                           border: 'none',
                           borderRadius: '5px',
-                          backgroundColor: 'rgba(97, 218, 251, 0.15)',
+                          backgroundColor: '#6c757d',
                           transition: '0.2s ease-in-out',
                           cursor: 'pointer'
                         }}
