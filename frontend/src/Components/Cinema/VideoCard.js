@@ -18,16 +18,20 @@ export const VideoCard = ({ video, onSelect }) => {
   };
 
   const handleVideoClick = () => {
+    // Always redirect to YouTube when video thumbnail is clicked
+    window.open(video.youtubeUrl, '_blank');
+  };
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Prevent video click when button is clicked
     if (onSelect) {
       onSelect();
-    } else {
-      window.open(video.youtubeUrl, '_blank');
     }
   };
 
   return (
-    <div className="video-card" onClick={handleVideoClick}>
-      <div className="video-thumbnail">
+    <div className="video-card">
+      <div className="video-thumbnail" onClick={handleVideoClick}>
         <img src={getYouTubeThumbnail(video.youtubeUrl)} alt={video.title} />
         <div className="play-button">
           <i className="fa fa-play"></i>
@@ -71,7 +75,7 @@ export const VideoCard = ({ video, onSelect }) => {
             </div>
           )}
         </div>
-        <button className="choose-video-btn" style={{
+        <button className="choose-video-btn" onClick={handleButtonClick} style={{
           marginBottom: '30px',
           fontWeight: '100',
           fontSize: '18px',

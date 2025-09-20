@@ -711,7 +711,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   line-height: 1.2;
-  color: white;
+  color: white !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
