@@ -202,30 +202,43 @@ const CinemaManagement = () => {
   const validateMovie = (movie, movieNumber) => {
     const errors = {};
     
-    if (!movie.name || movie.name.trim().length === 0) {
-      errors.name = `Movie ${movieNumber} name is required`;
-    }
+    // Only validate if movie has some data (since movie details are optional)
+    const hasMovieData = movie.name && movie.name.trim().length > 0;
     
-    if (!movie.start_date) {
-      errors.start_date = `Movie ${movieNumber} start date is required`;
-    }
-    
-    if (!movie.end_date) {
-      errors.end_date = `Movie ${movieNumber} end date is required`;
-    }
-    
-    if (movie.start_date && movie.end_date) {
-      const startDate = new Date(movie.start_date);
-      const endDate = new Date(movie.end_date);
-      if (endDate <= startDate) {
-        errors.end_date = `Movie ${movieNumber} end date must be after start date`;
+    if (hasMovieData) {
+      // If movie name is provided, validate other fields
+      if (!movie.start_date) {
+        errors.start_date = `Movie ${movieNumber} start date is required when movie name is provided`;
       }
-    }
-    
-    if (movie.trailer_link && movie.trailer_link.trim().length > 0) {
-      const youtubeRegex = /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/;
-      if (!youtubeRegex.test(movie.trailer_link)) {
-        errors.trailer_link = `Movie ${movieNumber} trailer must be a valid YouTube URL`;
+      
+      if (!movie.end_date) {
+        errors.end_date = `Movie ${movieNumber} end date is required when movie name is provided`;
+      }
+      
+      // Validate date relationship if both dates are provided
+      if (movie.start_date && movie.end_date) {
+        const startDate = new Date(movie.start_date);
+        const endDate = new Date(movie.end_date);
+        
+        // Check if start date is not after end date
+        if (startDate >= endDate) {
+          errors.end_date = `Movie ${movieNumber} end date must be after start date`;
+        }
+        
+        // Check if start date is not in the past (optional business rule)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (startDate < today) {
+          errors.start_date = `Movie ${movieNumber} start date cannot be in the past`;
+        }
+      }
+      
+      // Validate trailer link if provided
+      if (movie.trailer_link && movie.trailer_link.trim().length > 0) {
+        const youtubeRegex = /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/;
+        if (!youtubeRegex.test(movie.trailer_link)) {
+          errors.trailer_link = `Movie ${movieNumber} trailer must be a valid YouTube URL`;
+        }
       }
     }
     
@@ -243,8 +256,15 @@ const CinemaManagement = () => {
       if (locationError) newErrors.cinema_location = locationError;
     } else if (currentStep >= 2 && currentStep <= 5) {
       const movieKey = `movie_${currentStep - 1}`;
+      const movie = formData.ongoing_movies[movieKey];
       
-      // Only validate movie slot pricing (these are required)
+      // Validate movie details if provided
+      if (movie) {
+        const movieErrors = validateMovie(movie, currentStep - 1);
+        Object.assign(newErrors, movieErrors);
+      }
+      
+      // Always validate movie slot pricing (these are required)
       const pricing = formData.movie_slot_pricing[movieKey];
       if (pricing.starting_price < 0) {
         newErrors[`movie_${currentStep - 1}_starting_price`] = 'Starting price cannot be negative';
@@ -652,6 +672,8 @@ const CinemaManagement = () => {
                 handleInputChange={handleInputChange}
                 errors={errors}
                 steps={steps}
+                validateMovie={validateMovie}
+                setErrors={setErrors}
               />
 
               {/* Modal footer */}

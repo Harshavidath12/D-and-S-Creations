@@ -5,8 +5,44 @@ const ModalForm = ({
   formData, 
   handleInputChange, 
   errors, 
-  steps 
+  steps,
+  validateMovie,
+  setErrors
 }) => {
+  // Function to handle date validation on blur
+  const handleDateBlur = (e) => {
+    const { name } = e.target;
+    const movieKey = name.split('.')[1]; // Extract movie key (movie_1, movie_2, etc.)
+    const movie = formData.ongoing_movies[movieKey];
+    
+    if (movie && movie.name && movie.name.trim().length > 0) {
+      const movieErrors = validateMovie(movie, movieKey.split('_')[1]);
+      // Update errors state with new validation results
+      setErrors(prev => ({
+        ...prev,
+        ...movieErrors
+      }));
+    }
+  };
+
+  // Function to get minimum date for end date input
+  const getMinEndDate = (movieKey) => {
+    const movie = formData.ongoing_movies[movieKey];
+    if (movie && movie.start_date) {
+      // Set min date to start_date + 1 day
+      const startDate = new Date(movie.start_date);
+      startDate.setDate(startDate.getDate() + 1);
+      return startDate.toISOString().split('T')[0];
+    }
+    return '';
+  };
+
+  // Function to get minimum date for start date input (today)
+  const getMinStartDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
   return (
     <div className="form-content">
       {currentStep === 1 && (
@@ -111,6 +147,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_1.start_date"
                 value={formData.ongoing_movies.movie_1.start_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinStartDate()}
                 className={errors.start_date ? 'error' : ''}
                 placeholder="Select start date (optional)"
               />
@@ -124,6 +162,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_1.end_date"
                 value={formData.ongoing_movies.movie_1.end_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinEndDate('movie_1')}
                 className={errors.end_date ? 'error' : ''}
                 placeholder="Select end date (optional)"
               />
@@ -221,6 +261,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_2.start_date"
                 value={formData.ongoing_movies.movie_2.start_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinStartDate()}
                 className={errors.start_date ? 'error' : ''}
               />
               {errors.start_date && <span className="error-message">{errors.start_date}</span>}
@@ -233,6 +275,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_2.end_date"
                 value={formData.ongoing_movies.movie_2.end_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinEndDate('movie_2')}
                 className={errors.end_date ? 'error' : ''}
               />
               {errors.end_date && <span className="error-message">{errors.end_date}</span>}
@@ -329,6 +373,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_3.start_date"
                 value={formData.ongoing_movies.movie_3.start_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinStartDate()}
                 className={errors.start_date ? 'error' : ''}
               />
               {errors.start_date && <span className="error-message">{errors.start_date}</span>}
@@ -341,6 +387,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_3.end_date"
                 value={formData.ongoing_movies.movie_3.end_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinEndDate('movie_3')}
                 className={errors.end_date ? 'error' : ''}
               />
               {errors.end_date && <span className="error-message">{errors.end_date}</span>}
@@ -437,6 +485,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_4.start_date"
                 value={formData.ongoing_movies.movie_4.start_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinStartDate()}
                 className={errors.start_date ? 'error' : ''}
               />
               {errors.start_date && <span className="error-message">{errors.start_date}</span>}
@@ -449,6 +499,8 @@ const ModalForm = ({
                 name="ongoing_movies.movie_4.end_date"
                 value={formData.ongoing_movies.movie_4.end_date}
                 onChange={handleInputChange}
+                onBlur={handleDateBlur}
+                min={getMinEndDate('movie_4')}
                 className={errors.end_date ? 'error' : ''}
               />
               {errors.end_date && <span className="error-message">{errors.end_date}</span>}
