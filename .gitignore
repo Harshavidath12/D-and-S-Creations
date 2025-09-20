@@ -1,0 +1,40 @@
+# Node.js
+node_modules/
+.env
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+dist/
+build/
+
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/package-lock.json
+
+# Backend
+Backend/node_modules/
+Backend/build/
+Backend/dist/
+Backend/.env
+Backend/package-lock.json
+
+# Misc
+*.swp
+*.swo
+.idea/
+*.iml
