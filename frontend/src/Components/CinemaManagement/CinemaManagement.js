@@ -122,6 +122,33 @@ const CinemaManagement = () => {
     });
   };
 
+  // Extract YouTube video ID from URL
+  const getYouTubeVideoId = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  // Generate YouTube thumbnail URL
+  const getYouTubeThumbnail = (url) => {
+    const videoId = getYouTubeVideoId(url);
+    return videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : null;
+  };
+
+  // Generate Google Maps embed URL
+  const getGoogleMapsEmbedUrl = (mapsUrl) => {
+    if (!mapsUrl) return null;
+    // Extract coordinates or place ID from Google Maps URL
+    const match = mapsUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (match) {
+      const lat = match[1];
+      const lng = match[2];
+      return `https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${lat},${lng}&zoom=15&maptype=roadmap`;
+    }
+    return null;
+  };
+
   const handleUpdate = (cinema) => {
     setEditingCinema(cinema);
     setFormData(cinema);
@@ -430,17 +457,32 @@ const CinemaManagement = () => {
                         </div>
                       </td>
                       <td>
-                        <div className="cinema-location">
-                          {cinema.cinema_location}
+                        <div className="location-cell">
+                          <div className="cinema-location">
+                            <i className="fa fa-map-marker"></i>
+                            {cinema.cinema_location}
+                          </div>
                           {cinema.google_maps_location && (
-                            <a 
-                              href={cinema.google_maps_location} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="map-link"
-                            >
-                              <i className="fa fa-map-marker"></i>
-                            </a>
+                            <div className="map-preview">
+                              <iframe
+                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dOWWgU6xqjJjJY&q=${encodeURIComponent(cinema.cinema_location)}&zoom=15&maptype=roadmap`}
+                                width="100%"
+                                height="80"
+                                style={{ border: 0 }}
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title={`Map of ${cinema.cinema_location}`}
+                              ></iframe>
+                              <a 
+                                href={cinema.google_maps_location} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="map-link"
+                              >
+                                <i className="fa fa-external-link"></i> Open in Maps
+                              </a>
+                            </div>
                           )}
                         </div>
                       </td>
@@ -453,11 +495,38 @@ const CinemaManagement = () => {
                            {cinema.ongoing_movies && Object.keys(cinema.ongoing_movies).map((movieKey, index) => {
                              const movie = cinema.ongoing_movies[movieKey];
                              if (!movie || !movie.name) return null;
+                             const thumbnailUrl = getYouTubeThumbnail(movie.trailer_link);
                              return (
                                <div key={movieKey} className="movie-item">
-                                 <div className="movie-name">{movie.name}</div>
-                                 <div className="movie-dates">
-                                   {formatDate(movie.start_date)} - {formatDate(movie.end_date)}
+                                 <div className="movie-content">
+                                   <div className="movie-info">
+                                     <div className="movie-name">{movie.name}</div>
+                                     <div className="movie-dates">
+                                       {formatDate(movie.start_date)} - {formatDate(movie.end_date)}
+                                     </div>
+                                   </div>
+                                   {thumbnailUrl && (
+                                     <div className="movie-thumbnail">
+                                       <img 
+                                         src={thumbnailUrl} 
+                                         alt={`${movie.name} trailer thumbnail`}
+                                         className="thumbnail-image"
+                                       />
+                                       <div className="play-overlay">
+                                         <i className="fa fa-play-circle"></i>
+                                       </div>
+                                       {movie.trailer_link && (
+                                         <a 
+                                           href={movie.trailer_link} 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           className="trailer-link-overlay"
+                                         >
+                                           Watch Trailer
+                                         </a>
+                                       )}
+                                     </div>
+                                   )}
                                  </div>
                                </div>
                              );
@@ -473,14 +542,41 @@ const CinemaManagement = () => {
                            {cinema.upcoming_movies && Object.keys(cinema.upcoming_movies).map((movieKey, index) => {
                              const movie = cinema.upcoming_movies[movieKey];
                              if (!movie || !movie.name) return null;
+                             const thumbnailUrl = getYouTubeThumbnail(movie.trailer_link);
                              return (
                                <div key={movieKey} className="upcoming-item">
-                                 <div className="upcoming-name">{movie.name}</div>
-                                 {movie.trailer_link && (
-                                   <a href={movie.trailer_link} target="_blank" rel="noopener noreferrer" className="trailer-link">
-                                     <i className="fa fa-play-circle"></i> Trailer
-                                   </a>
-                                 )}
+                                 <div className="upcoming-content">
+                                   <div className="upcoming-info">
+                                     <div className="upcoming-name">{movie.name}</div>
+                                     {movie.trailer_link && (
+                                       <a href={movie.trailer_link} target="_blank" rel="noopener noreferrer" className="trailer-link">
+                                         <i className="fa fa-play-circle"></i> Trailer
+                                       </a>
+                                     )}
+                                   </div>
+                                   {thumbnailUrl && (
+                                     <div className="upcoming-thumbnail">
+                                       <img 
+                                         src={thumbnailUrl} 
+                                         alt={`${movie.name} trailer thumbnail`}
+                                         className="thumbnail-image"
+                                       />
+                                       <div className="play-overlay">
+                                         <i className="fa fa-play-circle"></i>
+                                       </div>
+                                       {movie.trailer_link && (
+                                         <a 
+                                           href={movie.trailer_link} 
+                                           target="_blank" 
+                                           rel="noopener noreferrer"
+                                           className="trailer-link-overlay"
+                                         >
+                                           Watch
+                                         </a>
+                                       )}
+                                     </div>
+                                   )}
+                                 </div>
                                </div>
                              );
                            })}
