@@ -94,17 +94,14 @@ function NewReservation() {
         <div className="container">
           <div className="reservation-form">
             {/* Step Indicator */}
-            <div className="step-indicator">
-              <div className={`step ${currentStep >= 1 ? 'active' : ''}`}>1</div>
-              <div className={`step ${currentStep >= 2 ? 'active' : ''}`}>2</div>
-              <div className={`step ${currentStep >= 3 ? 'active' : ''}`}>3</div>
-              <div className={`step ${currentStep >= 4 ? 'active' : ''}`}>4</div>
-              <div className="step-labels">
-                <span>Select Cinema</span>
-                <span>Select Movie</span>
-                <span>Select Slots</span>
-                <span>Confirm</span>
-              </div>
+            <div className="container-fluid">
+              <br /><br />
+              <ul className="list-unstyled multi-steps">
+                <li className={currentStep === 1 ? 'is-active' : ''}>Select Cinema</li>
+                <li className={currentStep === 2 ? 'is-active' : ''}>Select Movie</li>
+                <li className={currentStep === 3 ? 'is-active' : ''}>Select Slots</li>
+                <li className={currentStep === 4 ? 'is-active' : ''}>Confirm</li>
+              </ul>
             </div>
 
             {/* Step 1: Select Cinema */}
