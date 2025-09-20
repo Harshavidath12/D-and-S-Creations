@@ -42,7 +42,8 @@ const validateCinema = [
     body('is_active')
         .optional()
         .isBoolean()
-        .withMessage('is_active must be a boolean value')
+        .withMessage('is_active must be a boolean value'),
+
 ];
 
 // Update validation rules (all fields optional)

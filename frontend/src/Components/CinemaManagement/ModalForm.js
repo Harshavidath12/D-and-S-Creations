@@ -91,39 +91,41 @@ const ModalForm = ({
         <div className="step-content active">
           <h4>Movie 1 - Ongoing</h4>
           <div className="form-group">
-            <label>Movie Name *</label>
+            <label>Movie Name</label>
             <input
               type="text"
               name="ongoing_movies.movie_1.name"
               value={formData.ongoing_movies.movie_1.name}
               onChange={handleInputChange}
               className={errors.name ? 'error' : ''}
-              placeholder="Enter movie name"
+              placeholder="Enter movie name (optional)"
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
           </div>
           
           <div className="form-row">
             <div className="form-group">
-              <label>Start Date *</label>
+              <label>Start Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_1.start_date"
                 value={formData.ongoing_movies.movie_1.start_date}
                 onChange={handleInputChange}
                 className={errors.start_date ? 'error' : ''}
+                placeholder="Select start date (optional)"
               />
               {errors.start_date && <span className="error-message">{errors.start_date}</span>}
             </div>
             
             <div className="form-group">
-              <label>End Date *</label>
+              <label>End Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_1.end_date"
                 value={formData.ongoing_movies.movie_1.end_date}
                 onChange={handleInputChange}
                 className={errors.end_date ? 'error' : ''}
+                placeholder="Select end date (optional)"
               />
               {errors.end_date && <span className="error-message">{errors.end_date}</span>}
             </div>
@@ -141,6 +143,57 @@ const ModalForm = ({
             />
             {errors.trailer_link && <span className="error-message">{errors.trailer_link}</span>}
           </div>
+
+          {/* Movie 1 Slot Pricing */}
+          <div className="movie-pricing-section">
+            <h5>Advertisement Slot Pricing for Movie 1</h5>
+            <div className="pricing-grid">
+              <div className="form-group">
+                <label>Starting Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_1.starting_price"
+                  value={formData.movie_slot_pricing.movie_1.starting_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_1_starting_price ? 'error' : ''}
+                  placeholder="Enter starting slots price"
+                  min="0"
+                />
+                {errors.movie_1_starting_price && <span className="error-message">{errors.movie_1_starting_price}</span>}
+                <small>Price for slots 1-5 (before movie starts)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Interval Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_1.interval_price"
+                  value={formData.movie_slot_pricing.movie_1.interval_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_1_interval_price ? 'error' : ''}
+                  placeholder="Enter interval slots price"
+                  min="0"
+                />
+                {errors.movie_1_interval_price && <span className="error-message">{errors.movie_1_interval_price}</span>}
+                <small>Price for slots 6-10 (during movie interval)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Ending Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_1.ending_price"
+                  value={formData.movie_slot_pricing.movie_1.ending_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_1_ending_price ? 'error' : ''}
+                  placeholder="Enter ending slots price"
+                  min="0"
+                />
+                {errors.movie_1_ending_price && <span className="error-message">{errors.movie_1_ending_price}</span>}
+                <small>Price for slots 11-15 (after movie ends)</small>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -148,21 +201,21 @@ const ModalForm = ({
         <div className="step-content active">
           <h4>Movie 2 - Ongoing</h4>
           <div className="form-group">
-            <label>Movie Name *</label>
+            <label>Movie Name</label>
             <input
               type="text"
               name="ongoing_movies.movie_2.name"
               value={formData.ongoing_movies.movie_2.name}
               onChange={handleInputChange}
               className={errors.name ? 'error' : ''}
-              placeholder="Enter movie name"
+              placeholder="Enter movie name (optional)"
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
           </div>
           
           <div className="form-row">
             <div className="form-group">
-              <label>Start Date *</label>
+              <label>Start Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_2.start_date"
@@ -174,7 +227,7 @@ const ModalForm = ({
             </div>
             
             <div className="form-group">
-              <label>End Date *</label>
+              <label>End Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_2.end_date"
@@ -198,6 +251,57 @@ const ModalForm = ({
             />
             {errors.trailer_link && <span className="error-message">{errors.trailer_link}</span>}
           </div>
+
+          {/* Movie 2 Slot Pricing */}
+          <div className="movie-pricing-section">
+            <h5>Advertisement Slot Pricing for Movie 2</h5>
+            <div className="pricing-grid">
+              <div className="form-group">
+                <label>Starting Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_2.starting_price"
+                  value={formData.movie_slot_pricing.movie_2.starting_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_2_starting_price ? 'error' : ''}
+                  placeholder="Enter starting slots price"
+                  min="0"
+                />
+                {errors.movie_2_starting_price && <span className="error-message">{errors.movie_2_starting_price}</span>}
+                <small>Price for slots 1-5 (before movie starts)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Interval Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_2.interval_price"
+                  value={formData.movie_slot_pricing.movie_2.interval_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_2_interval_price ? 'error' : ''}
+                  placeholder="Enter interval slots price"
+                  min="0"
+                />
+                {errors.movie_2_interval_price && <span className="error-message">{errors.movie_2_interval_price}</span>}
+                <small>Price for slots 6-10 (during movie interval)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Ending Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_2.ending_price"
+                  value={formData.movie_slot_pricing.movie_2.ending_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_2_ending_price ? 'error' : ''}
+                  placeholder="Enter ending slots price"
+                  min="0"
+                />
+                {errors.movie_2_ending_price && <span className="error-message">{errors.movie_2_ending_price}</span>}
+                <small>Price for slots 11-15 (after movie ends)</small>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -205,21 +309,21 @@ const ModalForm = ({
         <div className="step-content active">
           <h4>Movie 3 - Ongoing</h4>
           <div className="form-group">
-            <label>Movie Name *</label>
+            <label>Movie Name</label>
             <input
               type="text"
               name="ongoing_movies.movie_3.name"
               value={formData.ongoing_movies.movie_3.name}
               onChange={handleInputChange}
               className={errors.name ? 'error' : ''}
-              placeholder="Enter movie name"
+              placeholder="Enter movie name (optional)"
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
           </div>
           
           <div className="form-row">
             <div className="form-group">
-              <label>Start Date *</label>
+              <label>Start Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_3.start_date"
@@ -231,7 +335,7 @@ const ModalForm = ({
             </div>
             
             <div className="form-group">
-              <label>End Date *</label>
+              <label>End Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_3.end_date"
@@ -255,6 +359,57 @@ const ModalForm = ({
             />
             {errors.trailer_link && <span className="error-message">{errors.trailer_link}</span>}
           </div>
+
+          {/* Movie 3 Slot Pricing */}
+          <div className="movie-pricing-section">
+            <h5>Advertisement Slot Pricing for Movie 3</h5>
+            <div className="pricing-grid">
+              <div className="form-group">
+                <label>Starting Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_3.starting_price"
+                  value={formData.movie_slot_pricing.movie_3.starting_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_3_starting_price ? 'error' : ''}
+                  placeholder="Enter starting slots price"
+                  min="0"
+                />
+                {errors.movie_3_starting_price && <span className="error-message">{errors.movie_3_starting_price}</span>}
+                <small>Price for slots 1-5 (before movie starts)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Interval Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_3.interval_price"
+                  value={formData.movie_slot_pricing.movie_3.interval_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_3_interval_price ? 'error' : ''}
+                  placeholder="Enter interval slots price"
+                  min="0"
+                />
+                {errors.movie_3_interval_price && <span className="error-message">{errors.movie_3_interval_price}</span>}
+                <small>Price for slots 6-10 (during movie interval)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Ending Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_3.ending_price"
+                  value={formData.movie_slot_pricing.movie_3.ending_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_3_ending_price ? 'error' : ''}
+                  placeholder="Enter ending slots price"
+                  min="0"
+                />
+                {errors.movie_3_ending_price && <span className="error-message">{errors.movie_3_ending_price}</span>}
+                <small>Price for slots 11-15 (after movie ends)</small>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -262,21 +417,21 @@ const ModalForm = ({
         <div className="step-content active">
           <h4>Movie 4 - Ongoing</h4>
           <div className="form-group">
-            <label>Movie Name *</label>
+            <label>Movie Name</label>
             <input
               type="text"
               name="ongoing_movies.movie_4.name"
               value={formData.ongoing_movies.movie_4.name}
               onChange={handleInputChange}
               className={errors.name ? 'error' : ''}
-              placeholder="Enter movie name"
+              placeholder="Enter movie name (optional)"
             />
             {errors.name && <span className="error-message">{errors.name}</span>}
           </div>
           
           <div className="form-row">
             <div className="form-group">
-              <label>Start Date *</label>
+              <label>Start Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_4.start_date"
@@ -288,7 +443,7 @@ const ModalForm = ({
             </div>
             
             <div className="form-group">
-              <label>End Date *</label>
+              <label>End Date</label>
               <input
                 type="date"
                 name="ongoing_movies.movie_4.end_date"
@@ -311,6 +466,57 @@ const ModalForm = ({
               placeholder="https://www.youtube.com/watch?v=..."
             />
             {errors.trailer_link && <span className="error-message">{errors.trailer_link}</span>}
+          </div>
+
+          {/* Movie 4 Slot Pricing */}
+          <div className="movie-pricing-section">
+            <h5>Advertisement Slot Pricing for Movie 4</h5>
+            <div className="pricing-grid">
+              <div className="form-group">
+                <label>Starting Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_4.starting_price"
+                  value={formData.movie_slot_pricing.movie_4.starting_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_4_starting_price ? 'error' : ''}
+                  placeholder="Enter starting slots price"
+                  min="0"
+                />
+                {errors.movie_4_starting_price && <span className="error-message">{errors.movie_4_starting_price}</span>}
+                <small>Price for slots 1-5 (before movie starts)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Interval Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_4.interval_price"
+                  value={formData.movie_slot_pricing.movie_4.interval_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_4_interval_price ? 'error' : ''}
+                  placeholder="Enter interval slots price"
+                  min="0"
+                />
+                {errors.movie_4_interval_price && <span className="error-message">{errors.movie_4_interval_price}</span>}
+                <small>Price for slots 6-10 (during movie interval)</small>
+              </div>
+              
+              <div className="form-group">
+                <label>Ending Slots Price (LKR) *</label>
+                <input
+                  type="number"
+                  name="movie_slot_pricing.movie_4.ending_price"
+                  value={formData.movie_slot_pricing.movie_4.ending_price}
+                  onChange={handleInputChange}
+                  className={errors.movie_4_ending_price ? 'error' : ''}
+                  placeholder="Enter ending slots price"
+                  min="0"
+                />
+                {errors.movie_4_ending_price && <span className="error-message">{errors.movie_4_ending_price}</span>}
+                <small>Price for slots 11-15 (after movie ends)</small>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -399,6 +605,26 @@ const ModalForm = ({
               }
               return null;
             })}
+            
+            <h5>Movie Slot Pricing</h5>
+            {Object.keys(formData.movie_slot_pricing).map((movieKey, index) => {
+              const movie = formData.ongoing_movies[movieKey];
+              const pricing = formData.movie_slot_pricing[movieKey];
+              if (movie && movie.name) {
+                return (
+                  <div key={movieKey} style={{ marginBottom: '15px', padding: '10px', background: '#f8f9fa', borderRadius: '6px' }}>
+                    <p><strong>{movie.name}:</strong></p>
+                    <p style={{ marginLeft: '20px', fontSize: '14px' }}>
+                      Starting: LKR {pricing.starting_price} | 
+                      Interval: LKR {pricing.interval_price} | 
+                      Ending: LKR {pricing.ending_price}
+                    </p>
+                  </div>
+                );
+              }
+              return null;
+            })}
+            
           </div>
         </div>
       )}

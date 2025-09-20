@@ -243,9 +243,18 @@ const CinemaManagement = () => {
       if (locationError) newErrors.cinema_location = locationError;
     } else if (currentStep >= 2 && currentStep <= 5) {
       const movieKey = `movie_${currentStep - 1}`;
-      const movie = formData.ongoing_movies[movieKey];
-      const movieErrors = validateMovie(movie, currentStep - 1);
-      Object.assign(newErrors, movieErrors);
+      
+      // Only validate movie slot pricing (these are required)
+      const pricing = formData.movie_slot_pricing[movieKey];
+      if (pricing.starting_price < 0) {
+        newErrors[`movie_${currentStep - 1}_starting_price`] = 'Starting price cannot be negative';
+      }
+      if (pricing.interval_price < 0) {
+        newErrors[`movie_${currentStep - 1}_interval_price`] = 'Interval price cannot be negative';
+      }
+      if (pricing.ending_price < 0) {
+        newErrors[`movie_${currentStep - 1}_ending_price`] = 'Ending price cannot be negative';
+      }
     }
     
     setErrors(newErrors);
@@ -255,16 +264,7 @@ const CinemaManagement = () => {
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData(prev => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent],
-          [child]: type === 'checkbox' ? checked : value
-        }
-      }));
-    } else if (name.startsWith('ongoing_movies.') || name.startsWith('upcoming_movies.') || name.startsWith('movie_slot_pricing.')) {
+    if (name.startsWith('ongoing_movies.') || name.startsWith('upcoming_movies.') || name.startsWith('movie_slot_pricing.')) {
       const parts = name.split('.');
       const movieKey = parts[1];
       const field = parts[2];
@@ -277,6 +277,15 @@ const CinemaManagement = () => {
             ...prev[parts[0]][movieKey],
             [field]: type === 'checkbox' ? checked : value
           }
+        }
+      }));
+    } else if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormData(prev => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: type === 'checkbox' ? checked : value
         }
       }));
     } else {
@@ -295,15 +304,21 @@ const CinemaManagement = () => {
   const handleNext = () => {
     if (validateCurrentStep()) {
       setCurrentStep(prev => Math.min(prev + 1, totalSteps));
+      // Clear all errors when moving to next step
+      setErrors({});
     }
   };
 
   const handlePrevious = () => {
     setCurrentStep(prev => Math.max(prev - 1, 1));
+    // Clear all errors when moving to previous step
+    setErrors({});
   };
 
   const handleSubmit = async () => {
     try {
+      console.log("🔍 Form data being sent:", JSON.stringify(formData, null, 2));
+      
       const url = editingCinema 
         ? `http://localhost:5000/api/cinemas/${editingCinema._id}`
         : 'http://localhost:5000/api/cinemas';

@@ -165,36 +165,6 @@ const createCinema = async (req, res) => {
             }
         }
 
-        // Validate advertisement slots pricing if provided
-        if (req.body.advertisement_slots) {
-            const slotTypes = ['start_slots', 'interval_slots', 'end_slots'];
-            for (const slotType of slotTypes) {
-                const slots = req.body.advertisement_slots[slotType];
-                if (slots && Array.isArray(slots)) {
-                    for (const slot of slots) {
-                        if (slot.price === undefined) {
-                            return res.status(400).json({
-                                success: false,
-                                message: `Missing required price for slot ${slot.slot_number} in ${slotType}`,
-                                required_fields: ["price"],
-                                received: {
-                                    price: slot.price !== undefined
-                                }
-                            });
-                        }
-                        if (slot.price < 0) {
-                            return res.status(400).json({
-                                success: false,
-                                message: `Price cannot be negative for slot ${slot.slot_number} in ${slotType}`,
-                                received: {
-                                    price: slot.price
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        }
 
         // Check if cinema already exists
         const existingCinema = await Cinema.findOne({
@@ -237,6 +207,7 @@ const createCinema = async (req, res) => {
             });
             console.log("🔧 Final processed pricing:", JSON.stringify(processedMovieSlotPricing, null, 2));
         }
+
 
         console.log("🔧 Creating Cinema with processed pricing:", JSON.stringify(processedMovieSlotPricing, null, 2));
         

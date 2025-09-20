@@ -20,17 +20,17 @@ const cinemaSchema = new Schema({
         movie_1: {
             name: {
                 type: String,
-                required: [true, "First ongoing movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
             start_date: {
                 type: Date,
-                required: [true, "First movie start date is required"]
+                required: false
             },
             end_date: {
                 type: Date,
-                required: [true, "First movie end date is required"]
+                required: false
             },
             trailer_link: {
                 type: String,
@@ -47,17 +47,17 @@ const cinemaSchema = new Schema({
         movie_2: {
             name: {
                 type: String,
-                required: [true, "Second ongoing movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
             start_date: {
                 type: Date,
-                required: [true, "Second movie start date is required"]
+                required: false
             },
             end_date: {
                 type: Date,
-                required: [true, "Second movie end date is required"]
+                required: false
             },
             trailer_link: {
                 type: String,
@@ -74,17 +74,17 @@ const cinemaSchema = new Schema({
         movie_3: {
             name: {
                 type: String,
-                required: [true, "Third ongoing movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
             start_date: {
                 type: Date,
-                required: [true, "Third movie start date is required"]
+                required: false
             },
             end_date: {
                 type: Date,
-                required: [true, "Third movie end date is required"]
+                required: false
             },
             trailer_link: {
                 type: String,
@@ -101,17 +101,17 @@ const cinemaSchema = new Schema({
         movie_4: {
             name: {
                 type: String,
-                required: [true, "Fourth ongoing movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
             start_date: {
                 type: Date,
-                required: [true, "Fourth movie start date is required"]
+                required: false
             },
             end_date: {
                 type: Date,
-                required: [true, "Fourth movie end date is required"]
+                required: false
             },
             trailer_link: {
                 type: String,
@@ -130,7 +130,7 @@ const cinemaSchema = new Schema({
         movie_1: {
             name: {
                 type: String,
-                required: [true, "First upcoming movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
@@ -149,7 +149,7 @@ const cinemaSchema = new Schema({
         movie_2: {
             name: {
                 type: String,
-                required: [true, "Second upcoming movie name is required"],
+                required: false,
                 trim: true,
                 maxlength: [100, "Movie name cannot exceed 100 characters"]
             },
@@ -176,29 +176,6 @@ const cinemaSchema = new Schema({
             },
             message: "Please enter a valid Google Maps URL"
         }
-    },
-    advertisement_slots: {
-        start_slots: [{
-            slot_number: { type: Number, required: true },
-            price: { type: Number, required: true, min: 0 },
-            is_reserved: { type: Boolean, default: false },
-            reserved_by: { type: String, default: "" },
-            reserved_at: { type: Date }
-        }],
-        interval_slots: [{
-            slot_number: { type: Number, required: true },
-            price: { type: Number, required: true, min: 0 },
-            is_reserved: { type: Boolean, default: false },
-            reserved_by: { type: String, default: "" },
-            reserved_at: { type: Date }
-        }],
-        end_slots: [{
-            slot_number: { type: Number, required: true },
-            price: { type: Number, required: true, min: 0 },
-            is_reserved: { type: Boolean, default: false },
-            reserved_by: { type: String, default: "" },
-            reserved_at: { type: Date }
-        }]
     },
     // Movie-wise slot pricing
     movie_slot_pricing: {
@@ -328,32 +305,6 @@ cinemaSchema.pre('save', function(next) {
         this.cinema_name = this.cinema_name.replace(/\b\w/g, l => l.toUpperCase());
     }
     
-    // Initialize advertisement slots if not present (without default prices)
-    if (this.isNew && (!this.advertisement_slots || !this.advertisement_slots.start_slots.length)) {
-        this.advertisement_slots = {
-            start_slots: Array.from({ length: 5 }, (_, i) => ({
-                slot_number: i + 1,
-                price: 0, // User must set their own prices
-                is_reserved: false,
-                reserved_by: "",
-                reserved_at: null
-            })),
-            interval_slots: Array.from({ length: 5 }, (_, i) => ({
-                slot_number: i + 1,
-                price: 0, // User must set their own prices
-                is_reserved: false,
-                reserved_by: "",
-                reserved_at: null
-            })),
-            end_slots: Array.from({ length: 5 }, (_, i) => ({
-                slot_number: i + 1,
-                price: 0, // User must set their own prices
-                is_reserved: false,
-                reserved_by: "",
-                reserved_at: null
-            }))
-        };
-    }
 
     // Initialize movie-wise slot pricing only if completely missing
     if (this.isNew && (!this.movie_slot_pricing || !this.movie_slot_pricing.movie_1)) {
