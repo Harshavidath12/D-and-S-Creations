@@ -226,15 +226,18 @@ function NewReservation() {
                 {(() => {
                   const slots = getAvailableSlots();
                   return (
-                    <div className="slots-selection">
-                      {/* Starting Slots */}
-                      <div className="slot-category">
-                        <h4>Starting Slots (Before Movie)</h4>
-                        <div className="slots-grid">
+                    <div className="compact-slots-selection">
+                      {/* Starting Slots Card */}
+                      <div className="slot-card">
+                        <div className="slot-card-header">
+                          <h4>Starting</h4>
+                          <span className="slot-count">{slots.starting.length} slots</span>
+                        </div>
+                        <div className="slot-card-content">
                           {slots.starting.map((slot) => (
                             <div 
                               key={`starting_${slot.slot_number}`}
-                              className={`slot-item ${selectedSlots.some(s => s.slot_id === `starting_${slot.slot_number}`) ? 'selected' : ''}`}
+                              className={`compact-slot-item ${selectedSlots.some(s => s.slot_id === `starting_${slot.slot_number}`) ? 'selected' : ''}`}
                               onClick={() => handleSlotSelect({
                                 slot_id: `starting_${slot.slot_number}`,
                                 slot_type: 'starting',
@@ -242,21 +245,24 @@ function NewReservation() {
                                 price: slot.price
                               })}
                             >
-                              <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">LKR {slot.price}</div>
+                              <span className="slot-number">{slot.slot_number}</span>
+                              <span className="slot-price">LKR {slot.price}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      {/* Interval Slots */}
-                      <div className="slot-category">
-                        <h4>Interval Slots (During Movie)</h4>
-                        <div className="slots-grid">
+                      {/* Interval Slots Card */}
+                      <div className="slot-card">
+                        <div className="slot-card-header">
+                          <h4>Interval</h4>
+                          <span className="slot-count">{slots.interval.length} slots</span>
+                        </div>
+                        <div className="slot-card-content">
                           {slots.interval.map((slot) => (
                             <div 
                               key={`interval_${slot.slot_number}`}
-                              className={`slot-item ${selectedSlots.some(s => s.slot_id === `interval_${slot.slot_number}`) ? 'selected' : ''}`}
+                              className={`compact-slot-item ${selectedSlots.some(s => s.slot_id === `interval_${slot.slot_number}`) ? 'selected' : ''}`}
                               onClick={() => handleSlotSelect({
                                 slot_id: `interval_${slot.slot_number}`,
                                 slot_type: 'interval',
@@ -264,21 +270,24 @@ function NewReservation() {
                                 price: slot.price
                               })}
                             >
-                              <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">LKR {slot.price}</div>
+                              <span className="slot-number">{slot.slot_number}</span>
+                              <span className="slot-price">LKR {slot.price}</span>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      {/* Ending Slots */}
-                      <div className="slot-category">
-                        <h4>Ending Slots (After Movie)</h4>
-                        <div className="slots-grid">
+                      {/* Ending Slots Card */}
+                      <div className="slot-card">
+                        <div className="slot-card-header">
+                          <h4>Ending</h4>
+                          <span className="slot-count">{slots.ending.length} slots</span>
+                        </div>
+                        <div className="slot-card-content">
                           {slots.ending.map((slot) => (
                             <div 
                               key={`ending_${slot.slot_number}`}
-                              className={`slot-item ${selectedSlots.some(s => s.slot_id === `ending_${slot.slot_number}`) ? 'selected' : ''}`}
+                              className={`compact-slot-item ${selectedSlots.some(s => s.slot_id === `ending_${slot.slot_number}`) ? 'selected' : ''}`}
                               onClick={() => handleSlotSelect({
                                 slot_id: `ending_${slot.slot_number}`,
                                 slot_type: 'ending',
@@ -286,8 +295,8 @@ function NewReservation() {
                                 price: slot.price
                               })}
                             >
-                              <div className="slot-number">Slot {slot.slot_number}</div>
-                              <div className="slot-price">LKR {slot.price}</div>
+                              <span className="slot-number">{slot.slot_number}</span>
+                              <span className="slot-price">LKR {slot.price}</span>
                             </div>
                           ))}
                         </div>
