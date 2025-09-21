@@ -2,20 +2,20 @@ const User = require("../Model/UserModel");
 
 //data display
 const getAllUsers = async (req, res, next) => {
-    let Users;
+    let users;
 
     try{
-        Users = await User.find();
+        users = await User.find();
     }catch (err){
         console.log(err);
     }
 
-    if (!Users || Users.length === 0) {
+    if (!users || users.length === 0) {
         return res.status(404).json({ message: "No Users Found" });
     }
 
     //display
-    return res.status(200).json({Users});
+    return res.status(200).json({users});
 };
 
 //data insert

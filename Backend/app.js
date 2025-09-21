@@ -7,16 +7,18 @@ const router = require("./Routes/UserRoutes");
 
 
 const app=express(); 
+const cors = require("cors")
 
 
 
 //Middleware
 app.use(express.json());
-app.use("/users",router)
+app.use(cors());
+app.use("/users",router);
 
 
 
-mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster0.sp3lpkf.mongodb.net/")
+mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster0.sp3lpkf.mongodb.net/test")
 .then(()=> console.log("Connected to MongoDB"))
 .then(()=>{
     app.listen(5000);
