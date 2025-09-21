@@ -17,6 +17,58 @@ function NewReservation() {
     company_name: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({
+    email: '',
+    phone: ''
+  });
+
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      return 'Email is required';
+    }
+    if (!emailRegex.test(email)) {
+      return 'Please enter a valid email address';
+    }
+    return '';
+  };
+
+  const validatePhone = (phone) => {
+    // Remove all non-digit characters
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    if (!phone) {
+      return 'Phone number is required';
+    }
+    
+    // Check for Sri Lankan phone number formats
+    // +94XXXXXXXXX (12 digits) or 0XXXXXXXXX (10 digits)
+    if (cleanPhone.length === 12 && cleanPhone.startsWith('94')) {
+      return ''; // Valid +94 format
+    }
+    if (cleanPhone.length === 10 && cleanPhone.startsWith('0')) {
+      return ''; // Valid 0XXXXXXXXX format
+    }
+    
+    return 'Please enter a valid Sri Lankan phone number (0XXXXXXXXX or +94XXXXXXXXX)';
+  };
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setCustomerInfo({...customerInfo, customer_email: email});
+    
+    const error = validateEmail(email);
+    setValidationErrors({...validationErrors, email: error});
+  };
+
+  const handlePhoneChange = (e) => {
+    const phone = e.target.value;
+    setCustomerInfo({...customerInfo, customer_phone: phone});
+    
+    const error = validatePhone(phone);
+    setValidationErrors({...validationErrors, phone: error});
+  };
 
   // Fetch cinemas from API
   useEffect(() => {
@@ -183,6 +235,34 @@ function NewReservation() {
     return selectedSlots.reduce((sum, slot) => sum + slot.price, 0);
   };
 
+  // Calculate advertisement period and total cost
+  const calculateAdvertisementDetails = () => {
+    if (!selectedMovie || !selectedCinema || selectedSlots.length === 0) return null;
+
+    // Find the movie data to get end date
+    const movieData = selectedCinema.ongoing_movies[selectedMovie.key];
+    if (!movieData || !movieData.end_date) return null;
+
+    const currentDate = new Date();
+    const endDate = new Date(movieData.end_date);
+    
+    // Calculate number of days
+    const timeDiff = endDate.getTime() - currentDate.getTime();
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+    // Calculate total cost per slot (price × days)
+    const dailySlotCost = selectedSlots.reduce((sum, slot) => sum + slot.price, 0);
+    const totalCost = dailySlotCost * daysDiff;
+
+    return {
+      startDate: currentDate,
+      endDate: endDate,
+      days: daysDiff,
+      dailySlotCost: dailySlotCost,
+      totalCost: totalCost
+    };
+  };
+
   const handleDownloadDetails = () => {
     // Create HTML content for PDF
     const htmlContent = `
@@ -329,9 +409,39 @@ function NewReservation() {
           </table>
         </div>
 
+        <div class="section">
+          <h2>Advertisement Period Calculation</h2>
+          ${(() => {
+            const adDetails = calculateAdvertisementDetails();
+            if (!adDetails) return '<p>No advertisement details available</p>';
+            
+            return `
+              <div class="info-row">
+                <div class="info-label">Period:</div>
+                <div class="info-value">${adDetails.startDate.toLocaleDateString()} to ${adDetails.endDate.toLocaleDateString()}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">Duration:</div>
+                <div class="info-value">${adDetails.days} days</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">Daily:</div>
+                <div class="info-value">LKR ${adDetails.dailySlotCost.toLocaleString()}</div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">Calculation:</div>
+                <div class="info-value">LKR ${adDetails.dailySlotCost.toLocaleString()} × ${adDetails.days} days</div>
+              </div>
+            `;
+          })()}
+        </div>
+
         <div class="total-section">
-          <h3>Total Amount</h3>
-          <div class="amount">LKR ${calculateTotal().toLocaleString()}</div>
+          <h3>Sub Total</h3>
+          <div class="amount">LKR ${(() => {
+            const adDetails = calculateAdvertisementDetails();
+            return adDetails ? adDetails.totalCost.toLocaleString() : calculateTotal().toLocaleString();
+          })()}</div>
         </div>
 
         <div class="footer">
@@ -361,6 +471,20 @@ function NewReservation() {
       if (!customerInfo.customer_name || !customerInfo.customer_email || 
           !customerInfo.customer_phone || !customerInfo.company_name) {
         alert('Please fill in all customer information fields.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Validate email and phone format
+      const emailError = validateEmail(customerInfo.customer_email);
+      const phoneError = validatePhone(customerInfo.customer_phone);
+      
+      if (emailError || phoneError) {
+        setValidationErrors({
+          email: emailError,
+          phone: phoneError
+        });
+        alert('Please fix the validation errors before proceeding.');
         setIsSubmitting(false);
         return;
       }
@@ -643,11 +767,38 @@ function NewReservation() {
                       {selectedSlots.length > 0 && (
                         <div className="total-summary">
                           <div className="total-amount">
-                            <span className="total-label">Total:</span>
+                            <span className="total-label">Daily:</span>
                             <span className="total-value">LKR {calculateTotal()}</span>
                           </div>
                         </div>
                       )}
+                    </div>
+                  );
+                })()}
+
+                {/* Advertisement Period Calculation */}
+                {selectedSlots.length > 0 && (() => {
+                  const adDetails = calculateAdvertisementDetails();
+                  if (!adDetails) return null;
+                  
+                  return (
+                    <div className="advertisement-calculation">
+                      <h4>Advertisement Period Calculation</h4>
+                      <div className="calculation-details">
+                        <p>
+                          <strong>Advertisement runs from:</strong> {adDetails.startDate.toLocaleDateString()} 
+                          <strong> to </strong> {adDetails.endDate.toLocaleDateString()}
+                        </p>
+                        <p>
+                          <strong>Total period:</strong> {adDetails.days} days
+                        </p>
+                        <p>
+                          <strong>Daily slot cost:</strong> LKR {adDetails.dailySlotCost.toLocaleString()} × {adDetails.days} days
+                        </p>
+                        <p className="total-calculation">
+                          <strong>Sub Total: LKR {adDetails.totalCost.toLocaleString()}</strong>
+                        </p>
+                      </div>
                     </div>
                   );
                 })()}
@@ -689,9 +840,36 @@ function NewReservation() {
                         </div>
                       ))}
                     </div>
-                    <p className="total-amount-display"><strong>Total Amount: LKR {calculateTotal()}</strong></p>
+                    <p className="total-amount-display"><strong>Daily: LKR {calculateTotal()}</strong></p>
                   </div>
                 </div>
+
+                {/* Advertisement Period Calculation for Confirmation */}
+                {(() => {
+                  const adDetails = calculateAdvertisementDetails();
+                  if (!adDetails) return null;
+                  
+                  return (
+                    <div className="advertisement-calculation">
+                      <h4>Advertisement Period Calculation</h4>
+                      <div className="calculation-details">
+                        <p>
+                          <strong>Advertisement runs from:</strong> {adDetails.startDate.toLocaleDateString()} 
+                          <strong> to </strong> {adDetails.endDate.toLocaleDateString()}
+                        </p>
+                        <p>
+                          <strong>Total period:</strong> {adDetails.days} days
+                        </p>
+                        <p>
+                          <strong>Daily slot cost:</strong> LKR {adDetails.dailySlotCost.toLocaleString()} × {adDetails.days} days
+                        </p>
+                        <p className="total-calculation">
+                          <strong>Sub Total: LKR {adDetails.totalCost.toLocaleString()}</strong>
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Customer Information Form */}
                 <div className="customer-info-form">
@@ -713,9 +891,13 @@ function NewReservation() {
                         type="email"
                         id="customer_email"
                         value={customerInfo.customer_email}
-                        onChange={(e) => setCustomerInfo({...customerInfo, customer_email: e.target.value})}
+                        onChange={handleEmailChange}
+                        className={validationErrors.email ? 'error' : ''}
                         required
                       />
+                      {validationErrors.email && (
+                        <span className="error-message">{validationErrors.email}</span>
+                      )}
                     </div>
                   </div>
                   <div className="form-row">
@@ -725,9 +907,14 @@ function NewReservation() {
                         type="tel"
                         id="customer_phone"
                         value={customerInfo.customer_phone}
-                        onChange={(e) => setCustomerInfo({...customerInfo, customer_phone: e.target.value})}
+                        onChange={handlePhoneChange}
+                        placeholder="0XXXXXXXXX or +94XXXXXXXXX"
+                        className={validationErrors.phone ? 'error' : ''}
                         required
                       />
+                      {validationErrors.phone && (
+                        <span className="error-message">{validationErrors.phone}</span>
+                      )}
                     </div>
                     <div className="form-group">
                       <label htmlFor="company_name">Company Name *</label>

@@ -253,18 +253,18 @@
 .total-summary {
   grid-column: 1 / -1;
   background: #f8f9fa;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
   border: 1px solid #e9ecef;
 }
 
 .total-amount {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   margin: 0;
-  color: #007bff;
+  color: #333;
 }
 
 .total-label {
@@ -480,6 +480,56 @@
   margin: 20px 0;
 }
 
+/* Advertisement Calculation Styles */
+.advertisement-calculation {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.advertisement-calculation h4 {
+  color: #282c34;
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.calculation-details p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.total-calculation {
+  background: #e63946;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+  border: 3px solid #c82333;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+  }
+}
+
 .slot-card {
   background: white;
   border: 2px solid var(--light-gray-secondary);
@@ -677,14 +727,15 @@
 }
 
 .total-amount-display {
-  background: #e63946;
-  color: white;
+  background: #f8f9fa;
+  color: #333;
   padding: 15px;
   border-radius: 8px;
   text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  margin: 20px 0 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px 0 0 0;
+  border: 1px solid #e9ecef;
 }
 
 .confirm-reservation-btn {
@@ -1954,5 +2005,104 @@
   .confirmation-actions a {
     width: 100%;
     max-width: 300px;
+  }
+}
+
+/* Validation Styles */
+.form-group input.error {
+  border: 2px solid #e63946 !important;
+  background-color: #ffeaea !important;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1) !important;
+}
+
+.form-group input.error:focus {
+  border-color: #e63946 !important;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2) !important;
+  outline: none !important;
+}
+
+.error-message {
+  display: block;
+  color: #e63946;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 5px;
+  padding-left: 5px;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Success state for valid inputs */
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: #28a745 !important;
+  background-color: #f8fff9 !important;
+}
+
+/* Phone number placeholder styling */
+.form-group input[type="tel"]::placeholder {
+  color: #6c757d;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Focus states for better UX */
+.form-group input:focus {
+  border-color: #61dafb !important;
+  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.1) !important;
+  outline: none !important;
+  transition: all 0.3s ease;
+}
+
+/* Form group spacing for error messages */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Label styling for required fields */
+.form-group label {
+  font-weight: 600;
+  color: #282c34;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-group label::after {
+  content: ' *';
+  color: #e63946;
+  font-weight: bold;
+}
+
+/* Input styling improvements */
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.form-group input:hover {
+  border-color: #61dafb;
+  box-shadow: 0 2px 8px rgba(97, 218, 251, 0.1);
+}
+
+/* Responsive validation messages */
+@media (max-width: 768px) {
+  .error-message {
+    font-size: 11px;
+    margin-top: 3px;
+  }
+  
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 13px;
   }
 }
