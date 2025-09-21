@@ -50,14 +50,6 @@ const AnimatedHero = () => {
     }
   }, []);
 
-  // Debug: Check if video loads
-  useEffect(() => {
-    const iframe = document.querySelector('.hero-video');
-    if (iframe) {
-      iframe.onload = () => console.log('YouTube video loaded successfully');
-      iframe.onerror = () => console.log('YouTube video failed to load');
-    }
-  }, []);
 
   const handleHeroDownClick = (e) => {
     e.preventDefault();

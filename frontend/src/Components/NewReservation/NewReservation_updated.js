@@ -15,19 +15,15 @@ function NewReservation() {
   useEffect(() => {
     const fetchCinemas = async () => {
       try {
-        console.log('Fetching cinemas...');
         setLoading(true);
         const response = await fetch('http://localhost:5000/api/cinemas');
         const data = await response.json();
         
         if (data.success) {
-          console.log('Cinemas loaded:', data.data.length);
           setCinemas(data.data);
         } else {
-          console.error('Error fetching cinemas:', data.message);
         }
       } catch (error) {
-        console.error('Error fetching cinemas:', error);
       } finally {
         setLoading(false);
       }
@@ -41,14 +37,12 @@ function NewReservation() {
     setSelectedMovie(null);
     setSelectedSlots([]);
     setCurrentStep(2);
-    console.log('Selected cinema:', cinema.cinema_name);
   };
 
   const handleMovieSelect = (movieKey, movieName) => {
     setSelectedMovie({ key: movieKey, name: movieName });
     setSelectedSlots([]);
     setCurrentStep(3);
-    console.log('Selected movie:', movieName);
   };
 
   const handleSlotSelect = (slot) => {
@@ -131,12 +125,6 @@ Thank you for choosing D&S Creations!
   const handleConfirmReservation = async () => {
     try {
       // Here you would typically send the reservation to your backend
-      console.log('Confirming reservation:', {
-        cinema: selectedCinema?.cinema_name,
-        movie: selectedMovie?.name,
-        slots: selectedSlots,
-        total: calculateTotal()
-      });
       
       // For now, just show an alert
       alert('Reservation confirmed successfully! You will receive a confirmation email shortly.');
@@ -147,7 +135,6 @@ Thank you for choosing D&S Creations!
       setSelectedSlots([]);
       setCurrentStep(1);
     } catch (error) {
-      console.error('Error confirming reservation:', error);
       alert('There was an error confirming your reservation. Please try again.');
     }
   };

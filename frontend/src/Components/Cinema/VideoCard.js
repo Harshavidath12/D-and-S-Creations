@@ -1,8 +1,6 @@
 import React from "react";
 
 export const VideoCard = ({ video, onSelect }) => {
-  console.log('🎬 VideoCard rendered with video:', video);
-  console.log('🎫 Video slotInfo:', video.slotInfo);
   
   // Function to extract YouTube video ID from URL
   const getYouTubeVideoId = (url) => {

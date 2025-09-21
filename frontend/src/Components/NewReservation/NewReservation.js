@@ -82,52 +82,14 @@ function NewReservation() {
   useEffect(() => {
     const fetchCinemas = async () => {
       try {
-        console.log('🚀 Fetching cinemas from API...');
         setLoading(true);
         const response = await fetch('http://localhost:5000/api/cinemas');
-        console.log('📡 API Response status:', response.status);
         
         const data = await response.json();
-        console.log('📊 API Response data:', data);
-        
         if (data.success) {
-          console.log('✅ Successfully fetched cinemas:', data.data.length);
-          console.log('🏢 Cinema details:', data.data);
-          
-          // Log slot information for each cinema
-          data.data.forEach((cinema, index) => {
-            console.log(`\n📽️ Cinema ${index + 1}: ${cinema.cinema_name}`);
-            console.log(`📍 Location: ${cinema.cinema_location}`);
-            
-            if (cinema.movie_slot_pricing) {
-              Object.keys(cinema.movie_slot_pricing).forEach(movieKey => {
-                const pricing = cinema.movie_slot_pricing[movieKey];
-                console.log(`🎬 ${movieKey}:`, {
-                  starting_price: pricing.starting_price,
-                  interval_price: pricing.interval_price,
-                  ending_price: pricing.ending_price,
-                  slots_count: pricing.slots?.length || 0
-                });
-                
-                if (pricing.slots) {
-                  const startingSlots = pricing.slots.filter(s => s.slot_type === 'starting');
-                  const intervalSlots = pricing.slots.filter(s => s.slot_type === 'interval');
-                  const endingSlots = pricing.slots.filter(s => s.slot_type === 'ending');
-                  
-                  console.log(`  🎬 Starting slots: ${startingSlots.length}`, startingSlots);
-                  console.log(`  ⏰ Interval slots: ${intervalSlots.length}`, intervalSlots);
-                  console.log(`  🏁 Ending slots: ${endingSlots.length}`, endingSlots);
-                }
-              });
-            }
-          });
-          
           setCinemas(data.data);
-        } else {
-          console.error('❌ Failed to fetch cinemas:', data.message);
         }
       } catch (error) {
-        console.error('💥 Error fetching cinemas:', error);
       } finally {
         setLoading(false);
       }
@@ -137,11 +99,6 @@ function NewReservation() {
   }, []);
 
   const handleCinemaSelect = (cinema) => {
-    console.log('🎬 Cinema selected:', cinema.cinema_name);
-    console.log('📍 Cinema location:', cinema.cinema_location);
-    console.log('🎫 Available movies:', cinema.ongoing_movies);
-    console.log('💰 Movie pricing:', cinema.movie_slot_pricing);
-    
     setSelectedCinema(cinema);
     setSelectedMovie(null);
     setSelectedSlots([]);
@@ -149,13 +106,8 @@ function NewReservation() {
   };
 
   const handleMovieSelect = (movieKey, movieName) => {
-    console.log('🎬 Movie selected:', movieName);
-    console.log('🔑 Movie key:', movieKey);
-    console.log('📽️ Selected cinema:', selectedCinema?.cinema_name);
-    
     // Get slot info for this movie
     const slotInfo = getMovieSlotInfo(movieKey);
-    console.log('🎫 Slot info for selected movie:', slotInfo);
     
     setSelectedMovie({ key: movieKey, name: movieName });
     setSelectedSlots([]);
@@ -185,37 +137,21 @@ function NewReservation() {
   };
 
   const getMovieSlotInfo = (movieKey) => {
-    console.log(`🔍 Getting slot info for movie: ${movieKey}`);
-    console.log(`📽️ Selected cinema:`, selectedCinema?.cinema_name);
-    
     if (!selectedCinema) {
-      console.log('❌ No cinema selected');
       return null;
     }
     
     const moviePricing = selectedCinema.movie_slot_pricing?.[movieKey];
-    console.log(`💰 Movie pricing for ${movieKey}:`, moviePricing);
-    
     const movieSlots = moviePricing?.slots || [];
-    console.log(`🎫 Total slots for ${movieKey}:`, movieSlots.length);
-    console.log(`📊 Slot details:`, movieSlots);
     
     const starting = movieSlots.filter(slot => slot.slot_type === 'starting');
     const interval = movieSlots.filter(slot => slot.slot_type === 'interval');
     const ending = movieSlots.filter(slot => slot.slot_type === 'ending');
     
-    console.log(`🎬 Starting slots:`, starting.length);
-    console.log(`⏰ Interval slots:`, interval.length);
-    console.log(`🏁 Ending slots:`, ending.length);
-    
     // Calculate available (non-reserved) slots
     const availableStarting = starting.filter(slot => !slot.is_reserved);
     const availableInterval = interval.filter(slot => !slot.is_reserved);
     const availableEnding = ending.filter(slot => !slot.is_reserved);
-    
-    console.log(`✅ Available starting:`, availableStarting.length);
-    console.log(`✅ Available interval:`, availableInterval.length);
-    console.log(`✅ Available ending:`, availableEnding.length);
     
     const result = {
       starting: starting.length > 0 ? { 
@@ -235,7 +171,6 @@ function NewReservation() {
       } : null
     };
     
-    console.log(`📋 Final slot info result:`, result);
     return result;
   };
 
@@ -518,8 +453,6 @@ function NewReservation() {
         notes: 'Reservation made through online booking system'
       };
 
-      console.log('Sending reservation data:', reservationData);
-      console.log('Selected slots:', selectedSlots);
 
       // Send reservation to backend
       const response = await fetch('http://localhost:5000/api/reservations', {
@@ -531,7 +464,6 @@ function NewReservation() {
       });
 
       const result = await response.json();
-      console.log('Backend response:', result);
 
       if (result.success) {
         alert('Reservation confirmed successfully!');
@@ -551,7 +483,6 @@ function NewReservation() {
         alert(`Error: ${result.message}`);
       }
     } catch (error) {
-      console.error('Error confirming reservation:', error);
       alert('There was an error confirming your reservation. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -713,10 +644,6 @@ function NewReservation() {
                 
                 {(() => {
                   const slots = getAvailableSlots();
-                  console.log('🎫 Available slots for selected movie:', slots);
-                  console.log('🎬 Starting slots:', slots.starting);
-                  console.log('⏰ Interval slots:', slots.interval);
-                  console.log('🏁 Ending slots:', slots.ending);
                   return (
                     <div className="compact-slots-selection">
                       {/* Starting Slots Card */}

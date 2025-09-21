@@ -91,11 +91,9 @@ function MyReservations() {
           }, {});
           setGroupedReservations(grouped);
         } else {
-          console.error('Error fetching cinemas:', data.message);
           setReservations([]);
         }
       } catch (error) {
-        console.error('Error fetching cinemas:', error);
         setReservations([]);
       } finally {
         setLoading(false);
@@ -150,7 +148,6 @@ function MyReservations() {
         alert('Error cancelling reservation: ' + data.message);
       }
     } catch (error) {
-      console.error('Error cancelling reservation:', error);
       alert('Error cancelling reservation. Please try again.');
     }
   };

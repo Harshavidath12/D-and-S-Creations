@@ -67,7 +67,6 @@ const CinemaManagement = () => {
         showNotification('Failed to fetch cinemas', 'error');
       }
     } catch (error) {
-      console.error('Error fetching cinemas:', error);
       showNotification('Error fetching cinemas', 'error');
     } finally {
       setLoading(false);
@@ -171,7 +170,6 @@ const CinemaManagement = () => {
           showNotification('Failed to delete cinema', 'error');
         }
       } catch (error) {
-        console.error('Error deleting cinema:', error);
         showNotification('Error deleting cinema', 'error');
       }
     }
@@ -337,7 +335,6 @@ const CinemaManagement = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log("🔍 Form data being sent:", JSON.stringify(formData, null, 2));
       
       const url = editingCinema 
         ? `http://localhost:5000/api/cinemas/${editingCinema._id}`
@@ -391,7 +388,6 @@ const CinemaManagement = () => {
         showNotification(data.message || 'Failed to save cinema', 'error');
       }
     } catch (error) {
-      console.error('Error saving cinema:', error);
       showNotification('Error saving cinema', 'error');
     }
   };
