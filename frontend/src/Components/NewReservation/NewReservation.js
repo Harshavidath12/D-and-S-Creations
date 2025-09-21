@@ -372,7 +372,7 @@ Thank you for choosing D&S Creations!
                   <p><strong>Location:</strong> {selectedCinema.cinema_location}</p>
                 </div>
                 
-                <div className="movies-grid">
+                <div className="movie-grid">
                   <h3>Available Movies:</h3>
                   {selectedCinema.ongoing_movies && Object.entries(selectedCinema.ongoing_movies).map(([key, movie]) => (
                     movie && movie.name ? (
@@ -384,24 +384,6 @@ Thank you for choosing D&S Creations!
                           slotInfo: getMovieSlotInfo(key)
                         }}
                         onSelect={() => handleMovieSelect(key, movie.name)}
-                        style={{
-                          marginBottom: '30px',
-                          fontWeight: '100',
-                          fontSize: '18px',
-                          color: '#e63946',
-                          width: '100%',
-                          height: '45px',
-                          textAlign: 'center',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          textDecoration: 'none',
-                          border: 'none',
-                          borderRadius: '5px',
-                          backgroundColor: '#6c757d',
-                          transition: '0.2s ease-in-out',
-                          cursor: 'pointer'
-                        }}
                       />
                     ) : null
                   ))}

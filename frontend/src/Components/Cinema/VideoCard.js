@@ -44,67 +44,62 @@ export const VideoCard = ({ video, onSelect }) => {
           <p className="video-subtitle">NEW OFFICIAL TRAILER</p>
         </div>
       </div>
-      <div className="video-content">
-        <div className="slot-info">
-          {video.slotInfo && (
-            <div className="slot-categories">
-              {video.slotInfo.starting && (
-                <div className="slot-category">
-                  <div className="category-info">
-                    <span className="category-label">Starting</span>
-                    <span className="slot-count">
-                      {video.slotInfo.starting.count} of {video.slotInfo.starting.total} available
-                    </span>
-                  </div>
-                  <span className="slot-price">LKR {video.slotInfo.starting.price}</span>
+      
+      {/* Pricing Card - Similar to the image design */}
+      <div className="pricing-card">
+        {video.slotInfo && (
+          <>
+            {video.slotInfo.starting && (
+              <div className="pricing-item">
+                <div className="pricing-label">STARTING</div>
+                <div className="pricing-details">
+                  <span className="availability-badge">
+                    {video.slotInfo.starting.count} of {video.slotInfo.starting.total} available
+                  </span>
+                  <span className="price-badge">
+                    LKR {video.slotInfo.starting.price.toLocaleString()}
+                  </span>
                 </div>
-              )}
-              {video.slotInfo.interval && (
-                <div className="slot-category">
-                  <div className="category-info">
-                    <span className="category-label">Interval</span>
-                    <span className="slot-count">
-                      {video.slotInfo.interval.count} of {video.slotInfo.interval.total} available
-                    </span>
-                  </div>
-                  <span className="slot-price">LKR {video.slotInfo.interval.price}</span>
+              </div>
+            )}
+            {video.slotInfo.interval && (
+              <div className="pricing-item">
+                <div className="pricing-label">INTERVAL</div>
+                <div className="pricing-details">
+                  <span className="availability-badge">
+                    {video.slotInfo.interval.count} of {video.slotInfo.interval.total} available
+                  </span>
+                  <span className="price-badge">
+                    LKR {video.slotInfo.interval.price.toLocaleString()}
+                  </span>
                 </div>
-              )}
-              {video.slotInfo.ending && (
-                <div className="slot-category">
-                  <div className="category-info">
-                    <span className="category-label">Ending</span>
-                    <span className="slot-count">
-                      {video.slotInfo.ending.count} of {video.slotInfo.ending.total} available
-                    </span>
-                  </div>
-                  <span className="slot-price">LKR {video.slotInfo.ending.price}</span>
+              </div>
+            )}
+            {video.slotInfo.ending && (
+              <div className="pricing-item">
+                <div className="pricing-label">ENDING</div>
+                <div className="pricing-details">
+                  <span className="availability-badge">
+                    {video.slotInfo.ending.count} of {video.slotInfo.ending.total} available
+                  </span>
+                  <span className="price-badge">
+                    LKR {video.slotInfo.ending.price.toLocaleString()}
+                  </span>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-        <button className="choose-video-btn" onClick={handleButtonClick} style={{
-          marginBottom: '30px',
-          fontWeight: '100',
-          fontSize: '18px',
-          color: '#e63946',
-          width: '100%',
-          height: '45px',
-          textAlign: 'center',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textDecoration: 'none',
-          border: 'none',
-          borderRadius: '5px',
-          backgroundColor: '#6c757d',
-          transition: '0.2s ease-in-out',
-          cursor: 'pointer'
-        }}>
-          Select This Movie
-        </button>
+              </div>
+            )}
+          </>
+        )}
+        {(!video.slotInfo || (!video.slotInfo.starting && !video.slotInfo.interval && !video.slotInfo.ending)) && (
+          <div className="no-slots-available">
+            <p>No slot information available</p>
+          </div>
+        )}
       </div>
+      
+      <button className="choose-video-btn" onClick={handleButtonClick}>
+        Select This Movie
+      </button>
     </div>
   );
 };
