@@ -318,8 +318,8 @@ cinemaSchema.pre('save', function(next) {
     }
     
     // Generate slots for all movies based on their pricing
+    // Only regenerate slots if this is a new document or if pricing has changed
     if (this.movie_slot_pricing && this.movie_slot_pricing.movie_1) {
-        console.log("🔍 Processing movie slot pricing:", JSON.stringify(this.movie_slot_pricing, null, 2));
         const movies = ['movie_1', 'movie_2', 'movie_3', 'movie_4'];
         
         movies.forEach(movieKey => {
@@ -329,40 +329,56 @@ cinemaSchema.pre('save', function(next) {
                 const intervalPrice = movie.interval_price || 0;
                 const endingPrice = movie.ending_price || 0;
                 
-                console.log(`💰 Generating slots for ${movieKey}:`, { startingPrice, intervalPrice, endingPrice });
+                // Only regenerate slots if:
+                // 1. This is a new document (isNew)
+                // 2. The slots array is empty or doesn't exist
+                // 3. The pricing has changed (check if slots have different prices)
+                const shouldRegenerate = this.isNew || 
+                    !movie.slots || 
+                    movie.slots.length === 0 ||
+                    (movie.slots.length > 0 && 
+                     (movie.slots[0].price !== startingPrice || 
+                      movie.slots[5]?.price !== intervalPrice || 
+                      movie.slots[10]?.price !== endingPrice));
                 
-                // Generate slots with the correct prices
-                movie.slots = [
-                    // Starting slots (1-5)
-                    ...Array.from({ length: 5 }, (_, i) => ({
-                        slot_number: i + 1,
-                        slot_type: 'starting',
-                        price: startingPrice,
-                        is_reserved: false,
-                        reserved_by: "",
-                        reserved_at: null
-                    })),
-                    // Interval slots (6-10)
-                    ...Array.from({ length: 5 }, (_, i) => ({
-                        slot_number: i + 6,
-                        slot_type: 'interval',
-                        price: intervalPrice,
-                        is_reserved: false,
-                        reserved_by: "",
-                        reserved_at: null
-                    })),
-                    // Ending slots (11-15)
-                    ...Array.from({ length: 5 }, (_, i) => ({
-                        slot_number: i + 11,
-                        slot_type: 'ending',
-                        price: endingPrice,
-                        is_reserved: false,
-                        reserved_by: "",
-                        reserved_at: null
-                    }))
-                ];
-                
-                console.log(`✅ Generated ${movie.slots.length} slots for ${movieKey}`);
+                if (shouldRegenerate) {
+                    console.log(`💰 Generating slots for ${movieKey}:`, { startingPrice, intervalPrice, endingPrice });
+                    
+                    // Generate slots with the correct prices
+                    movie.slots = [
+                        // Starting slots (1-5)
+                        ...Array.from({ length: 5 }, (_, i) => ({
+                            slot_number: i + 1,
+                            slot_type: 'starting',
+                            price: startingPrice,
+                            is_reserved: false,
+                            reserved_by: "",
+                            reserved_at: null
+                        })),
+                        // Interval slots (1-5)
+                        ...Array.from({ length: 5 }, (_, i) => ({
+                            slot_number: i + 1,
+                            slot_type: 'interval',
+                            price: intervalPrice,
+                            is_reserved: false,
+                            reserved_by: "",
+                            reserved_at: null
+                        })),
+                        // Ending slots (1-5)
+                        ...Array.from({ length: 5 }, (_, i) => ({
+                            slot_number: i + 1,
+                            slot_type: 'ending',
+                            price: endingPrice,
+                            is_reserved: false,
+                            reserved_by: "",
+                            reserved_at: null
+                        }))
+                    ];
+                    
+                    console.log(`✅ Generated ${movie.slots.length} slots for ${movieKey}`);
+                } else {
+                    console.log(`ℹ️ Keeping existing slots for ${movieKey} (no pricing changes detected)`);
+                }
             }
         });
     }
