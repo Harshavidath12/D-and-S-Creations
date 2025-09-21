@@ -373,6 +373,7 @@ function NewReservation() {
         show_date: new Date().toISOString().split('T')[0], // Today's date
         show_time: '19:00', // Default show time
         advertisement_slots: selectedSlots.map(slot => ({
+          slot_id: slot.slot_id,
           slot_type: slot.slot_type,
           slot_number: slot.slot_number,
           price: slot.price
@@ -386,6 +387,7 @@ function NewReservation() {
       };
 
       console.log('Sending reservation data:', reservationData);
+      console.log('Selected slots:', selectedSlots);
 
       // Send reservation to backend
       const response = await fetch('http://localhost:5000/api/reservations', {
@@ -397,6 +399,7 @@ function NewReservation() {
       });
 
       const result = await response.json();
+      console.log('Backend response:', result);
 
       if (result.success) {
         alert('Reservation confirmed successfully! You will receive a confirmation email shortly.');
@@ -569,7 +572,7 @@ function NewReservation() {
                               onClick={() => handleSlotSelect({
                                 slot_id: `starting_${slot.slot_number}`,
                                 slot_type: 'starting',
-                                slot_number: slot.slot_number,
+                                slot_number: parseInt(slot.slot_number),
                                 price: slot.price
                               })}
                             >
@@ -596,7 +599,7 @@ function NewReservation() {
                               onClick={() => handleSlotSelect({
                                 slot_id: `interval_${slot.slot_number}`,
                                 slot_type: 'interval',
-                                slot_number: slot.slot_number,
+                                slot_number: parseInt(slot.slot_number),
                                 price: slot.price
                               })}
                             >
@@ -623,7 +626,7 @@ function NewReservation() {
                               onClick={() => handleSlotSelect({
                                 slot_id: `ending_${slot.slot_number}`,
                                 slot_type: 'ending',
-                                slot_number: slot.slot_number,
+                                slot_number: parseInt(slot.slot_number),
                                 price: slot.price
                               })}
                             >
