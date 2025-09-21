@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './nav.css'
 import {Link} from "react-router-dom";
 
 function Nav() {
   const [isCinemaDropdownOpen, setIsCinemaDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleCinemaDropdown = () => {
     setIsCinemaDropdownOpen(!isCinemaDropdownOpen);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsCinemaDropdownOpen(false);
+      }
+    };
+
+    if (isCinemaDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isCinemaDropdownOpen]);
 
   return (
     <div>
@@ -19,7 +37,7 @@ function Nav() {
         </li>
         
         {/* Cinema Dropdown */}
-        <li className="home-ll dropdown-container">
+        <li className="home-ll dropdown-container" ref={dropdownRef}>
           <div className="dropdown-trigger" onClick={toggleCinemaDropdown}>
             <h1>Cinema</h1>
             <span className="dropdown-arrow">▼</span>
@@ -27,12 +45,12 @@ function Nav() {
           {isCinemaDropdownOpen && (
             <ul className="dropdown-menu">
               <li className="dropdown-item">
-                <Link to="/my-reservations" className="dropdown-link">
+                <Link to="/my-reservations" className="dropdown-link" onClick={() => setIsCinemaDropdownOpen(false)}>
                   My Reservations
                 </Link>
               </li>
               <li className="dropdown-item">
-                <Link to="/new-reservation" className="dropdown-link">
+                <Link to="/new-reservation" className="dropdown-link" onClick={() => setIsCinemaDropdownOpen(false)}>
                   New Reservation
                 </Link>
               </li>
