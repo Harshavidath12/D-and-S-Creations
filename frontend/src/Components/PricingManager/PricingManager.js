@@ -4,38 +4,45 @@ import Nav from "../Nav/Nav";
 import "./PricingManager.css";
 
 const PricingManager = () => {
-  const [pricing, setPricing] = useState({
-    Outdoor: { daily: 0, extraHour: 0 },
-    Indoor: { daily: 0, extraHour: 0 },
-    P3: { daily: 0, extraHour: 0 },
-    P6: { daily: 0, extraHour: 0 },
-  });
+  const [pricing, setPricing] = useState([]);
 
   // Fetch current pricing
   const fetchPricing = async () => {
-    const res = await axios.get("http://localhost:5000/pricing");
-    setPricing(res.data);
+    try {
+      const res = await axios.get("http://localhost:5000/pricing");
+      setPricing(res.data);
+    } catch (err) {
+      console.error("Error fetching pricing:", err);
+    }
   };
 
   useEffect(() => {
     fetchPricing();
   }, []);
 
-  // Handle price updates
-  const handleChange = (e, boardType, field) => {
-    setPricing({
-      ...pricing,
-      [boardType]: {
-        ...pricing[boardType],
-        [field]: e.target.value,
-      },
-    });
+  // Handle field change
+  const handleChange = (e, index, field) => {
+    const updated = [...pricing];
+    updated[index][field] = e.target.value;
+    setPricing(updated);
   };
 
+  // Save updates to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put("http://localhost:5000/pricing", pricing);
-    alert("Pricing updated successfully!");
+    try {
+      for (let item of pricing) {
+        await axios.put(`http://localhost:5000/pricing/${item._id}`, {
+          dailyRate: item.dailyRate,
+          hourlyRate: item.hourlyRate,
+        });
+      }
+      alert("Pricing updated successfully!");
+      fetchPricing(); // refresh
+    } catch (err) {
+      console.error("Error updating pricing:", err);
+      alert("Failed to update pricing.");
+    }
   };
 
   return (
@@ -44,20 +51,20 @@ const PricingManager = () => {
       <div className="pricing-container">
         <h1>LED Board Pricing Management</h1>
         <form onSubmit={handleSubmit}>
-          {Object.keys(pricing).map((type) => (
-            <div className="pricing-card" key={type}>
-              <h2>{type} LED Board</h2>
+          {pricing.map((item, index) => (
+            <div className="pricing-card" key={item._id}>
+              <h2>{item.boardType}</h2>
               <label>Daily Rate (LKR)</label>
               <input
                 type="number"
-                value={pricing[type].daily}
-                onChange={(e) => handleChange(e, type, "daily")}
+                value={item.dailyRate}
+                onChange={(e) => handleChange(e, index, "dailyRate")}
               />
               <label>Extra Hour Rate (LKR)</label>
               <input
                 type="number"
-                value={pricing[type].extraHour}
-                onChange={(e) => handleChange(e, type, "extraHour")}
+                value={item.hourlyRate}
+                onChange={(e) => handleChange(e, index, "hourlyRate")}
               />
             </div>
           ))}
