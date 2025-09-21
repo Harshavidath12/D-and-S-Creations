@@ -135,7 +135,7 @@ function LedBoard() {
       </div>
 
       <div className="ledboard-categories">
-        <h2>LED Board Categories</h2>
+        <h2>LED Boards Categories</h2>
         <div className="categories-grid">
           {Object.keys(pricing).map((boardType) => (
             <div className="category-card" key={boardType}>
