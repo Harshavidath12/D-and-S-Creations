@@ -206,7 +206,7 @@ function LedBoard() {
           </select>
 
           <div className="cost-display">
-            <strong>Estimated Cost:</strong> {cost > 0 ? `LKR ${cost}` : "Select type, quantity, and dates"}
+            <strong>Estimated Costs:</strong> {cost > 0 ? `LKR ${cost}` : "Select type, quantity, and dates"}
           </div>
 
           <button type="submit" className="submit-btn">Book Now</button>
