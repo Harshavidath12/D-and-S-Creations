@@ -21,6 +21,7 @@ function NewReservation() {
     email: '',
     phone: ''
   });
+  const [cinemaSearchTerm, setCinemaSearchTerm] = useState('');
 
   // Validation functions
   const validateEmail = (email) => {
@@ -69,6 +70,12 @@ function NewReservation() {
     const error = validatePhone(phone);
     setValidationErrors({...validationErrors, phone: error});
   };
+
+  // Filter cinemas based on search term
+  const filteredCinemas = cinemas.filter(cinema => 
+    cinema.cinema_name.toLowerCase().includes(cinemaSearchTerm.toLowerCase()) ||
+    cinema.cinema_location.toLowerCase().includes(cinemaSearchTerm.toLowerCase())
+  );
 
   // Fetch cinemas from API
   useEffect(() => {
@@ -589,9 +596,37 @@ function NewReservation() {
                   </div>
                 ) : (
                   <div className="cinemas-grid">
-                    <h3>Available Cinemas ({cinemas.length})</h3>
+                    <div className="cinema-search-container">
+                      <h3>Available Cinemas ({filteredCinemas.length})</h3>
+                      <div className="search-box">
+                        <i className="fa fa-search"></i>
+                        <input
+                          type="text"
+                          placeholder="Search cinemas by name or location..."
+                          value={cinemaSearchTerm}
+                          onChange={(e) => setCinemaSearchTerm(e.target.value)}
+                          className="cinema-search-input"
+                        />
+                        {cinemaSearchTerm && (
+                          <button 
+                            className="clear-search-btn"
+                            onClick={() => setCinemaSearchTerm('')}
+                            title="Clear search"
+                          >
+                            <i className="fa fa-times"></i>
+                          </button>
+                        )}
+                      </div>
+                    </div>
                     <div className="cinema-cards">
-                      {cinemas.map((cinema) => (
+                      {filteredCinemas.length === 0 ? (
+                        <div className="no-results">
+                          <i className="fa fa-search"></i>
+                          <h4>No cinemas found</h4>
+                          <p>Try adjusting your search terms</p>
+                        </div>
+                      ) : (
+                        filteredCinemas.map((cinema) => (
                         <div key={cinema._id} className="cinema-card">
                           <div className="cinema-header">
                             <h4>{cinema.cinema_name}</h4>
@@ -618,7 +653,8 @@ function NewReservation() {
                             Select Cinema
                           </button>
                         </div>
-                      ))}
+                        ))
+                      )}
                     </div>
                   </div>
                 )}
