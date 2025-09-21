@@ -3,23 +3,23 @@ import Nav from "../Nav/Nav";
 import "./LedBoard.css";
 import axios from "axios";
 import User from "../User/User";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const URL = "http://localhost:5000/users";
+const USERS_URL = "http://localhost:5000/users";
+const PRICING_URL = "http://localhost:5000/pricing"; // Your backend endpoint
 
 const fetchHandler = async () => {
-  return await axios.get(URL).then((res) => res.data);
+  return await axios.get(USERS_URL).then((res) => res.data);
 };
 
 function LedBoard() {
-  const location = useLocation(); // Detect route changes
+  const location = useLocation();
   const history = useNavigate();
 
   const [inputs, setInputs] = useState({
     name: "",
     ledBoardType: "",
-    quantity: "",
+    quantity: 1,
     location: "",
     purpose: "",
     rentalStartDateTime: "",
@@ -27,39 +27,46 @@ function LedBoard() {
     paymentMethod: "",
   });
 
-  // ✅ New state for dynamic pricing
+  const [cost, setCost] = useState(0);
+
+  // Fetch pricing from backend
   const [pricing, setPricing] = useState({});
 
-  // ✅ Fetch pricing data from backend when component loads
- useEffect(() => {
-  const fetchPricing = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/pricing");
-      setPricing(res.data);
-    } catch (err) {
-      console.error("Error fetching pricing:", err);
-    }
-  };
-  fetchPricing();
-}, []);
-
+  useEffect(() => {
+    const fetchPricing = async () => {
+      try {
+        const res = await axios.get(PRICING_URL);
+        const pricingObj = {};
+        res.data.forEach((item) => {
+          pricingObj[item.boardType] = {
+            daily: item.dailyRate,
+            extraHour: item.hourlyRate,
+          };
+        });
+        setPricing(pricingObj);
+      } catch (err) {
+        console.error("Error fetching pricing:", err);
+      }
+    };
+    fetchPricing();
+  }, []);
 
   const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
+    setInputs((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs); // After user clicks submit to which page to be navigated
+    console.log("Form submitted:", inputs);
     sendRequest().then(() => history("/userdetails"));
   };
 
   const sendRequest = async () => {
     await axios
-      .post("http://localhost:5000/users", {
+      .post(USERS_URL, {
         name: String(inputs.name),
         ledBoardType: String(inputs.ledBoardType),
         quantity: String(inputs.quantity),
@@ -77,73 +84,47 @@ function LedBoard() {
     fetchHandler().then((data) => setLedBoards(data.ledboards));
   }, []);
 
-  // Initial state
-  const [formData, setFormData] = useState({
-    name: "",
-    ledBoardType: "",
-    quantity: 1,
-    location: "",
-    purpose: "",
-    rentalStartDateTime: "",
-    rentalEndDateTime: "",
-    paymentMethod: "",
-  });
+  const calculateCost = () => {
+    const { ledBoardType, rentalStartDateTime, rentalEndDateTime, quantity } = inputs;
+    if (!ledBoardType || !rentalStartDateTime || !rentalEndDateTime) {
+      setCost(0);
+      return;
+    }
 
-  const [cost, setCost] = useState(0);
+    const start = new Date(rentalStartDateTime);
+    const end = new Date(rentalEndDateTime);
+    if (end <= start) {
+      setCost(0);
+      return;
+    }
 
-  // Calculate rental cost dynamically using fetched pricing
- const calculateCost = () => {
-  if (!inputs.ledBoardType || !inputs.rentalStartDateTime || !inputs.rentalEndDateTime) return;
+    const diffMs = end - start;
+    const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+    const days = Math.floor(diffHours / 24);
+    const extraHours = diffHours % 24;
 
-  const start = new Date(inputs.rentalStartDateTime);
-  const end = new Date(inputs.rentalEndDateTime);
+    const boardPricing = pricing[ledBoardType];
+    if (!boardPricing) return;
 
-  // Invalid dates
-  if (end <= start) {
-    setCost(0);
-    return;
-  }
+    let totalCost = 0;
+    if (diffHours < 24) {
+      totalCost = diffHours * boardPricing.extraHour;
+    } else {
+      totalCost = days * boardPricing.daily + extraHours * boardPricing.extraHour;
+    }
 
-  const diffMs = end - start;
-  const diffHours = Math.ceil(diffMs / (1000 * 60 * 60)); // total hours
+    totalCost *= parseInt(quantity) || 1;
+    setCost(totalCost);
+  };
 
-  const days = Math.floor(diffHours / 24); // full days
-  const extraHours = diffHours % 24;       // remaining hours
-
-  const boardPricing = pricing[inputs.ledBoardType];
-  if (!boardPricing) return;
-
-  const { daily, extraHour } = boardPricing;
-
-  let totalCost = 0;
-
-  if (diffHours < 24) {
-    // Less than 24 hours → charge only extra hours
-    totalCost = diffHours * extraHour;
-  } else {
-    // 24 hours or more → charge full days + extra hours
-    totalCost = (days * daily) + (extraHours * extraHour);
-  }
-
-  // Multiply by quantity
-  totalCost *= parseInt(inputs.quantity) || 1;
-
-  setCost(totalCost);
-};
-
-
-  // Update cost live when form data changes
   useEffect(() => {
     calculateCost();
-    // eslint-disable-next-line
-  }, [inputs.ledBoardType, inputs.quantity, inputs.rentalStartDateTime, inputs.rentalEndDateTime, pricing]);
+  }, [inputs, pricing]);
 
   return (
     <div>
-      {/* Navbar */}
       <Nav />
 
-      {/* ✅ LED Board Categories Section */}
       <div>
         {ledboards &&
           ledboards.map((ledboard, i) => (
@@ -156,38 +137,19 @@ function LedBoard() {
       <div className="ledboard-categories">
         <h2>LED Board Categories</h2>
         <div className="categories-grid">
-          <div className="category-card">
-            <img src="/images/outdoor-led.jpg" alt="Outdoor LED" />
-            <h3>Outdoor LED Board</h3>
-            <p>
-              LKR {pricing.Outdoor?.daily || 50000} per day + LKR{" "}
-              {pricing.Outdoor?.extraHour || 1000} per extra hour
-            </p>
-          </div>
-          <div className="category-card">
-            <img src="/images/indoor-led.jpg" alt="Indoor LED" />
-            <h3>Indoor LED Board</h3>
-            <p>
-              LKR {pricing.Indoor?.daily || 24000} per day + LKR{" "}
-              {pricing.Indoor?.extraHour || 1000} per extra hour
-            </p>
-          </div>
-          <div className="category-card">
-            <img src="/images/p6-led.jpg" alt="P3 LED" />
-            <h3>P3 LED Board</h3>
-            <p>
-              LKR {pricing.P3?.daily || 12000} per day + LKR{" "}
-              {pricing.P3?.extraHour || 1000} per extra hour
-            </p>
-          </div>
-          <div className="category-card">
-            <img src="/images/p6-led.jpg" alt="P6 LED" />
-            <h3>P6 LED Board</h3>
-            <p>
-              LKR {pricing.P6?.daily || 6000} per day + LKR{" "}
-              {pricing.P6?.extraHour || 1000} per extra hour
-            </p>
-          </div>
+          {Object.keys(pricing).map((boardType) => (
+            <div className="category-card" key={boardType}>
+              <img
+                src={`/images/${boardType.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+                alt={boardType}
+              />
+              <h3>{boardType}</h3>
+              <p>
+                LKR {pricing[boardType]?.daily || 0} per day + LKR{" "}
+                {pricing[boardType]?.extraHour || 0} per extra hour
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -198,64 +160,28 @@ function LedBoard() {
           hotels, weddings, concerts, conferences, and more.
         </p>
 
-        {/* Rental Form */}
         <form className="ledboard-form" onSubmit={handleSubmit}>
-          {/* Name */}
           <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Enter Full name"
-            value={inputs.name}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" name="name" value={inputs.name} onChange={handleChange} required />
 
-          {/* Type of LED Board */}
           <label>Type of LED Board</label>
-          <select
-            name="ledBoardType"
-            value={inputs.ledBoardType}
-            onChange={handleChange}
-            required
-          >
+          <select name="ledBoardType" value={inputs.ledBoardType} onChange={handleChange} required>
             <option value="">-- Select Type --</option>
-            <option value="Outdoor">Outdoor LED Board</option>
-            <option value="Indoor">Indoor LED Board</option>
-            <option value="P3">P3 LED Board</option>
-            <option value="P6">P6 LED Board</option>
+            {Object.keys(pricing).map((boardType) => (
+              <option key={boardType} value={boardType}>
+                {boardType}
+              </option>
+            ))}
           </select>
 
-          {/* Quantity */}
           <label>Quantity</label>
-          <input
-            type="number"
-            name="quantity"
-            min="1"
-            value={inputs.quantity}
-            onChange={handleChange}
-            required
-          />
+          <input type="number" name="quantity" min="1" value={inputs.quantity} onChange={handleChange} required />
 
-          {/* Location */}
-          <label>Location (Venue, City, Address)</label>
-          <input
-            type="text"
-            name="location"
-            placeholder="Enter location"
-            value={inputs.location}
-            onChange={handleChange}
-            required
-          />
+          <label>Location</label>
+          <input type="text" name="location" value={inputs.location} onChange={handleChange} required />
 
-          {/* Purpose */}
           <label>Purpose</label>
-          <select
-            name="purpose"
-            value={inputs.purpose}
-            onChange={handleChange}
-            required
-          >
+          <select name="purpose" value={inputs.purpose} onChange={handleChange} required>
             <option value="">-- Select Purpose --</option>
             <option value="Advertisement">Advertisement</option>
             <option value="Wedding">Wedding</option>
@@ -265,56 +191,30 @@ function LedBoard() {
             <option value="University Event">University Event</option>
           </select>
 
-          {/* Rental Dates */}
           <label>Rental Start Date & Time</label>
-          <input
-            type="datetime-local"
-            name="rentalStartDateTime"
-            value={inputs.rentalStartDateTime}
-            onChange={handleChange}
-            required
-          />
+          <input type="datetime-local" name="rentalStartDateTime" value={inputs.rentalStartDateTime} onChange={handleChange} required />
 
           <label>Rental End Date & Time</label>
-          <input
-            type="datetime-local"
-            name="rentalEndDateTime"
-            value={inputs.rentalEndDateTime}
-            onChange={handleChange}
-            required
-          />
+          <input type="datetime-local" name="rentalEndDateTime" value={inputs.rentalEndDateTime} onChange={handleChange} required />
 
-          {/* Payment */}
           <label>Payment Method</label>
-          <select
-            name="paymentMethod"
-            value={inputs.paymentMethod}
-            onChange={handleChange}
-            required
-          >
+          <select name="paymentMethod" value={inputs.paymentMethod} onChange={handleChange} required>
             <option value="">-- Select Payment --</option>
             <option value="Card">Credit / Debit Card</option>
             <option value="Bank">Bank Transfer</option>
             <option value="Cash">Cash</option>
           </select>
 
-          {/* Cost Display */}
           <div className="cost-display">
-            <strong>Estimated Cost:</strong>{" "}
-            {cost > 0 ? `LKR ${cost}` : "Select type, quantity, and dates"}
+            <strong>Estimated Cost:</strong> {cost > 0 ? `LKR ${cost}` : "Select type, quantity, and dates"}
           </div>
 
-          <button type="submit" className="submit-btn">
-            Book Now
-          </button>
+          <button type="submit" className="submit-btn">Book Now</button>
         </form>
       </div>
 
-      {/* Footer */}
       <footer className="footer">
-        <p>
-          &copy; {new Date().getFullYear()} D&S Creations. All rights reserved.
-        </p>
+        <p>&copy; {new Date().getFullYear()} D&S Creations. All rights reserved.</p>
       </footer>
     </div>
   );
