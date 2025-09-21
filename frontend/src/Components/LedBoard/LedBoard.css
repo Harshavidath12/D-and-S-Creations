@@ -31,12 +31,23 @@
 .ledboard-form input,
 .ledboard-form select {
   width: 100%;
+  max-width: 100%;   /* prevents overflow */
   padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 15px;
   transition: border 0.3s, box-shadow 0.3s;
+   box-sizing: border-box; /* ensures padding doesn't affect width */
+}
+
+/* Normalize date/time inputs */
+.ledboard-form input[type="date"],
+.ledboard-form input[type="time"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
 }
 
 .ledboard-form input:focus,
