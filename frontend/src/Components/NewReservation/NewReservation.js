@@ -22,19 +22,52 @@ function NewReservation() {
   useEffect(() => {
     const fetchCinemas = async () => {
       try {
-        console.log('Fetching cinemas...');
+        console.log('🚀 Fetching cinemas from API...');
         setLoading(true);
         const response = await fetch('http://localhost:5000/api/cinemas');
+        console.log('📡 API Response status:', response.status);
+        
         const data = await response.json();
+        console.log('📊 API Response data:', data);
         
         if (data.success) {
-          console.log('Cinemas loaded:', data.data.length);
+          console.log('✅ Successfully fetched cinemas:', data.data.length);
+          console.log('🏢 Cinema details:', data.data);
+          
+          // Log slot information for each cinema
+          data.data.forEach((cinema, index) => {
+            console.log(`\n📽️ Cinema ${index + 1}: ${cinema.cinema_name}`);
+            console.log(`📍 Location: ${cinema.cinema_location}`);
+            
+            if (cinema.movie_slot_pricing) {
+              Object.keys(cinema.movie_slot_pricing).forEach(movieKey => {
+                const pricing = cinema.movie_slot_pricing[movieKey];
+                console.log(`🎬 ${movieKey}:`, {
+                  starting_price: pricing.starting_price,
+                  interval_price: pricing.interval_price,
+                  ending_price: pricing.ending_price,
+                  slots_count: pricing.slots?.length || 0
+                });
+                
+                if (pricing.slots) {
+                  const startingSlots = pricing.slots.filter(s => s.slot_type === 'starting');
+                  const intervalSlots = pricing.slots.filter(s => s.slot_type === 'interval');
+                  const endingSlots = pricing.slots.filter(s => s.slot_type === 'ending');
+                  
+                  console.log(`  🎬 Starting slots: ${startingSlots.length}`, startingSlots);
+                  console.log(`  ⏰ Interval slots: ${intervalSlots.length}`, intervalSlots);
+                  console.log(`  🏁 Ending slots: ${endingSlots.length}`, endingSlots);
+                }
+              });
+            }
+          });
+          
           setCinemas(data.data);
         } else {
-          console.error('Error fetching cinemas:', data.message);
+          console.error('❌ Failed to fetch cinemas:', data.message);
         }
       } catch (error) {
-        console.error('Error fetching cinemas:', error);
+        console.error('💥 Error fetching cinemas:', error);
       } finally {
         setLoading(false);
       }
@@ -44,18 +77,29 @@ function NewReservation() {
   }, []);
 
   const handleCinemaSelect = (cinema) => {
+    console.log('🎬 Cinema selected:', cinema.cinema_name);
+    console.log('📍 Cinema location:', cinema.cinema_location);
+    console.log('🎫 Available movies:', cinema.ongoing_movies);
+    console.log('💰 Movie pricing:', cinema.movie_slot_pricing);
+    
     setSelectedCinema(cinema);
     setSelectedMovie(null);
     setSelectedSlots([]);
     setCurrentStep(2);
-    console.log('Selected cinema:', cinema.cinema_name);
   };
 
   const handleMovieSelect = (movieKey, movieName) => {
+    console.log('🎬 Movie selected:', movieName);
+    console.log('🔑 Movie key:', movieKey);
+    console.log('📽️ Selected cinema:', selectedCinema?.cinema_name);
+    
+    // Get slot info for this movie
+    const slotInfo = getMovieSlotInfo(movieKey);
+    console.log('🎫 Slot info for selected movie:', slotInfo);
+    
     setSelectedMovie({ key: movieKey, name: movieName });
     setSelectedSlots([]);
     setCurrentStep(3);
-    console.log('Selected movie:', movieName);
   };
 
   const handleSlotSelect = (slot) => {
@@ -74,26 +118,65 @@ function NewReservation() {
     const movieSlots = selectedCinema.movie_slot_pricing?.[selectedMovie.key]?.slots || [];
     
     return {
-      starting: movieSlots.filter(slot => slot.slot_type === 'starting'),
-      interval: movieSlots.filter(slot => slot.slot_type === 'interval'),
-      ending: movieSlots.filter(slot => slot.slot_type === 'ending')
+      starting: movieSlots.filter(slot => slot.slot_type === 'starting' && !slot.is_reserved),
+      interval: movieSlots.filter(slot => slot.slot_type === 'interval' && !slot.is_reserved),
+      ending: movieSlots.filter(slot => slot.slot_type === 'ending' && !slot.is_reserved)
     };
   };
 
   const getMovieSlotInfo = (movieKey) => {
-    if (!selectedCinema) return null;
+    console.log(`🔍 Getting slot info for movie: ${movieKey}`);
+    console.log(`📽️ Selected cinema:`, selectedCinema?.cinema_name);
     
-    const movieSlots = selectedCinema.movie_slot_pricing?.[movieKey]?.slots || [];
+    if (!selectedCinema) {
+      console.log('❌ No cinema selected');
+      return null;
+    }
+    
+    const moviePricing = selectedCinema.movie_slot_pricing?.[movieKey];
+    console.log(`💰 Movie pricing for ${movieKey}:`, moviePricing);
+    
+    const movieSlots = moviePricing?.slots || [];
+    console.log(`🎫 Total slots for ${movieKey}:`, movieSlots.length);
+    console.log(`📊 Slot details:`, movieSlots);
     
     const starting = movieSlots.filter(slot => slot.slot_type === 'starting');
     const interval = movieSlots.filter(slot => slot.slot_type === 'interval');
     const ending = movieSlots.filter(slot => slot.slot_type === 'ending');
     
-    return {
-      starting: starting.length > 0 ? { count: starting.length, price: starting[0].price } : null,
-      interval: interval.length > 0 ? { count: interval.length, price: interval[0].price } : null,
-      ending: ending.length > 0 ? { count: ending.length, price: ending[0].price } : null
+    console.log(`🎬 Starting slots:`, starting.length);
+    console.log(`⏰ Interval slots:`, interval.length);
+    console.log(`🏁 Ending slots:`, ending.length);
+    
+    // Calculate available (non-reserved) slots
+    const availableStarting = starting.filter(slot => !slot.is_reserved);
+    const availableInterval = interval.filter(slot => !slot.is_reserved);
+    const availableEnding = ending.filter(slot => !slot.is_reserved);
+    
+    console.log(`✅ Available starting:`, availableStarting.length);
+    console.log(`✅ Available interval:`, availableInterval.length);
+    console.log(`✅ Available ending:`, availableEnding.length);
+    
+    const result = {
+      starting: starting.length > 0 ? { 
+        count: availableStarting.length, 
+        total: starting.length,
+        price: starting[0].price 
+      } : null,
+      interval: interval.length > 0 ? { 
+        count: availableInterval.length, 
+        total: interval.length,
+        price: interval[0].price 
+      } : null,
+      ending: ending.length > 0 ? { 
+        count: availableEnding.length, 
+        total: ending.length,
+        price: ending[0].price 
+      } : null
     };
+    
+    console.log(`📋 Final slot info result:`, result);
+    return result;
   };
 
   const calculateTotal = () => {
@@ -347,13 +430,19 @@ Thank you for choosing D&S Creations!
                 
                 {(() => {
                   const slots = getAvailableSlots();
+                  console.log('🎫 Available slots for selected movie:', slots);
+                  console.log('🎬 Starting slots:', slots.starting);
+                  console.log('⏰ Interval slots:', slots.interval);
+                  console.log('🏁 Ending slots:', slots.ending);
                   return (
                     <div className="compact-slots-selection">
                       {/* Starting Slots Card */}
                       <div className="slot-card">
                         <div className="slot-card-header">
                           <h4>Starting</h4>
-                          <span className="slot-count">{slots.starting.length} slots</span>
+                          <span className="slot-count">
+                            {slots.starting.length} of {selectedCinema?.movie_slot_pricing?.[selectedMovie.key]?.slots?.filter(s => s.slot_type === 'starting').length || 0} available
+                          </span>
                         </div>
                         <div className="slot-card-content">
                           {slots.starting.map((slot) => (
@@ -378,7 +467,9 @@ Thank you for choosing D&S Creations!
                       <div className="slot-card">
                         <div className="slot-card-header">
                           <h4>Interval</h4>
-                          <span className="slot-count">{slots.interval.length} slots</span>
+                          <span className="slot-count">
+                            {slots.interval.length} of {selectedCinema?.movie_slot_pricing?.[selectedMovie.key]?.slots?.filter(s => s.slot_type === 'interval').length || 0} available
+                          </span>
                         </div>
                         <div className="slot-card-content">
                           {slots.interval.map((slot) => (
@@ -403,7 +494,9 @@ Thank you for choosing D&S Creations!
                       <div className="slot-card">
                         <div className="slot-card-header">
                           <h4>Ending</h4>
-                          <span className="slot-count">{slots.ending.length} slots</span>
+                          <span className="slot-count">
+                            {slots.ending.length} of {selectedCinema?.movie_slot_pricing?.[selectedMovie.key]?.slots?.filter(s => s.slot_type === 'ending').length || 0} available
+                          </span>
                         </div>
                         <div className="slot-card-content">
                           {slots.ending.map((slot) => (

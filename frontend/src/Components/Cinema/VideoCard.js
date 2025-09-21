@@ -1,6 +1,9 @@
 import React from "react";
 
 export const VideoCard = ({ video, onSelect }) => {
+  console.log('🎬 VideoCard rendered with video:', video);
+  console.log('🎫 Video slotInfo:', video.slotInfo);
+  
   // Function to extract YouTube video ID from URL
   const getYouTubeVideoId = (url) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -49,7 +52,9 @@ export const VideoCard = ({ video, onSelect }) => {
                 <div className="slot-category">
                   <div className="category-info">
                     <span className="category-label">Starting</span>
-                    <span className="slot-count">{video.slotInfo.starting.count} slots</span>
+                    <span className="slot-count">
+                      {video.slotInfo.starting.count} of {video.slotInfo.starting.total} available
+                    </span>
                   </div>
                   <span className="slot-price">LKR {video.slotInfo.starting.price}</span>
                 </div>
@@ -58,7 +63,9 @@ export const VideoCard = ({ video, onSelect }) => {
                 <div className="slot-category">
                   <div className="category-info">
                     <span className="category-label">Interval</span>
-                    <span className="slot-count">{video.slotInfo.interval.count} slots</span>
+                    <span className="slot-count">
+                      {video.slotInfo.interval.count} of {video.slotInfo.interval.total} available
+                    </span>
                   </div>
                   <span className="slot-price">LKR {video.slotInfo.interval.price}</span>
                 </div>
@@ -67,7 +74,9 @@ export const VideoCard = ({ video, onSelect }) => {
                 <div className="slot-category">
                   <div className="category-info">
                     <span className="category-label">Ending</span>
-                    <span className="slot-count">{video.slotInfo.ending.count} slots</span>
+                    <span className="slot-count">
+                      {video.slotInfo.ending.count} of {video.slotInfo.ending.total} available
+                    </span>
                   </div>
                   <span className="slot-price">LKR {video.slotInfo.ending.price}</span>
                 </div>
