@@ -205,16 +205,17 @@ const CinemaManagement = () => {
     
     if (hasMovieData) {
       // If movie name is provided, validate other fields
-      if (!movie.start_date) {
+      if (!movie.start_date || movie.start_date.trim() === '') {
         errors.start_date = `Movie ${movieNumber} start date is required when movie name is provided`;
       }
       
-      if (!movie.end_date) {
+      if (!movie.end_date || movie.end_date.trim() === '') {
         errors.end_date = `Movie ${movieNumber} end date is required when movie name is provided`;
       }
       
       // Validate date relationship if both dates are provided
-      if (movie.start_date && movie.end_date) {
+      if (movie.start_date && movie.end_date && 
+          movie.start_date.trim() !== '' && movie.end_date.trim() !== '') {
         const startDate = new Date(movie.start_date);
         const endDate = new Date(movie.end_date);
         

@@ -189,7 +189,7 @@ const ModalForm = ({
             <h5>Advertisement Slot Pricing for Movie 1</h5>
             <div className="pricing-grid">
               <div className="form-group">
-                <label>Starting Slots Price (LKR) *</label>
+                <label>Starting Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_1.starting_price"
@@ -204,7 +204,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Interval Slots Price (LKR) *</label>
+                <label>Interval Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_1.interval_price"
@@ -219,7 +219,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Ending Slots Price (LKR) *</label>
+                <label>Ending Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_1.ending_price"
@@ -301,7 +301,7 @@ const ModalForm = ({
             <h5>Advertisement Slot Pricing for Movie 2</h5>
             <div className="pricing-grid">
               <div className="form-group">
-                <label>Starting Slots Price (LKR) *</label>
+                <label>Starting Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_2.starting_price"
@@ -316,7 +316,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Interval Slots Price (LKR) *</label>
+                <label>Interval Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_2.interval_price"
@@ -331,7 +331,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Ending Slots Price (LKR) *</label>
+                <label>Ending Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_2.ending_price"
@@ -413,7 +413,7 @@ const ModalForm = ({
             <h5>Advertisement Slot Pricing for Movie 3</h5>
             <div className="pricing-grid">
               <div className="form-group">
-                <label>Starting Slots Price (LKR) *</label>
+                <label>Starting Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_3.starting_price"
@@ -428,7 +428,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Interval Slots Price (LKR) *</label>
+                <label>Interval Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_3.interval_price"
@@ -443,7 +443,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Ending Slots Price (LKR) *</label>
+                <label>Ending Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_3.ending_price"
@@ -525,7 +525,7 @@ const ModalForm = ({
             <h5>Advertisement Slot Pricing for Movie 4</h5>
             <div className="pricing-grid">
               <div className="form-group">
-                <label>Starting Slots Price (LKR) *</label>
+                <label>Starting Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_4.starting_price"
@@ -540,7 +540,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Interval Slots Price (LKR) *</label>
+                <label>Interval Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_4.interval_price"
@@ -555,7 +555,7 @@ const ModalForm = ({
               </div>
               
               <div className="form-group">
-                <label>Ending Slots Price (LKR) *</label>
+                <label>Ending Slots Price (LKR)</label>
                 <input
                   type="number"
                   name="movie_slot_pricing.movie_4.ending_price"
