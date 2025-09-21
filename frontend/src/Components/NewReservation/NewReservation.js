@@ -526,7 +526,7 @@ function NewReservation() {
       console.log('Backend response:', result);
 
       if (result.success) {
-        alert('Reservation confirmed successfully! You will receive a confirmation email shortly.');
+        alert('Reservation confirmed successfully!');
         
         // Reset the form
         setSelectedCinema(null);
