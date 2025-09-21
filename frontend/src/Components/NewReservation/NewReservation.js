@@ -71,8 +71,9 @@ function NewReservation() {
     setValidationErrors({...validationErrors, phone: error});
   };
 
+
   // Filter cinemas based on search term
-  const filteredCinemas = cinemas.filter(cinema => 
+  const filteredCinemas = cinemas.filter(cinema =>
     cinema.cinema_name.toLowerCase().includes(cinemaSearchTerm.toLowerCase()) ||
     cinema.cinema_location.toLowerCase().includes(cinemaSearchTerm.toLowerCase())
   );
@@ -599,7 +600,7 @@ function NewReservation() {
                     <div className="cinema-search-container">
                       <h3>Available Cinemas ({filteredCinemas.length})</h3>
                       <div className="search-box">
-                        <i className="fa fa-search"></i>
+                        <i className="fa fa-search search-icon"></i>
                         <input
                           type="text"
                           placeholder="Search cinemas by name or location..."
