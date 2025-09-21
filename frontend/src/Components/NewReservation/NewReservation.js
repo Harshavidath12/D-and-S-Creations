@@ -184,38 +184,173 @@ function NewReservation() {
   };
 
   const handleDownloadDetails = () => {
-    // Create a text summary of the reservation
-    const reservationDetails = `
-D&S Creations - Advertisement Slot Reservation
-==============================================
+    // Create HTML content for PDF
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Reservation Details</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+          }
+          .header {
+            text-align: center;
+            border-bottom: 3px solid #e63946;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+          }
+          .header h1 {
+            color: #e63946;
+            margin: 0;
+            font-size: 28px;
+          }
+          .header p {
+            color: #666;
+            margin: 5px 0 0 0;
+            font-size: 16px;
+          }
+          .section {
+            margin-bottom: 25px;
+          }
+          .section h2 {
+            color: #282c34;
+            border-bottom: 2px solid #61dafb;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+          }
+          .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            padding: 8px 0;
+          }
+          .info-label {
+            font-weight: bold;
+            width: 120px;
+            color: #282c34;
+          }
+          .info-value {
+            flex: 1;
+            color: #333;
+          }
+          .slots-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+          }
+          .slots-table th,
+          .slots-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+          }
+          .slots-table th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            color: #282c34;
+          }
+          .total-section {
+            background-color: #e63946;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+          }
+          .total-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+          }
+          .total-section .amount {
+            font-size: 32px;
+            font-weight: bold;
+          }
+          .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>D&S Creations</h1>
+          <p>Advertisement Slot Reservation</p>
+        </div>
 
-Cinema: ${selectedCinema?.cinema_name}
-Location: ${selectedCinema?.cinema_location}
-Movie: ${selectedMovie?.name}
+        <div class="section">
+          <h2>Reservation Details</h2>
+          <div class="info-row">
+            <div class="info-label">Cinema:</div>
+            <div class="info-value">${selectedCinema?.cinema_name}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Location:</div>
+            <div class="info-value">${selectedCinema?.cinema_location}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Movie:</div>
+            <div class="info-value">${selectedMovie?.name}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Date:</div>
+            <div class="info-value">${new Date().toLocaleDateString()}</div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">Time:</div>
+            <div class="info-value">${new Date().toLocaleTimeString()}</div>
+          </div>
+        </div>
 
-Selected Slots:
-${selectedSlots.map(slot => 
-  `- ${slot.slot_type.charAt(0).toUpperCase() + slot.slot_type.slice(1)} Slot ${slot.slot_number}: LKR ${slot.price}`
-).join('\n')}
+        <div class="section">
+          <h2>Selected Advertisement Slots</h2>
+          <table class="slots-table">
+            <thead>
+              <tr>
+                <th>Slot Type</th>
+                <th>Slot Number</th>
+                <th>Price (LKR)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${selectedSlots.map(slot => `
+                <tr>
+                  <td>${slot.slot_type.charAt(0).toUpperCase() + slot.slot_type.slice(1)}</td>
+                  <td>${slot.slot_number}</td>
+                  <td>${slot.price.toLocaleString()}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
 
-Total Amount: LKR ${calculateTotal()}
+        <div class="total-section">
+          <h3>Total Amount</h3>
+          <div class="amount">LKR ${calculateTotal().toLocaleString()}</div>
+        </div>
 
-Reservation Date: ${new Date().toLocaleDateString()}
-Reservation Time: ${new Date().toLocaleTimeString()}
+        <div class="footer">
+          <p>Thank you for choosing D&S Creations!</p>
+          <p>For inquiries, please contact us at info@dscreations.com</p>
+        </div>
+      </body>
+      </html>
+    `;
 
-Thank you for choosing D&S Creations!
-    `.trim();
-
-    // Create and download the file
-    const blob = new Blob([reservationDetails], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `reservation-${selectedCinema?.cinema_name?.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    // Create a new window and print the content
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    
+    // Wait for content to load, then trigger print
+    printWindow.onload = function() {
+      printWindow.print();
+    };
   };
 
   const handleConfirmReservation = async () => {
