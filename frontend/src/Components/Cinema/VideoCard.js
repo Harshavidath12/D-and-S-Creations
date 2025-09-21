@@ -45,6 +45,36 @@ export const VideoCard = ({ video, onSelect }) => {
         </div>
       </div>
       
+      {/* Movie Dates Display */}
+      {(video.startDate || video.endDate) && (
+        <div className="movie-dates">
+          {video.startDate && (
+            <div className="date-item">
+              <span className="date-label">From:</span>
+              <span className="date-value">
+                {new Date(video.startDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </span>
+            </div>
+          )}
+          {video.endDate && (
+            <div className="date-item">
+              <span className="date-label">To:</span>
+              <span className="date-value">
+                {new Date(video.endDate).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+      
       {/* Pricing Card - Similar to the image design */}
       <div className="pricing-card">
         {video.slotInfo && (

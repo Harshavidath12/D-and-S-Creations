@@ -519,6 +519,8 @@ function NewReservation() {
                         video={{
                           title: movie.name,
                           youtubeUrl: movie.trailer_link,
+                          startDate: movie.start_date,
+                          endDate: movie.end_date,
                           slotInfo: getMovieSlotInfo(key)
                         }}
                         onSelect={() => handleMovieSelect(key, movie.name)}

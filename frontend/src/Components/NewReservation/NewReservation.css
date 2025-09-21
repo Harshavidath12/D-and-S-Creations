@@ -1233,7 +1233,7 @@
   width: 100%;
   max-width: 250px;
   min-width: 220px;
-  max-height: 358px;
+  max-height: 420px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   display: block;
@@ -1313,6 +1313,35 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: white;
+}
+
+/* Movie Dates Display */
+.movie-dates {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.date-label {
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.date-value {
+  font-weight: 500;
+  color: #495057;
 }
 
 /* Pricing Card - Matching the image design */
