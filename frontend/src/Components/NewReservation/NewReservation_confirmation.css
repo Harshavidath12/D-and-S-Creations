@@ -1,0 +1,110 @@
+/* Confirmation Section Styles */
+
+/* Confirmation Actions */
+.confirmation-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+/* Download Button */
+.btn-download {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-download:hover {
+  background: #4fc3f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+/* Confirm Button */
+.btn-confirm {
+  background: var(--primary-red);
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-confirm:hover {
+  background: #d62828;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+
+/* Selected Slots Details */
+.selected-slots-details {
+  margin: 15px 0;
+  padding: 15px;
+  background: var(--light-gray);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-red);
+}
+
+.slot-detail {
+  padding: 5px 0;
+  font-size: 0.9rem;
+  color: var(--dark-bg);
+}
+
+/* Total Amount Display */
+.total-amount-display {
+  font-size: 1.2rem;
+  color: var(--primary-red);
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(230, 57, 70, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Responsive Design for Confirmation Actions */
+@media (max-width: 768px) {
+  .confirmation-actions {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  
+  .btn-download,
+  .btn-confirm,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation-actions {
+    gap: 8px;
+  }
+  
+  .btn-download,
+  .btn-confirm,
+  .btn-secondary {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}

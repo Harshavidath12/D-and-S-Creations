@@ -10,13 +10,6 @@ function NewReservation() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [currentStep, setCurrentStep] = useState(1);
-  const [customerInfo, setCustomerInfo] = useState({
-    customer_name: '',
-    customer_email: '',
-    customer_phone: '',
-    company_name: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fetch cinemas from API
   useEffect(() => {
@@ -137,71 +130,25 @@ Thank you for choosing D&S Creations!
 
   const handleConfirmReservation = async () => {
     try {
-      setIsSubmitting(true);
-
-      // Validate required fields
-      if (!customerInfo.customer_name || !customerInfo.customer_email || 
-          !customerInfo.customer_phone || !customerInfo.company_name) {
-        alert('Please fill in all customer information fields.');
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Prepare reservation data
-      const reservationData = {
-        cinema_id: selectedCinema._id,
-        movie_name: selectedMovie.name,
-        movie_key: selectedMovie.key,
-        show_date: new Date().toISOString().split('T')[0], // Today's date
-        show_time: '19:00', // Default show time
-        advertisement_slots: selectedSlots.map(slot => ({
-          slot_type: slot.slot_type,
-          slot_number: slot.slot_number,
-          price: slot.price
-        })),
-        advertisement_duration: 30, // Default 30 seconds
-        customer_name: customerInfo.customer_name,
-        customer_email: customerInfo.customer_email,
-        customer_phone: customerInfo.customer_phone,
-        company_name: customerInfo.company_name,
-        notes: 'Reservation made through online booking system'
-      };
-
-      console.log('Sending reservation data:', reservationData);
-
-      // Send reservation to backend
-      const response = await fetch('http://localhost:5000/api/reservations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reservationData)
+      // Here you would typically send the reservation to your backend
+      console.log('Confirming reservation:', {
+        cinema: selectedCinema?.cinema_name,
+        movie: selectedMovie?.name,
+        slots: selectedSlots,
+        total: calculateTotal()
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        alert('Reservation confirmed successfully! You will receive a confirmation email shortly.');
-        
-        // Reset the form
-        setSelectedCinema(null);
-        setSelectedMovie(null);
-        setSelectedSlots([]);
-        setCustomerInfo({
-          customer_name: '',
-          customer_email: '',
-          customer_phone: '',
-          company_name: ''
-        });
-        setCurrentStep(1);
-      } else {
-        alert(`Error: ${result.message}`);
-      }
+      
+      // For now, just show an alert
+      alert('Reservation confirmed successfully! You will receive a confirmation email shortly.');
+      
+      // Reset the form
+      setSelectedCinema(null);
+      setSelectedMovie(null);
+      setSelectedSlots([]);
+      setCurrentStep(1);
     } catch (error) {
       console.error('Error confirming reservation:', error);
       alert('There was an error confirming your reservation. Please try again.');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -478,55 +425,6 @@ Thank you for choosing D&S Creations!
                   </div>
                 </div>
 
-                {/* Customer Information Form */}
-                <div className="customer-info-form">
-                  <h3>Customer Information</h3>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="customer_name">Full Name *</label>
-                      <input
-                        type="text"
-                        id="customer_name"
-                        value={customerInfo.customer_name}
-                        onChange={(e) => setCustomerInfo({...customerInfo, customer_name: e.target.value})}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="customer_email">Email *</label>
-                      <input
-                        type="email"
-                        id="customer_email"
-                        value={customerInfo.customer_email}
-                        onChange={(e) => setCustomerInfo({...customerInfo, customer_email: e.target.value})}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="customer_phone">Phone Number *</label>
-                      <input
-                        type="tel"
-                        id="customer_phone"
-                        value={customerInfo.customer_phone}
-                        onChange={(e) => setCustomerInfo({...customerInfo, customer_phone: e.target.value})}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="company_name">Company Name *</label>
-                      <input
-                        type="text"
-                        id="company_name"
-                        value={customerInfo.company_name}
-                        onChange={(e) => setCustomerInfo({...customerInfo, company_name: e.target.value})}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
                 {/* Action Buttons */}
                 <div className="confirmation-actions">
                   <button 
@@ -545,10 +443,9 @@ Thank you for choosing D&S Creations!
                   <button 
                     className="btn-confirm" 
                     onClick={handleConfirmReservation}
-                    disabled={isSubmitting}
                   >
                     <i className="fa fa-check"></i>
-                    {isSubmitting ? 'Processing...' : 'Confirm Reservation'}
+                    Confirm Reservation
                   </button>
                 </div>
               </div>
