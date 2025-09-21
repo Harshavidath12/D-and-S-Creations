@@ -4,6 +4,7 @@ import "./LedBoard.css";
 import axios from "axios";
 import User from "../User/User";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const URL = "http://localhost:5000/users";
 
@@ -12,6 +13,7 @@ const fetchHandler = async () => {
 };
 
 function LedBoard() {
+  const location = useLocation(); // Detect route changes
   const history = useNavigate();
 
   const [inputs, setInputs] = useState({
@@ -29,17 +31,18 @@ function LedBoard() {
   const [pricing, setPricing] = useState({});
 
   // ✅ Fetch pricing data from backend when component loads
-  useEffect(() => {
-    const fetchPricing = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/pricing");
-        setPricing(res.data);
-      } catch (err) {
-        console.error("Error fetching pricing:", err);
-      }
-    };
-    fetchPricing();
-  }, []);
+ useEffect(() => {
+  const fetchPricing = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/pricing");
+      setPricing(res.data);
+    } catch (err) {
+      console.error("Error fetching pricing:", err);
+    }
+  };
+  fetchPricing();
+}, []);
+
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -89,45 +92,45 @@ function LedBoard() {
   const [cost, setCost] = useState(0);
 
   // Calculate rental cost dynamically using fetched pricing
-  const calculateCost = () => {
-    if (!inputs.ledBoardType || !inputs.rentalStartDateTime || !inputs.rentalEndDateTime) return;
+ const calculateCost = () => {
+  if (!inputs.ledBoardType || !inputs.rentalStartDateTime || !inputs.rentalEndDateTime) return;
 
-    let start = new Date(inputs.rentalStartDateTime);
-    let end = new Date(inputs.rentalEndDateTime);
+  const start = new Date(inputs.rentalStartDateTime);
+  const end = new Date(inputs.rentalEndDateTime);
 
-    if (end <= start) {
-      setCost(0);
-      return;
-    }
+  // Invalid dates
+  if (end <= start) {
+    setCost(0);
+    return;
+  }
 
-    let diffMs = end - start;
-    let diffHours = Math.ceil(diffMs / (1000 * 60 * 60)); // total hours
+  const diffMs = end - start;
+  const diffHours = Math.ceil(diffMs / (1000 * 60 * 60)); // total hours
 
-    let days = Math.floor(diffHours / 24);
-    let hours = diffHours % 24;
+  const days = Math.floor(diffHours / 24); // full days
+  const extraHours = diffHours % 24;       // remaining hours
 
-    // ✅ Pull pricing dynamically from backend data
-    const boardPricing = pricing[inputs.ledBoardType];
-    if (!boardPricing) return;
+  const boardPricing = pricing[inputs.ledBoardType];
+  if (!boardPricing) return;
 
-    let { daily, extraHour } = boardPricing;
+  const { daily, extraHour } = boardPricing;
 
-    let totalCost = days * daily + (hours > 0 ? daily : 0); // charge a full day if partial
-    if (hours > 24) hours = 24; // safety
+  let totalCost = 0;
 
-    if (hours > 0 && diffHours > 24) {
-      totalCost += (hours - 24) * extraHour;
-    }
+  if (diffHours < 24) {
+    // Less than 24 hours → charge only extra hours
+    totalCost = diffHours * extraHour;
+  } else {
+    // 24 hours or more → charge full days + extra hours
+    totalCost = (days * daily) + (extraHours * extraHour);
+  }
 
-    // For rentals less than a day
-    if (diffHours < 24) {
-      totalCost = daily + (diffHours - 24 > 0 ? (diffHours - 24) * extraHour : 0);
-    }
+  // Multiply by quantity
+  totalCost *= parseInt(inputs.quantity) || 1;
 
-    totalCost = totalCost * (parseInt(inputs.quantity) || 1);
+  setCost(totalCost);
+};
 
-    setCost(totalCost);
-  };
 
   // Update cost live when form data changes
   useEffect(() => {

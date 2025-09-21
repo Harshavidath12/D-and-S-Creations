@@ -18,19 +18,22 @@ app.use(express.json());//use json data
 app.use(express.json());//postmon eken insert krna data tika json ekata responsive wenna 
 app.use(cors());
 app.use("/users",router);
-
-app.use("/pricing", pricingRoutes); // for pricing routes
-
+app.use("/pricing",pricingRoutes); // for pricing routes
 
 
-mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
-.then(() => {
+mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/test")
+  .then(() => {
     console.log("Connected to MongoDB");
     app.listen(5000, () => {
-        console.log("✅ Server running on http://localhost:5000");
+      console.log("✅ Server running on http://localhost:5000");
     });
-})
-.catch((err) => console.log("❌ DB connection error:", err));
+  })
+  .catch(err => console.error("❌ DB connection error:", err));
+
+
+
+
+
 
 //register function ,call register model
 /*
