@@ -9,14 +9,53 @@ const ModalForm = ({
   validateMovie,
   setErrors
 }) => {
+  // Function to format dates for display
+  const formatDate = (dateInput) => {
+    if (!dateInput) return 'N/A';
+    
+    // Handle both Date objects and date strings
+    const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) return 'N/A';
+    
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
   // Function to handle date validation on blur
   const handleDateBlur = (e) => {
-    const { name } = e.target;
+    const { name, value } = e.target;
     const movieKey = name.split('.')[1]; // Extract movie key (movie_1, movie_2, etc.)
+    const field = name.split('.')[2]; // Extract field name (start_date, end_date)
     const movie = formData.ongoing_movies[movieKey];
     
+    console.log('🔍 Date blur debug:', {
+      name,
+      value,
+      movieKey,
+      field,
+      movieName: movie?.name,
+      currentStartDate: movie?.start_date,
+      currentEndDate: movie?.end_date,
+      hasMovieName: movie && movie.name && movie.name.trim().length > 0
+    });
+    
     if (movie && movie.name && movie.name.trim().length > 0) {
-      const movieErrors = validateMovie(movie, movieKey.split('_')[1]);
+      // Create a temporary movie object with the updated value for validation
+      const tempMovie = {
+        ...movie,
+        [field]: value
+      };
+      
+      console.log('🔍 Temp movie for validation:', tempMovie);
+      
+      const movieErrors = validateMovie(tempMovie, movieKey.split('_')[1]);
+      console.log('🔍 Validation errors:', movieErrors);
+      
       // Update errors state with new validation results
       setErrors(prev => ({
         ...prev,
@@ -638,7 +677,7 @@ const ModalForm = ({
                 return (
                   <p key={index}>
                     <strong>Movie {index + 1}:</strong> {movie.name} 
-                    ({movie.start_date} - {movie.end_date})
+                    ({formatDate(movie.start_date)} - {formatDate(movie.end_date)})
                   </p>
                 );
               }

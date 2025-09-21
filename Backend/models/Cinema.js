@@ -168,14 +168,7 @@ const cinemaSchema = new Schema({
     },
     google_maps_location: {
         type: String,
-        trim: true,
-        validate: {
-            validator: function(v) {
-                if (!v) return true; // Allow empty location
-                return /^https?:\/\/(www\.)?(google\.com\/maps|maps\.google\.com)\/.+/.test(v);
-            },
-            message: "Please enter a valid Google Maps URL"
-        }
+        trim: true
     },
     // Movie-wise slot pricing
     movie_slot_pricing: {

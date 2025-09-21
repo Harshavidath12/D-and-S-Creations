@@ -112,9 +112,16 @@ const CinemaManagement = () => {
     return count;
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('en-US', {
+  const formatDate = (dateInput) => {
+    if (!dateInput) return 'N/A';
+    
+    // Handle both Date objects and date strings
+    const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) return 'N/A';
+    
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -204,18 +211,35 @@ const CinemaManagement = () => {
     const hasMovieData = movie.name && movie.name.trim().length > 0;
     
     if (hasMovieData) {
+      // Helper function to check if date is valid and not empty
+      const isValidDate = (date) => {
+        if (!date) return false;
+        if (date instanceof Date) return !isNaN(date.getTime());
+        if (typeof date === 'string') return date.trim() !== '';
+        return false;
+      };
+      
+      console.log(`🔍 Validating Movie ${movieNumber}:`, {
+        name: movie.name,
+        start_date: movie.start_date,
+        end_date: movie.end_date,
+        start_date_type: typeof movie.start_date,
+        end_date_type: typeof movie.end_date,
+        start_date_valid: isValidDate(movie.start_date),
+        end_date_valid: isValidDate(movie.end_date)
+      });
+      
       // If movie name is provided, validate other fields
-      if (!movie.start_date || movie.start_date.trim() === '') {
+      if (!isValidDate(movie.start_date)) {
         errors.start_date = `Movie ${movieNumber} start date is required when movie name is provided`;
       }
       
-      if (!movie.end_date || movie.end_date.trim() === '') {
+      if (!isValidDate(movie.end_date)) {
         errors.end_date = `Movie ${movieNumber} end date is required when movie name is provided`;
       }
       
       // Validate date relationship if both dates are provided
-      if (movie.start_date && movie.end_date && 
-          movie.start_date.trim() !== '' && movie.end_date.trim() !== '') {
+      if (isValidDate(movie.start_date) && isValidDate(movie.end_date)) {
         const startDate = new Date(movie.start_date);
         const endDate = new Date(movie.end_date);
         
@@ -336,6 +360,33 @@ const CinemaManagement = () => {
 
   const handleSubmit = async () => {
     try {
+      // Create a deep copy of form data to avoid modifying the original
+      const processedData = JSON.parse(JSON.stringify(formData));
+      
+      // Convert date strings to Date objects for ongoing_movies
+      Object.keys(processedData.ongoing_movies).forEach(movieKey => {
+        const movie = processedData.ongoing_movies[movieKey];
+        if (movie.start_date && movie.start_date.trim() !== '') {
+          movie.start_date = new Date(movie.start_date);
+        }
+        if (movie.end_date && movie.end_date.trim() !== '') {
+          movie.end_date = new Date(movie.end_date);
+        }
+      });
+      
+      // Convert date strings to Date objects for upcoming_movies
+      Object.keys(processedData.upcoming_movies).forEach(movieKey => {
+        const movie = processedData.upcoming_movies[movieKey];
+        if (movie.start_date && movie.start_date.trim() !== '') {
+          movie.start_date = new Date(movie.start_date);
+        }
+        if (movie.end_date && movie.end_date.trim() !== '') {
+          movie.end_date = new Date(movie.end_date);
+        }
+      });
+      
+      // Debug: Log the processed data being sent
+      console.log("🚀 Sending processed cinema data:", JSON.stringify(processedData, null, 2));
       
       const url = editingCinema 
         ? `http://localhost:5000/api/cinemas/${editingCinema._id}`
@@ -348,10 +399,14 @@ const CinemaManagement = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(processedData)
       });
       
       const data = await response.json();
+      
+      // Debug: Log the response
+      console.log("📡 Backend response:", data);
+      console.log("📊 Response status:", response.status);
       
       if (data.success) {
         showNotification(
@@ -386,9 +441,11 @@ const CinemaManagement = () => {
         setCurrentStep(1);
         fetchCinemas();
       } else {
+        console.error("❌ Backend error:", data);
         showNotification(data.message || 'Failed to save cinema', 'error');
       }
     } catch (error) {
+      console.error("💥 Frontend error:", error);
       showNotification('Error saving cinema', 'error');
     }
   };

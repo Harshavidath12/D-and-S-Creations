@@ -92,8 +92,8 @@ const getCinemaById = async (req, res) => {
 // @access  Public
 const createCinema = async (req, res) => {
     try {
-        console.log("📥 Received cinema data:", JSON.stringify(req.body, null, 2));
-        console.log("📥 Movie slot pricing data:", JSON.stringify(req.body.movie_slot_pricing, null, 2));
+        console.log(" Received cinema data:", JSON.stringify(req.body, null, 2));
+        console.log(" Movie slot pricing data:", JSON.stringify(req.body.movie_slot_pricing, null, 2));
         
         const {
             cinema_name,
@@ -108,7 +108,7 @@ const createCinema = async (req, res) => {
 
         // Validate required fields
         if (!cinema_name || !cinema_location || !ongoing_movies) {
-            console.log("❌ Missing required fields:", {
+            console.log(" Missing required fields:", {
                 cinema_name: !!cinema_name,
                 cinema_location: !!cinema_location,
                 ongoing_movies: !!ongoing_movies,
@@ -188,14 +188,14 @@ const createCinema = async (req, res) => {
         // Process movie slot pricing to ensure it has the correct structure
         let processedMovieSlotPricing = movie_slot_pricing;
         if (movie_slot_pricing) {
-            console.log("🔧 Processing movie slot pricing in controller:", JSON.stringify(movie_slot_pricing, null, 2));
+            console.log(" Processing movie slot pricing in controller:", JSON.stringify(movie_slot_pricing, null, 2));
             processedMovieSlotPricing = {};
             const movies = ['movie_1', 'movie_2', 'movie_3', 'movie_4'];
             
             movies.forEach(movieKey => {
                 const movie = movie_slot_pricing[movieKey];
                 if (movie) {
-                    console.log(`🔧 Processing ${movieKey}:`, JSON.stringify(movie, null, 2));
+                    console.log(` Processing ${movieKey}:`, JSON.stringify(movie, null, 2));
                     processedMovieSlotPricing[movieKey] = {
                         starting_price: movie.starting_price || 0,
                         interval_price: movie.interval_price || 0,
