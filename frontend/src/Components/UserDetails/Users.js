@@ -4,6 +4,7 @@ import axios from "axios";
 import User from '../User/User';
 import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
+import "./Users.css"; //Import the CSS file
 
 const URL = "http://localhost:5000/users";
 
@@ -17,7 +18,7 @@ function Users() {
 
   useEffect(() => {
     fetchHandler().then((data) => setUsers(data.users));
-  }, [location]); // ✅ fixed 'Location' typo
+  }, [location]);
 
   const ComponentsRef = useRef();
 
@@ -42,51 +43,55 @@ function Users() {
     });
   };
 
-  const handleSendReport=()=>{
-    //Creare the whatsapp chat URL
-    const phoneNumber="+94706625728";
-    const message=`selected User Reprts`
-    const WhatsAppUrl=`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
+  const handleSendReport = () => {
+    const phoneNumber = "+94706625728";
+    const message = `Selected User Reports`;
+    const WhatsAppUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(
       message
     )}`;
-
-    //open the whatsapp chat in new window 
-    window.open(WhatsAppUrl,"_blank");
-  }
+    window.open(WhatsAppUrl, "_blank");
+  };
 
   return (
-    <div>
+    <div className="users-container">
       <Nav />
-      <h1>User Details Display Page</h1>
-      
-      <input //search function
-        onChange={(e) => setSearchQuery(e.target.value)}
-        type="text"
-        name="search"
-        placeholder="Search Users"
-      />
-      <button onClick={handleSearch}>Search</button>
+      <h1 className="page-title">User Details Display Page</h1>
+
+      {/* Search bar */}
+      <div className="search-section">
+        <input
+          onChange={(e) => setSearchQuery(e.target.value)}
+          type="text"
+          name="search"
+          placeholder="Search Users"
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="btn btn-blue">
+          Search
+        </button>
+      </div>
 
       {noResults ? (
-        <div>
-          <p>No Users Found</p>
-        </div>
+        <div className="no-results">No Users Found</div>
       ) : (
-        <div>
-          <div ref={ComponentsRef}>
-            {users && users.map((user, i) => (
-              <div key={i}>
-                <User user={user} />
-              </div>
-            ))}
-          </div>
-          <br />
+        <div ref={ComponentsRef} className="users-list">
+          {users && users.map((user, i) => (
+            <div key={i} className="user-card">
+              <User user={user} />
+            </div>
+          ))}
         </div>
       )}
 
-      <button onClick={handlePrint}>Download</button>
-      <br></br>
-      <button onClick={handleSendReport}>Send Whatsapp Message</button>
+      {/* Action buttons */}
+      <div className="button-group">
+        <button onClick={handlePrint} className="btn btn-green">
+          Download PDF
+        </button>
+        <button onClick={handleSendReport} className="btn btn-darkgreen">
+          Send WhatsApp Message
+        </button>
+      </div>
     </div>
   );
 }

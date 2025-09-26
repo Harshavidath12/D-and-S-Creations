@@ -8,6 +8,7 @@ import AddUser from "./Components/AddUser/AddUser";
 import UpdateUser from "./Components/UpdateUser/UpdateUser";
 import LedBoard from "./Components/LedBoard/LedBoard";
 import PricingManager from "./Components/PricingManager/PricingManager";
+import Payment from "./Components/Payment/Payment";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
        <Route path="/users/:id" element={<UpdateUser/>}/> 
           <Route path="/ledboard" element={<LedBoard/>} />
          <Route path="/pricing-manager" element={<PricingManager />} />
+         <Route path="/payment" element={<Payment />} />
       </Routes>
      </React.Fragment>
     </div>

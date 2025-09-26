@@ -5,6 +5,7 @@ const mongoose=require("mongoose");
 const express = require("express");
 const router= require("./Routes/UserRoutes");
 const pricingRoutes = require("./Routes/pricingRoutes"); // import pricing routes
+const paymentRoutes = require("./Routes/PaymentRoutes");
 
 
 const app=express(); 
@@ -19,20 +20,17 @@ app.use(express.json());//postmon eken insert krna data tika json ekata responsi
 app.use(cors());
 app.use("/users",router);
 app.use("/pricing",pricingRoutes); // for pricing routes
+app.use("/payments", paymentRoutes); // for payment routes
 
 
-mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net")
+mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
 .then(() => {
     console.log("Connected to MongoDB");
     app.listen(5000, () => {
-        console.log("✅ Server running on http://localhost:5000");
+        console.log("Server running on http://localhost:5000");
     });
 })
-.catch((err) => console.log("❌ DB connection error:", err));
-
-
-
-
+.catch((err) => console.log("DB connection error:", err));
 
 
 

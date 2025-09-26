@@ -58,11 +58,31 @@ function LedBoard() {
     }));
   };
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Form submitted:", inputs);
+
+  try {
+    // Send data to backend
+    await sendRequest();
+
+    // Add cost to inputs
+    const bookingDetails = { ...inputs, cost };
+
+    // Navigate to payment page with state
+    history("/payment", { state: bookingDetails });
+  } catch (err) {
+    console.error("Error submitting booking:", err);
+  }
+};
+
+
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", inputs);
     sendRequest().then(() => history("/userdetails"));
-  };
+  };*/
 
   const sendRequest = async () => {
     await axios
@@ -99,7 +119,7 @@ function LedBoard() {
     }
 
     const diffMs = end - start;
-    const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
     const days = Math.floor(diffHours / 24);
     const extraHours = diffHours % 24;
 

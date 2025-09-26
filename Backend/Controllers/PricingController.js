@@ -1,7 +1,7 @@
 // Controllers/PricingController.js
 const Pricelist = require("../Model/Pricelist");
 
-// ✅ Get all pricing records
+// Get all pricing records
 const getAllPrices = async (req, res) => {
   try {
     const prices = await Pricelist.find();
@@ -13,7 +13,7 @@ const getAllPrices = async (req, res) => {
 };
 
 
-// ✅ Add new price entry
+// Add new price entry
 const addPrice = async (req, res, next) => {
   const { boardType, dailyRate, hourlyRate } = req.body;
 
@@ -31,7 +31,7 @@ const addPrice = async (req, res, next) => {
   return res.status(200).json({ price });
 };
 
-// ✅ Get price by ID
+// Get price by ID
 const getById = async (req, res, next) => {
   const id = req.params.id;
   let price;
@@ -47,7 +47,7 @@ const getById = async (req, res, next) => {
   return res.status(200).json({ price });
 };
 
-// ✅ Update price entry
+//Update price entry
 const updatePrice = async (req, res, next) => {
   const id = req.params.id;
   const { boardType, dailyRate, hourlyRate } = req.body;
@@ -69,7 +69,7 @@ const updatePrice = async (req, res, next) => {
   return res.status(200).json({ price });
 };
 
-// ✅ Delete price entry
+// Delete price entry
 const deletePrice = async (req, res, next) => {
   const id = req.params.id;
   let price;
