@@ -111,6 +111,36 @@ const deleteUser=async(req,res,next)=>{
    return res.status(200).json({user});
 };
 
+// Example in BookingController
+const addBooking = async (req, res) => {
+  const { boardType, quantity } = req.body;
+
+  // ✅ Find available boards
+  const availableBoards = await Inventory.find({
+    boardType,
+    status: "Available"
+  }).limit(quantity);
+
+  // ❌ If not enough available boards
+  if (availableBoards.length < quantity) {
+    return res.status(400).json({ message: "Not enough stock available" });
+  }
+
+  // ✅ Reserve those boards
+  for (let board of availableBoards) {
+    board.status = "Rented";  // or "Reserved"
+    await board.save();
+  }
+
+  // ✅ Save booking record
+  const booking = new Booking(req.body);
+  booking.assignedBoards = availableBoards.map(b => b.serialNo);
+  await booking.save();
+
+  res.status(201).json(booking);
+};
+
+
 
 
 exports.getAllUsers = getAllUsers;
