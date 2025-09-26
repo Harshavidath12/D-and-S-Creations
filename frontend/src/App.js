@@ -9,6 +9,7 @@ import UpdateUser from "./Components/UpdateUser/UpdateUser";
 import LedBoard from "./Components/LedBoard/LedBoard";
 import PricingManager from "./Components/PricingManager/PricingManager";
 import Payment from "./Components/Payment/Payment";
+import InventoryManager from "./Components/Inventory/InventoryManager";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/ledboard" element={<LedBoard/>} />
          <Route path="/pricing-manager" element={<PricingManager />} />
          <Route path="/payment" element={<Payment />} />
+         <Route path="/inventory-manager" element={<InventoryManager />} />
       </Routes>
      </React.Fragment>
     </div>
