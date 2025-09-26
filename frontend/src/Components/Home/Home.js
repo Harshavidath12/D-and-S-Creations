@@ -11,20 +11,11 @@ function Home() {
       {/* Navbar */}
       <Nav />
 
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Grow Your Brand with Impactful Advertising</h1>
-          <p>
-            We specialize in <b>Cinema Hall Advertising</b> and <b>LED Board
-            Advertising</b> to give your business the exposure it deserves.
-          </p>
-          <button className="cta-btn">Get Started</button>
-        </div>
-      </section>
+      {/* New Animated Hero Section */}
+      <AnimatedHero />
 
       {/* Cinema Hall Advertising Section */}
-      <section className="section">
+      <section className="section" id="this">
         <h2>Cinema Hall Advertising</h2>
         <div className="section-content">
           <img src="/images/cinema.jpg" alt="Cinema Advertising" />
@@ -87,4 +78,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Home;

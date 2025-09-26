@@ -7,7 +7,7 @@ body {
 
 /* Hero Section */
 .hero {
-  background: url("https://via.placeholder.com/1600x600") center/cover no-repeat;
+  background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-red) 100%);
   height: 80vh;
   display: flex;
   align-items: center;
@@ -21,7 +21,7 @@ body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.6); /* dark overlay */
+  background: rgba(40, 44, 52, 0.3); /* subtle overlay */
 }
 
 .hero-content {
@@ -41,7 +41,7 @@ body {
 }
 
 .cta-btn {
-  background: #e63946;
+  background: var(--color-dark-bg);
   color: white;
   padding: 12px 30px;
   border: none;
@@ -52,7 +52,7 @@ body {
 }
 
 .cta-btn:hover {
-  background: #c71f2d;
+  background: var(--color-red);
 }
 
 /* Section */
@@ -88,7 +88,7 @@ body {
 }
 
 .alt-bg {
-  background: #f7f7f7;
+  background: var(--color-light-gray);
 }
 
 /* Services */
@@ -110,7 +110,7 @@ body {
 }
 
 .service-card {
-  background: #f4f4f4;
+  background: var(--color-lighter-gray);
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -121,11 +121,11 @@ body {
   transform: translateY(-5px);
 }
 
-/* Footer */
+/* Footer of the page */
 .footer {
-  background: #222;
+  background: var(--color-darker-bg);
   color: #aaa;
   padding: 20px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.9rem;
 }
