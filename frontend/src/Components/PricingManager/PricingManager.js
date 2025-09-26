@@ -49,7 +49,7 @@ const PricingManager = () => {
     <div>
       <Nav />
       <div className="pricing-container">
-        <h1>LED Boards Pricing Management</h1>
+        <h1>LED Boards Price Management</h1>
         <form onSubmit={handleSubmit}>
           {pricing.map((item, index) => (
             <div className="pricing-card" key={item._id}>
