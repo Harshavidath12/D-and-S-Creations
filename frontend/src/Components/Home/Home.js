@@ -1,6 +1,7 @@
 import React from "react";
 import Nav from "../Nav/Nav";
 import "./Home.css"; // import css file
+import AnimatedHero from "./AnimatedHero"; // import new animated hero
 import { Link } from "react-router-dom";
 
 
