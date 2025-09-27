@@ -111,22 +111,31 @@ function InventoryManager() {
           onChange={handleChange}
           required
         />
-        <input
-          type="date"
-          name="purchaseDate"
-          placeholder="Purchase Date"
-          value={formData.purchaseDate}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="date"
-          name="warrantyExpiry"
-          placeholder="Warranty Expiry"
-          value={formData.warrantyExpiry}
-          onChange={handleChange}
-          required
-        />
+        
+       {/* ✅ Date fields side by side */}
+<div className="date-fields">
+  <div>
+    <label>Purchase Date</label>
+    <input
+      type="date"
+      name="purchaseDate"
+      value={formData.purchaseDate}
+      onChange={handleChange}
+      required
+    />
+  </div>
+  <div>
+    <label>Warranty Expiry</label>
+    <input
+      type="date"
+      name="warrantyExpiry"
+      value={formData.warrantyExpiry}
+      onChange={handleChange}
+      required
+    />
+  </div>
+</div>
+
         <select name="status" value={formData.status} onChange={handleChange}>
           <option value="Available">Available</option>
           <option value="Rented">Rented</option>

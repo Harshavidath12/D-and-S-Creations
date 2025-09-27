@@ -1,158 +1,160 @@
-//const User = require("../Model/UserModel");
-const User=require("../Model/RentalModel");
+const User = require("../Model/RentalModel"); // Rental bookings
+const Stock = require("../Model/StockModel"); // Inventory
 
-// Data display part
+// ===================== USERS / RENTALS ===================== //
 
+// Get all users (rentals)
 const getAllUsers = async (req, res, next) => {
-  let users;
-
-  // Get all users
   try {
-    users = await User.find();
+    const users = await User.find();
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No rentals found" });
+    }
+    return res.status(200).json({ users });
   } catch (err) {
     console.log(err);
+    return res.status(500).json({ message: "Server error" });
   }
-
-  // Not found
-  if (!users) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  // Display all users
-  return res.status(200).json({ users });
 };
 
+// Add rental booking (only if stock available)
+const addUsers = async (req, res, next) => {
+  const {
+    name,
+    ledBoardType,
+    quantity,
+    location,
+    purpose,
+    rentalStartDateTime,
+    rentalEndDateTime,
+    paymentMethod,
+  } = req.body;
 
-//Data Insert part
+  try {
+    // ✅ Find available stock
+    const availableBoards = await Stock.find({
+      boardType: ledBoardType,
+      status: "Available",
+    }).limit(quantity);
 
-const addUsers= async(req, res, next)=> {
-  const {name,ledBoardType,quantity,location,purpose,rentalStartDateTime,rentalEndDateTime,paymentMethod}=req.body;
-
-  let users;
-
-  try{
-    users=new User({name,ledBoardType,quantity,location,purpose,rentalStartDateTime,rentalEndDateTime,paymentMethod});
-    await users.save();//save to database
-  }catch(err){
-    console.log(err);
-  }
-  // if data is not getting inserted
-
-  if(!users){
-     return res.status(404).json({message:"unable to add users"});
-
-  }
-   return res.status(200).json({users});
-
-};
-
-//Get  by Id
-const getById= async(req,res,next)=>{
-    const id=req.params.id;
-
-    let user;
-
-    try{
-        user=await User.findById(id);// me id ekata me user inawada
-    }catch(err){
-        console.log(err);
+    if (availableBoards.length < quantity) {
+      return res
+        .status(400)
+        .json({ message: "Not enough stock available for booking" });
     }
-    // not available users
-    if(!user){
-     return res.status(404).json({message:"Users not found"});
 
-  }
-   return res.status(200).json({user});
+    // ✅ Save rental/booking record first
+    const booking = new User({
+      name,
+      ledBoardType,
+      quantity,
+      location,
+      purpose,
+      rentalStartDateTime,
+      rentalEndDateTime,
+      paymentMethod,
+    });
 
-};
+    await booking.save();
 
-
-
-//Update user details
-const updateUser=async(req,res,next)=>{
-   const id=req.params.id;
-
-    const {name,ledBoardType,quantity,location,purpose,rentalStartDateTime,rentalEndDateTime,paymentMethod}=req.body;
-
-    let users;
-    try{
-       users=await User.findByIdAndUpdate(id,
-
-       {name,ledBoardType,quantity,location,purpose,rentalStartDateTime,rentalEndDateTime,paymentMethod});
-       users=await users.save();
-    }catch(err){
-      console.log(err);
+    // ✅ Mark boards as rented and link booking._id
+    for (let board of availableBoards) {
+      board.status = "Rented";
+      board.assignedToBooking = booking._id;
+      await board.save();
     }
-     if(!users){
-     return res.status(404).json({message:"Unable to update user details"});
 
-  }
-   return res.status(200).json({users});
-};
-
-
-//Delete Uuser Details
-
-const deleteUser=async(req,res,next)=>{
-  const id=req.params.id;
-
-  let user;// creating a variable
-
-  try{
-    user=await User.findByIdAndDelete(id) // this will get the id id and delete the data belong to that id
-  }catch(err){
+    return res.status(201).json({
+      message: "Booking successful",
+      booking,
+      rentedBoards: availableBoards,
+    });
+  } catch (err) {
     console.log(err);
+    return res.status(500).json({ message: "Server error while booking" });
   }
-
-   if(!user){
-     return res.status(404).json({message:"Ubale to delete user details"});
-
-  }
-   return res.status(200).json({user});
 };
 
-// Example in BookingController
-const addBooking = async (req, res) => {
-  const { boardType, quantity } = req.body;
-
-  // ✅ Find available boards
-  const availableBoards = await Inventory.find({
-    boardType,
-    status: "Available"
-  }).limit(quantity);
-
-  // ❌ If not enough available boards
-  if (availableBoards.length < quantity) {
-    return res.status(400).json({ message: "Not enough stock available" });
+// Get booking by ID
+const getById = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Server error" });
   }
-
-  // ✅ Reserve those boards
-  for (let board of availableBoards) {
-    board.status = "Rented";  // or "Reserved"
-    await board.save();
-  }
-
-  // ✅ Save booking record
-  const booking = new Booking(req.body);
-  booking.assignedBoards = availableBoards.map(b => b.serialNo);
-  await booking.save();
-
-  res.status(201).json(booking);
 };
 
+// Update booking
+const updateUser = async (req, res, next) => {
+  const id = req.params.id;
+  const {
+    name,
+    ledBoardType,
+    quantity,
+    location,
+    purpose,
+    rentalStartDateTime,
+    rentalEndDateTime,
+    paymentMethod,
+  } = req.body;
 
+  try {
+    let user = await User.findByIdAndUpdate(
+      id,
+      {
+        name,
+        ledBoardType,
+        quantity,
+        location,
+        purpose,
+        rentalStartDateTime,
+        rentalEndDateTime,
+        paymentMethod,
+      },
+      { new: true }
+    );
 
+    if (!user) {
+      return res.status(404).json({ message: "Unable to update booking" });
+    }
+    return res.status(200).json({ user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Delete booking
+const deleteUser = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Unable to delete booking" });
+    }
+
+    // ✅ Free up linked stock
+    await Stock.updateMany(
+      { assignedToBooking: user._id },
+      { $set: { status: "Available", assignedToBooking: null } }
+    );
+
+    return res.status(200).json({ message: "Booking deleted", user });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 
 exports.getAllUsers = getAllUsers;
-
-exports.addUsers=addUsers;
-
-exports.getById=getById;
-
-exports.updateUser=updateUser;
-
-exports.deleteUser=deleteUser;
-
-
-
-
+exports.addUsers = addUsers;
+exports.getById = getById;
+exports.updateUser = updateUser;
+exports.deleteUser = deleteUser;

@@ -53,9 +53,14 @@ const getStockById = async (req, res, next) => {
 // Update stock
 const updateStock = async (req, res, next) => {
   const id = req.params.id;
-  const { boardType, serialNo, status, purchaseDate, warrantyExpiry, assignedToBooking } = req.body;
+  let { boardType, serialNo, status, purchaseDate, warrantyExpiry, assignedToBooking } = req.body;
 
   try {
+    // ✅ Auto-reset assignedToBooking if status is Available
+    if (status === "Available") {
+      assignedToBooking = null;
+    }
+
     let stock = await Stock.findByIdAndUpdate(
       id,
       { boardType, serialNo, status, purchaseDate, warrantyExpiry, assignedToBooking },
@@ -67,10 +72,9 @@ const updateStock = async (req, res, next) => {
     return res.status(200).json({ stock });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "Server error" });
-  }
+    return res.status(500).json({ message: "Server error" });
+  }
 };
-
 // Delete stock
 const deleteStock = async (req, res, next) => {
   const id = req.params.id;
