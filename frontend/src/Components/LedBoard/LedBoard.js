@@ -168,14 +168,14 @@ function LedBoard() {
     );
 
     if (availableStock.length > 0) {
-      // ✅ Show available with count
+      // Show available with count
       return (
         <option key={boardType} value={boardType}>
           {boardType} ({availableStock.length} Available)
         </option>
       );
     } else {
-      // ❌ Show as unavailable (disabled)
+      // Show as unavailable (disabled)
       return (
         <option key={boardType} value="" disabled>
           {boardType} (Currently unavailable)

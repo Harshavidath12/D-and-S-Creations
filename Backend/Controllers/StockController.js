@@ -56,7 +56,7 @@ const updateStock = async (req, res, next) => {
   let { boardType, serialNo, status, purchaseDate, warrantyExpiry, assignedToBooking } = req.body;
 
   try {
-    // ✅ Auto-reset assignedToBooking if status is Available
+    //Auto-reset assignedToBooking if status is Available
     if (status === "Available") {
       assignedToBooking = null;
     }
