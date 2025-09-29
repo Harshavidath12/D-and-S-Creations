@@ -1,10 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import DesignerList from "./components/DesignerList";
 import ComplaintList from "./components/ComplaintList";
 import "./style.css";
-
 
 const mockDesigners = [
   {
@@ -23,32 +22,44 @@ const mockDesigners = [
   },
   {
     id: 3,
-    name: "Catherine Lee",
+    name: "David Kim",
     type: "Video Editing",
     qualifications: "Film School Graduate, 3 years experience",
     profileImage: "/images/designer3.jpeg",
   },
   {
     id: 4,
-    name: "David Kim",
+    name: "Rithika Patel",
     type: "Image Editing",
     qualifications: "Creative Director, 6 years experience",
     profileImage: "/images/designer4.jpeg",
   },
+  {
+    id: 5,
+    name: "Jone Maxwell",
+    type: "Video Editing",
+    qualifications: "Film Director, 2 years experience",
+    profileImage: "/images/designer5.jpeg",
+  },
+  {
+    id: 6,
+    name: "Catherine Lee",
+    type: "Image Editing",
+    qualifications: "Creative Director, 3 years experience",
+    profileImage: "/images/designer6.jpeg",
+  },
 ];
 
-
-// Home component
 function Home() {
   return (
     <div className="home-container">
       <header className="home-header">
         <h1>Welcome to Our Advertising Agency</h1>
-        <p><h3>
-          Grow your brand with impactful advertising solutions! We connect your
-          business with creative designers and expert marketing strategies to
-          deliver maximum impact.
-        </h3></p>
+        <h3>
+          Grow your brand with impactful advertising solutions! We connect
+          your business with creative designers and expert marketing strategies
+          to deliver maximum impact.
+        </h3>
         <img
           src="/images/dashboard-banner.jpeg"
           alt="Dashboard Banner"
@@ -56,7 +67,6 @@ function Home() {
         />
       </header>
 
-      {/* Section: Who prefers our agency */}
       <section className="agency-section">
         <h2>Who Chooses Our Agency?</h2>
         <p>
@@ -67,7 +77,6 @@ function Home() {
         </p>
       </section>
 
-      {/* Section: How we select designers */}
       <section className="selection-section">
         <h2>How We Select Designers</h2>
         <p>
@@ -78,9 +87,8 @@ function Home() {
         </p>
       </section>
 
-      {/* Section: Our Designers (Horizontal Scroll) */}
       <section className="designers-section">
-        <h2>Meet Our Designers</h2>
+        <h2>Head of our Designers</h2>
         <div className="designer-cards-container">
           {mockDesigners.map((designer) => (
             <div key={designer.id} className="designer-card">
@@ -90,20 +98,31 @@ function Home() {
                 className="designer-image"
               />
               <h3>{designer.name}</h3>
-              <p><strong>Type:</strong> {designer.type}</p>
-              <p><strong>Qualifications:</strong> {designer.qualifications}</p>
+              <p>
+                <strong>Type:</strong> {designer.type}
+              </p>
+              <p>
+                <strong>Qualifications:</strong> {designer.qualifications}
+              </p>
             </div>
           ))}
+        </div>
+
+        <div className="get-started-container">
+          <Link to="/designers" className="get-started-button">
+            Get Started
+          </Link>
         </div>
       </section>
     </div>
   );
 }
+
 function App() {
   return (
     <Router>
       <div className="app-container">
-        <Navbar />
+        <Navbar />  {/* left sidebar */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />

@@ -45,9 +45,12 @@ const ComplaintList = () => {
 
   return (
     <div className="page">
-      <div className="top-actions">
-      <button className="download-btn" onClick={handleDownload}>⬇️ Download PDF</button>
-      </div>
+     <div className="top-actions">
+       <button className="download-btn" onClick={handleDownload}>
+       ⬇️ Download PDF
+       </button>
+    </div>
+
       {showForm && (
         <ComplaintForm onSubmit={handleAdd} existingData={editing} onCancel={() => { setEditing(null); setShowForm(false); }} />
       )}

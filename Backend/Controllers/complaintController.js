@@ -1,7 +1,7 @@
 const Complaint = require('../Models/Complaint');
 const Designer = require('../Models/Designer');
 const PDFDocument = require('pdfkit');
-const fs = require('fs');
+
 
 exports.getAllComplaints = async (req, res) => {
   try {
@@ -57,7 +57,7 @@ exports.deleteComplaint = async (req, res) => {
   }
 };
 
-// Generate PDF
+
 exports.downloadComplaintsPDF = async (req, res) => {
   try {
     const complaints = await Complaint.find().populate('designerId', 'name type');

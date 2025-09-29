@@ -9,8 +9,12 @@ const ComplaintForm = ({ onSubmit, existingData, onCancel }) => {
 
   useEffect(() => {
     const fetchDesigners = async () => {
-      const { data } = await getDesigners();
-      setDesigners(data);
+      try {
+        const { data } = await getDesigners();
+        setDesigners(data);
+      } catch (err) {
+        console.error("Error fetching designers:", err);
+      }
     };
     fetchDesigners();
   }, []);
@@ -22,18 +26,40 @@ const ComplaintForm = ({ onSubmit, existingData, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
-    setFormData({ designerId: "", clientName: "", description: "", date: "" });
-  };
 
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().split("T")[0];
+    
+    if (!formData.date) {
+      alert("Please select a date.");
+      return;
+    }
+
+    const today = new Date();
+    const selectedDate = new Date(formData.date);
+    today.setHours(0, 0, 0, 0); 
+
+    if (selectedDate < today) {
+      alert("Please select a date from today or a future date.");
+      return;
+    }
+
+    onSubmit(formData);
+
+   
+    if (!existingData) {
+      setFormData({ designerId: "", clientName: "", description: "", date: "" });
+    }
+  };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
       <h3>{existingData ? "Update Complaint" : "Add Complaint"}</h3>
 
-      <select name="designerId" value={formData.designerId} onChange={handleChange} required>
+      <select
+        name="designerId"
+        value={formData.designerId}
+        onChange={handleChange}
+        required
+      >
         <option value="">Select Designer</option>
         {designers.map((d) => (
           <option key={d._id} value={d._id}>{d.name}</option>
@@ -61,13 +87,19 @@ const ComplaintForm = ({ onSubmit, existingData, onCancel }) => {
         name="date"
         value={formData.date}
         onChange={handleChange}
-        min={today} // <-- restrict past dates
+        min={new Date().toISOString().split("T")[0]} 
+        max={new Date().toISOString().split("T")[0]} 
         required
       />
 
       <button type="submit">{existingData ? "Update" : "Add"}</button>
+
       {onCancel && (
-        <button onClick={onCancel} type="button" className="cancel-btn">
+        <button
+          onClick={onCancel}
+          type="button"
+          className="cancel-btn"
+        >
           Cancel
         </button>
       )}

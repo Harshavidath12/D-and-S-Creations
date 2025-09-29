@@ -1,128 +1,165 @@
 import React, { useEffect, useState } from "react";
-import { getDesigners, createDesigner, updateDesigner, deleteDesigner } from "../api";
 import DesignerForm from "./DesignerForm";
+import { getDesigners, createDesigner, updateDesigner, deleteDesigner } from "../api";
 import "../style.css";
 
 const DesignerList = () => {
   const [designers, setDesigners] = useState([]);
-  const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [selectedDesigner, setSelectedDesigner] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDesigner, setSelectedDesigner] = useState(null); // New state for details
-
-  const fetchData = async () => {
-    const { data } = await getDesigners();
-    setDesigners(data);
-  };
 
   useEffect(() => {
-    fetchData();
+    fetchDesigners();
   }, []);
 
-  const handleAdd = async (designer) => {
-    if (editing) {
-      await updateDesigner(editing._id, designer);
-      setEditing(null);
-    } else {
-      await createDesigner(designer);
+  const fetchDesigners = async () => {
+    try {
+      const { data } = await getDesigners();
+      setDesigners(data.map(d => ({ ...d, previousDesigns: d.previousDesigns || [] })));
+    } catch (err) {
+      console.error(err);
     }
-    setShowForm(false);
-    fetchData();
+  };
+
+  const handleSubmit = async (backendData, frontendDesigns) => {
+    try {
+      let response;
+      if (editing) {
+        response = await updateDesigner(editing._id, backendData);
+        setDesigners(designers.map(d =>
+          d._id === editing._id ? { ...d, ...backendData, previousDesigns: frontendDesigns } : d
+        ));
+      } else {
+        response = await createDesigner(backendData);
+        setDesigners([...designers, { ...response.data, previousDesigns: frontendDesigns }]);
+      }
+      setShowForm(false);
+      setEditing(null);
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Error saving designer");
+    }
   };
 
   const handleDelete = async (id) => {
-    await deleteDesigner(id);
-    if (selectedDesigner && selectedDesigner._id === id) {
-      setSelectedDesigner(null); // Clear details if deleted
+    try {
+      await deleteDesigner(id);
+      setDesigners(designers.filter(d => d._id !== id));
+      if (selectedDesigner && selectedDesigner._id === id) setSelectedDesigner(null);
+    } catch (err) {
+      console.error(err);
     }
-    fetchData();
   };
 
-  const handleEdit = (designer) => {
-    setEditing(designer);
-    setShowForm(true);
-  };
-
-  // Filter designers based on search term
-  const filteredDesigners = designers.filter((d) =>
+  const filteredDesigners = designers.filter(d =>
     d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     d.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     d.type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="page">
-      {/* Search + Add button */}
-      <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <input
-          type="text"
-          placeholder="Search designers..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: "8px 12px",
-            width: "250px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            fontSize: "16px"
-          }}
-        />
-        <button className="floating-btn" onClick={() => { setShowForm(true); setEditing(null); }}>
-          ➕ Add Designer
-        </button>
-      </div>
+    <div className="designer-page">
+      <input
+        type="text"
+        className="designer-search"
+        placeholder="Search designers..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
 
-      {/* Add/Edit Designer Form */}
+      {/* Designer Form ABOVE the table */}
       {showForm && (
-        <DesignerForm
-          onSubmit={handleAdd}
-          existingData={editing}
-          onCancel={() => { setShowForm(false); setEditing(null); }}
-        />
+        <div className="form-top-container">
+          <DesignerForm
+            existingData={editing}
+            onCancel={() => { setShowForm(false); setEditing(null); }}
+            onSubmit={handleSubmit}
+          />
+        </div>
       )}
 
-      {/* Designers Table */}
-      <h3>Designers List</h3>
-      <table>
+      {/* Designer Table */}
+      <table className="designer-table">
         <thead>
           <tr>
-            <th>Name</th><th>Email</th><th>Type</th><th>Actions</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredDesigners.map((d) => (
+          {filteredDesigners.map(d => (
             <tr key={d._id}>
-              <td
-                className="designer-name clickable"
-                onClick={() => setSelectedDesigner(d)}
-              >
-                {d.name}
-              </td>
+              <td className="clickable" onClick={() => setSelectedDesigner(d)}>{d.name}</td>
               <td>{d.email}</td>
               <td>{d.type}</td>
               <td>
-                <button onClick={() => handleEdit(d)}>✏️</button>
+                <button onClick={() => { setEditing(d); setShowForm(true); }}>✏️</button>
                 <button onClick={() => handleDelete(d._id)}>🗑️</button>
               </td>
             </tr>
           ))}
-          {filteredDesigners.length === 0 && (
-            <tr>
-              <td colSpan="4" style={{ textAlign: "center", padding: "20px" }}>No designers found.</td>
-            </tr>
-          )}
         </tbody>
       </table>
 
-      {/* Designer Details Panel */}
+      {/* Floating Add Designer Button */}
+      <button
+        className="floating-add-btn"
+        onClick={() => { setShowForm(true); setEditing(null); }}
+      >
+        ➕ Add Designer
+      </button>
+
+      {/* Designer Details Card / Overlay */}
       {selectedDesigner && (
-        <div className="designer-details">
-          <h3>Designer Details</h3>
-          <p><strong>Name:</strong> {selectedDesigner.name}</p>
-          <p><strong>Email:</strong> {selectedDesigner.email}</p>
-          <p><strong>Type:</strong> {selectedDesigner.type}</p>
-          <p><strong>Previous Designs:</strong> {selectedDesigner.previousDesigns.join(", ")}</p>
-          <button onClick={() => setSelectedDesigner(null)} className="cancel-btn">Close</button>
+        <div className="designer-overlay">
+          <div className="designer-card">
+            <h2>{selectedDesigner.name}</h2>
+            <p><strong>Email:</strong> {selectedDesigner.email}</p>
+            <p><strong>Type:</strong> {selectedDesigner.type}</p>
+
+            {selectedDesigner.previousDesigns && selectedDesigner.previousDesigns.length > 0 ? (
+              <div className="previous-works">
+                {selectedDesigner.previousDesigns.map((work, index) => {
+                  const ext = work.split(".").pop().toLowerCase();
+                  return ["mp4", "webm"].includes(ext) ? (
+                    <video 
+                      key={index} 
+                      controls 
+                      width="400" 
+                      height="250" 
+                      style={{ margin: "10px", borderRadius: "10px" }}
+                    >
+                      <source src={work} type={`video/${ext}`} />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img 
+                      key={index} 
+                      src={work} 
+                      alt={`work-${index}`} 
+                      width="400" 
+                      style={{ margin: "10px", borderRadius: "10px" }}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <p>No previous works uploaded</p>
+            )}
+
+            <a
+              href={`mailto:${selectedDesigner.email}?subject=Customization Request&body=Hi ${selectedDesigner.name}, I would like to discuss a custom design.`}
+              className="custom-btn"
+            >
+              Customize
+            </a>
+
+            <button className="cancel-btn" onClick={() => setSelectedDesigner(null)}>Close</button>
+          </div>
         </div>
       )}
     </div>

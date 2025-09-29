@@ -1,17 +1,17 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api" // backend port
+  baseURL: "http://localhost:5000/api" 
 });
 
-// Designers API
+//get all designers
 export const getDesigners = () => API.get("/designers");
 export const getDesignerById = (id) => API.get(`/designers/${id}`);
 export const createDesigner = (data) => API.post("/designers", data);
 export const updateDesigner = (id, data) => API.put(`/designers/${id}`, data);
 export const deleteDesigner = (id) => API.delete(`/designers/${id}`);
 
-// Complaints API
+
 export const getComplaints = () => API.get("/complaints");
 export const getComplaintById = (id) => API.get(`/complaints/${id}`);
 export const createComplaint = (data) => API.post("/complaints", data);
