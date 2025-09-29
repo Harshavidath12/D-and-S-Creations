@@ -15,6 +15,7 @@ const cors = require("cors")
 app.use(express.json());
 app.use(cors());
 app.use("/users",router);
+app.use("/uploads", express.static("uploads"));
 
 
 
@@ -24,3 +25,41 @@ mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster
     app.listen(5000);
 })
 .catch((err)=> console.log((err)));
+
+
+//call register
+require("./Model/LoginModel");
+const User = mongoose.model("registers");
+app.post("/registers", async(req, res) => {
+    const {username, password, whoareyou} =req.body;
+    try{
+        await User.create({
+            username,
+            password,
+            whoareyou
+        })
+        res.send({status: "ok"});
+    }catch (err){
+        res.send({status: "err"});
+    }
+});
+
+
+//call login
+app.post("/login", async(req,res)=> {
+    const {username, password} = req.body;
+    try{
+        const user = await User.findOne({username});
+        if(!user){
+            return res.json({err: "User not Found"})
+        }
+        if(user.password === password){
+            return res.json({status: "ok"});
+        }else{
+            return res.json({err: "incorrect password"});
+        }
+    }catch (err){
+        console.error(err);
+        res.status(500).json({err:"sever error"});
+    }
+});

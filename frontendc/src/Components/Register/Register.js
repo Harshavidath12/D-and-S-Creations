@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import './Register.css'
+import HomeNav from '../HomeNav/HomeNav';
 import {useNavigate} from "react-router";
 
 
 function Register() {
   const history = useNavigate();
   const [inputs, setInputs] = useState({
-    username:"",
+    firstname:"", 
+    lastname:"",
     email:"",
     phonenumber:"",
     whoareyou:"",
@@ -24,12 +27,19 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
-    sendRequest().then(() => history("/AdminDash"))  //give the path
+    sendRequest().then(() => {
+      alert ("Request completed successfully.\nPlease wait for your username and password. Check your WhatsApp or email.\nThank you!")
+      history("/Home")  //give the path
+      })
+      .catch((err)=>{
+        alert(err.message);
+      });
   };
 
   const sendRequest = async() => {
     await axios.post("http://localhost:5000/users",{
-      username:String (inputs.username),
+      firstname:String (inputs.firstname),
+      lastname:String (inputs.lastname),
       email:String (inputs.email),
       phonenumber:String (inputs.phonenumber),
       whoareyou:String (inputs.whoareyou),
@@ -40,11 +50,18 @@ function Register() {
 
   return (
     <div>
+    <HomeNav/>
+    <div className="register-container">
+      
       <h1>Register</h1>
       <br/>
-      <form onSubmit={handleSubmit}>
-        <label>Username</label> 
-        <input type="text" name="username" onChange={handleChange} value={inputs.username} required></input> 
+      <form className="register-form" onSubmit={handleSubmit}>
+        <label>First Name</label> 
+        <input type="text" name="firstname" onChange={handleChange} value={inputs.firstname} required></input> 
+        <br />
+
+        <label>Last Name</label> 
+        <input type="text" name="lastname" onChange={handleChange} value={inputs.lastname} required></input> 
         <br />
         
         <label>Email</label> 
@@ -57,7 +74,7 @@ function Register() {
 
         <label>Who Are You</label> 
         <select name="whoareyou" onChange={handleChange} value={inputs.whoareyou} required>
-          <option value="Client" selected>Client</option>
+          <option value="Client">Client</option>
           <option value="FilmHall Owner">FilmHall Owner</option>
           <option value="LedBoard Owner">LedBoard Owner</option>
           <option value="Designer">Designer</option>
@@ -77,6 +94,7 @@ function Register() {
 
         <button type="submit">Request</button>
       </form>
+    </div>
     </div>
   )
 }

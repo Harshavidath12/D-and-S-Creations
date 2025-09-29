@@ -21,11 +21,11 @@ const getAllUsers = async (req, res, next) => {
 //data insert
 const addUser = async (req, res, next) => {
     
-    const{username, email, phonenumber, whoareyou, gender, birthday} = req.body;
+    const{firstname, lastname, email, phonenumber, whoareyou, gender, birthday} = req.body;
     let users;
 
     try {
-        users = new User({username, email, phonenumber, whoareyou, gender, birthday});
+        users = new User({firstname, lastname, email, phonenumber, whoareyou, gender, birthday});
         await users.save(); 
     }catch (err){
          console.log(err);
@@ -57,26 +57,27 @@ const getById = async(req, res, next) => {
     return res.status(200).json({users});
 };
 
-//update user details
-const updateUser = async(req, res, next) => {
-    const id = req.params.id;
-    const{username, email, phonenumber, whoareyou, gender, birthday} = req.body;
-    let users;
+// update user details
+const updateUser = async (req, res, next) => {
+  const id = req.params.id;
+  const { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic } = req.body; // 👈 include status
+  let users;
 
-    try {
-        users = await User.findByIdAndUpdate(id,{
-            username: username, email: email, phonenumber: phonenumber, whoareyou: whoareyou, gender: gender, birthday: birthday
-        });
-        users = await users.save();
-    }catch (err) {
-        console.log(err);
-    }
+  try {
+    users = await User.findByIdAndUpdate(
+      id,
+      { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic }, // 👈 now status updates too
+      { new: true } // return updated doc
+    );
+  } catch (err) {
+    console.log(err);
+  }
 
-    if (!users){
-        return res.status(404).json({ message: "Unable to Update user Details"});
-    }
+  if (!users) {
+    return res.status(404).json({ message: "Unable to Update user Details" });
+  }
 
-    return res.status(200).json({users});
+  return res.status(200).json({ users });
 };
 
 //delete user
@@ -103,3 +104,4 @@ exports.addUser = addUser;
 exports.getById = getById;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+

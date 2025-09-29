@@ -1,22 +1,41 @@
-import React from 'react'
+import React from "react";
+import "../AdminProfile/AdminProfile.css"
+import {Link} from "react-router-dom";
 
 function AdminProfileDisplay(props) {
- const {_id, username, email, phonenumber, whoareyou, gender, birthday, status} = props.user;
+ const {_id, firstname, lastname, email, phonenumber, gender, birthday, profilePic} = props.user;
+
   return (
-    <div>
-      <h3>Id:{_id}</h3>
-      <h3>User Name:{username}</h3>
-      <h3>E-Maile:{email}</h3>
-      <h3>Phone Number:{phonenumber}</h3>
-      <h3>Who Are You:{whoareyou}</h3>
-      <h3>Gender:{gender}</h3>
-      <h3>Birthday:{birthday}</h3>
-      <h3>Status:{status}</h3>
-      <button>Accept</button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button>Reject</button>
-      <br/><br/><br/>
+<div className="profile-container">
+  <h1>My Profile</h1>
+
+  <div className="profile-wrapper">
+    {/* Left Panel */} 
+    <div className="profile-left"> 
+      <div className="avatar"><img src={`http://localhost:5000/uploads/${profilePic}`} alt="profile" className="avatar-img"/></div>
+      <h2>{firstname} {lastname}</h2> 
+      </div>
+
+    {/* Right Panel */}
+    <div className="profile-right">
+      <label>Email</label>
+      <h3>{email}</h3>
+
+      <label>Phone Number</label>
+      <h3>{phonenumber}</h3>
+
+      <label>Gender</label>
+      <h3>{gender}</h3>
+
+      <label>Birthday</label>
+      <h3>{birthday}</h3>
+
+      <Link to={`/PendingUsers/${_id}`} className="profile-button">Edit Profile</Link>
     </div>
+  </div>
+</div>
+
+
   )
 }
 

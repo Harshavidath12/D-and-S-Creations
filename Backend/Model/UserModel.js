@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
-    username:{
+    firstname:{
+        type:String,
+        required:true,
+    },
+    lastname:{
         type:String,
         required:true,
     },
@@ -16,8 +20,8 @@ const userSchema = new Schema({
     },
     whoareyou:{
         type:String,
-        enum: ["FilmHall Owner", "LedBoard Owner", "Designer", "Client"],
-        default: "Client"
+        enum: ["Client", "FilmHall Owner", "LedBoard Owner", "Designer", "Admin"],
+        required:true,
     },
     gender:{
         type:String,
@@ -32,6 +36,10 @@ const userSchema = new Schema({
         type: String, 
         enum: ["Pending", "Active", "Rejected"], 
         default: "Pending" 
+    },
+    profilePic: {
+    type: String, // just store the file path or image URL
+    default: ""   // empty until user uploads
     }
     
 });
