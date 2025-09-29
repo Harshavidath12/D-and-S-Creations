@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import DesignerList from "./components/DesignerList";
 import ComplaintList from "./components/ComplaintList";
+import ClientDesignerList from "./components/ClientDesignerList"; // ✅ new import
 import "./style.css";
 
 const mockDesigners = [
@@ -122,12 +123,13 @@ function App() {
   return (
     <Router>
       <div className="app-container">
-        <Navbar />  {/* left sidebar */}
+        <Navbar /> {/* left sidebar */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/designers" element={<DesignerList />} />
             <Route path="/complaints" element={<ComplaintList />} />
+            <Route path="/client-designers" element={<ClientDesignerList />} /> {/* ✅ new route */}
           </Routes>
         </div>
       </div>
