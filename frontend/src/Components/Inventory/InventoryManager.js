@@ -92,7 +92,7 @@ function InventoryManager() {
 
   return (
     <div className="inventory-container">
-      <h1>Inventory Manager</h1>
+      <h1>Inventory Manager DashBoard</h1>
 
       <form onSubmit={handleAddStock} className="inventory-form">
         <input
