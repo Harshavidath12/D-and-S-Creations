@@ -2,7 +2,7 @@ const Complaint = require('../Models/Complaint');
 const Designer = require('../Models/Designer');
 const PDFDocument = require('pdfkit');
 
-
+//To get and Diaplay the all complaints
 exports.getAllComplaints = async (req, res) => {
   try {
     const complaints = await Complaint.find().populate('designerId', 'name type');
@@ -12,6 +12,7 @@ exports.getAllComplaints = async (req, res) => {
   }
 };
 
+//To get the compalint by searching 
 exports.getComplaintById = async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id).populate('designerId', 'name type');
@@ -22,6 +23,7 @@ exports.getComplaintById = async (req, res) => {
   }
 };
 
+//To create a new complaint
 exports.createComplaint = async (req, res) => {
   const complaint = new Complaint({
     designerId: req.body.designerId,
@@ -37,6 +39,7 @@ exports.createComplaint = async (req, res) => {
   }
 };
 
+//To update exsisting complaint
 exports.updateComplaint = async (req, res) => {
   try {
     const complaint = await Complaint.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -47,6 +50,7 @@ exports.updateComplaint = async (req, res) => {
   }
 };
 
+//to Delete any complaint
 exports.deleteComplaint = async (req, res) => {
   try {
     const complaint = await Complaint.findByIdAndDelete(req.params.id);
@@ -57,7 +61,7 @@ exports.deleteComplaint = async (req, res) => {
   }
 };
 
-
+//to download pdf of complaint using pdfkit
 exports.downloadComplaintsPDF = async (req, res) => {
   try {
     const complaints = await Complaint.find().populate('designerId', 'name type');
@@ -83,5 +87,6 @@ exports.downloadComplaintsPDF = async (req, res) => {
     doc.end();
   } catch (err) {
     res.status(500).json({ message: err.message });
+    
   }
 };

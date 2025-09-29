@@ -1,5 +1,6 @@
 const Designer = require('../Models/Designer');
 
+// to get all designers
 exports.getAllDesigners = async (req, res) => {
   try {
     const designers = await Designer.find().sort({ name: 1 }); // Sorted A-Z
@@ -9,6 +10,7 @@ exports.getAllDesigners = async (req, res) => {
   }
 };
 
+//to get all designers by id
 exports.getDesignerById = async (req, res) => {
   try {
     const designer = await Designer.findById(req.params.id);
@@ -19,12 +21,14 @@ exports.getDesignerById = async (req, res) => {
   }
 };
 
+
+//to create a new designer
 exports.createDesigner = async (req, res) => {
   const designer = new Designer({
     name: req.body.name,
     type: req.body.type,
     previousDesigns: req.body.previousDesigns || [],
-    email: req.body.email // NEW FIELD
+    email: req.body.email 
   });
 
   try {
@@ -35,6 +39,7 @@ exports.createDesigner = async (req, res) => {
   }
 };
 
+//To update an existing Designer
 exports.updateDesigner = async (req, res) => {
   try {
     const designer = await Designer.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -45,6 +50,7 @@ exports.updateDesigner = async (req, res) => {
   }
 };
 
+//To delete any designer
 exports.deleteDesigner = async (req, res) => {
   try {
     const designer = await Designer.findByIdAndDelete(req.params.id);
