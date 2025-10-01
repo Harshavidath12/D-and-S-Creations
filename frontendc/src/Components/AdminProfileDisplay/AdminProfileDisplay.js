@@ -3,7 +3,22 @@ import "../AdminProfile/AdminProfile.css"
 import {Link} from "react-router-dom";
 
 function AdminProfileDisplay(props) {
- const {_id, firstname, lastname, email, phonenumber, gender, birthday, profilePic} = props.user;
+ const {_id, firstname, lastname, email, phonenumber, gender, birthday, whoareyou} = props.user;
+
+ const getProfileLink = () => {
+  switch (whoareyou) {
+    case "Client":
+      return `/Client/${_id}`;
+    case "Designer":
+      return `/Designer/${_id}`;
+    case "FilmhallOwners":
+      return `/FilmhallOwners/${_id}`;
+    case "LedBoardOwners":
+      return `/LedBoardOwners/${_id}`;
+    default:
+      return `/PendingUsers/${_id}`;
+  }
+};
 
   return (
 <div className="profile-container">
@@ -12,7 +27,6 @@ function AdminProfileDisplay(props) {
   <div className="profile-wrapper">
     {/* Left Panel */} 
     <div className="profile-left"> 
-      <div className="avatar"><img src={`http://localhost:5000/uploads/${profilePic}`} alt="profile" className="avatar-img"/></div>
       <h2>{firstname} {lastname}</h2> 
       </div>
 
@@ -30,7 +44,7 @@ function AdminProfileDisplay(props) {
       <label>Birthday</label>
       <h3>{birthday}</h3>
 
-      <Link to={`/PendingUsers/${_id}`} className="profile-button">Edit Profile</Link>
+      <Link to={getProfileLink()} className="profile-button">Edit Profile</Link>
     </div>
   </div>
 </div>

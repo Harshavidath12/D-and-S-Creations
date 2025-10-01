@@ -8,8 +8,11 @@ function HomeNav() {
     <div class="navbar">
       <ul className="nav-list">
         <li> 
-            <Link to="/Home" className="nav-link">Home</Link> 
+            <Link to="/Home" className="nav-link">Home</Link>
         </li>
+        {/* <li> 
+            <Link to="/AdminProfile" className="nav-link">View Profile</Link> 
+        </li> */}
         <li> 
             <Link to="/Login" className="nav-link">Login</Link> 
         </li>

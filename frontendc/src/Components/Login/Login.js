@@ -6,6 +6,7 @@ import "./Login.css";
 
 function Login() {
   const history = useNavigate();
+
   const [user, setUser] = useState({
     username:"",
     password:""
@@ -13,23 +14,48 @@ function Login() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({...prevUser, [name]: value}));
+    setUser((prevUser) => ({
+      ...prevUser, 
+      [name]: value}));
   };
 
   const handleSubmit = async(e) => {
-    e.preventDefault();
-    try{
-      const response = await sendRequest();
-      if(response.status === "ok"){
-        history("/AdminDash");
-      }else{
-        alert("Login Error !");
-      }
-    }catch (err) {
-      alert ("error" + err.message);
-    }
-  };
+  e.preventDefault();
 
+  try {
+    const response = await sendRequest();
+
+    if(response.status === "ok"){
+      localStorage.setItem("username", response.user.username); // save username
+
+      switch (response.user.whoareyou) {
+        case "Admin":
+          history("/AdminDash");
+          break;
+        case "Designer":
+          history("/DesignerDash");
+          break;
+        case "FilmHall Owner":
+          history("/FilmHallOwnerDash");
+          break;
+        case "LedBoard Owner":
+          history("/LedBoardOwnerDash");
+          break;
+        case "Client":
+          history("/Home");
+          break;
+        default:
+          history("/"); // fallback
+      }
+    } else {
+      alert("Login Error !");
+    }
+  } catch (err) {
+    alert("Error: " + err.message);
+  }
+};
+
+  //Function to call the backend login
   const sendRequest = async() => {
     return await axios.post("http://localhost:5000/login",{
       username: user.username,

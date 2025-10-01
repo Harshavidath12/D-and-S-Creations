@@ -56,17 +56,32 @@ const getById = async(req, res, next) => {
 
     return res.status(200).json({users});
 };
+//get by username
+const getByUsername = async(req, res, next) => {
+    const username = req.params.username;
+    
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ message: "User Not Found" });
+        }
+        return res.status(200).json({ user });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Server Error" });
+    }
+};
 
 // update user details
 const updateUser = async (req, res, next) => {
   const id = req.params.id;
-  const { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic } = req.body; // 👈 include status
+  const { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic, username, password } = req.body; // 👈 include status
   let users;
 
   try {
     users = await User.findByIdAndUpdate(
       id,
-      { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic }, // 👈 now status updates too
+      { firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, profilePic, username, password }, // 👈 now status updates too
       { new: true } // return updated doc
     );
   } catch (err) {
@@ -104,4 +119,5 @@ exports.addUser = addUser;
 exports.getById = getById;
 exports.updateUser = updateUser;
 exports.deleteUser = deleteUser;
+exports.getByUsername = getByUsername;
 

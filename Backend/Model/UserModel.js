@@ -43,11 +43,11 @@ const userSchema = new Schema({
     },
     username:{
         type:String,
-        default: "notyet"
+        default: "Not Yet"
     },
     password:{
         type:String,
-        default: "nptyet"
+        default: "Not Yet"
     }
     
 });

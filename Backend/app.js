@@ -45,20 +45,20 @@ app.post("/users", async(req, res) => {
 
 
 //call login
-app.post("/login", async(req,res)=> {
-    const {username, password} = req.body;
-    try{
-        const user = await User.findOne({username});
-        if(!user){
-            return res.json({err: "User not Found"})
-        }
-        if(user.password === password){
-            return res.json({status: "ok"});
-        }else{
-            return res.json({err: "incorrect password"});
-        }
-    }catch (err){
-        console.error(err);
-        res.status(500).json({err:"sever error"});
+app.post("/login", async (req,res)=> {
+  const {username, password} = req.body;
+  try {
+    const user = await User.findOne({username});
+    if(!user){
+      return res.json({err: "User not Found"})
     }
+    if(user.password === password){
+      return res.json({status: "ok", user});
+    }else{
+      return res.json({err: "incorrect password"});
+    }
+  }catch (err){
+    console.error(err);
+    res.status(500).json({err:"server error"});
+  }
 });

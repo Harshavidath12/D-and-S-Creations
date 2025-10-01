@@ -13,6 +13,7 @@ router.post("/",UserController.addUser);
 router.get("/:id",UserController.getById);
 router.put("/:id",UserController.updateUser);
 router.delete("/:id",UserController.deleteUser);
+router.get("/username/:username", UserController.getByUsername);
 
 
 //udate to login
@@ -36,41 +37,5 @@ router.put("/users/:id", async (req, res) => {
   }
 });
 
-// Storage config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
-});
 
-const upload = multer({ storage });
-
-// Use this for updating user with profile picture
-router.put("/:id", upload.single("ProfilePic"), async (req, res) => {
-  const id = req.params.id;
-
-  // Destructure text fields from req.body
-  const { firstname, lastname, email, phonenumber, whoareyou, gender, birthday } = req.body;
-
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      {
-        firstname,
-        lastname,
-        email,
-        phonenumber,
-        whoareyou,
-        gender,
-        birthday,
-        profilePic: req.file ? req.file.filename : undefined
-      },
-      { new: true }
-    );
-    res.json(updatedUser);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
-});
-//export
 module.exports = router;

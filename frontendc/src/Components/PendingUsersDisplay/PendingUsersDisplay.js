@@ -4,7 +4,7 @@ import './PendingUserDisplay.css';
 import { useNavigate } from 'react-router-dom';
 
 function PendingUsersDisplay(props) {
-    const {_id, firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status} = props.user;
+    const {_id, firstname, lastname, email, phonenumber, whoareyou, gender, birthday, status, username, password} = props.user;
 
     const history = useNavigate();
 
@@ -47,6 +47,12 @@ function PendingUsersDisplay(props) {
       <br/>
       <label>Status</label>
       <h3>{status}</h3>
+      <br/>
+      <label>User Name</label>
+      <h3>{username}</h3>
+      <br/>
+      <label>Password</label>
+      <h3>{password}</h3>
       <div className="buttons">
       <button onClick={acceptHandler} className="Acceptbutton" disabled={status === "Active"}>Accept</button>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

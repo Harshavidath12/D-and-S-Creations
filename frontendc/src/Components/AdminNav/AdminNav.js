@@ -15,7 +15,7 @@ function AdminNav() {
                 <Link to="/Roll" className="nav-link">Job Roll</Link> 
             </li>
             <li> 
-                <Link to="/AdminProfile" className="nav-link">Admin Profile</Link> 
+                <Link to="/AdminProfile" className="nav-link">View Profile</Link> 
             </li>
             <li> 
                 <Link to="/Home" className="nav-link">Sing Out</Link> 
