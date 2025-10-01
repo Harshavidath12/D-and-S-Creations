@@ -584,6 +584,7 @@ function NewReservation() {
                           >
                             Select Cinema
                           </button>
+                          
 
                           
                         </div>
