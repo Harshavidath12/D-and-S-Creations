@@ -6,9 +6,9 @@ import { useNavigate, useLocation } from "react-router";
 
 function SetLogin() {
   const history = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // Access the location object
 
-  const { _id, firstname, lastname, whoareyou } = location.state || {};
+  const { _id, firstname, lastname, whoareyou } = location.state || {}; // 
 
    const generatePassword = (length = 10) => {
     const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
@@ -44,16 +44,12 @@ function SetLogin() {
   };
 
   const sendRequest = async() => {
-    await axios.post("http://localhost:5000/registers",{
-      username:String (inputs.username),
-      password:String (inputs.password),
-      whoareyou: whoareyou, 
+    await axios.put(`http://localhost:5000/users/${_id}`,{
+      username: inputs.username,
+      password: inputs.password,
+      status: "Active"        //Update pending user status
     }).then(res => res.data);
 
-  //Update pending user status
-  await axios.put(`http://localhost:5000/users/${_id}`, {
-    status: "Active"
-  });
   }
   return (
     <div>

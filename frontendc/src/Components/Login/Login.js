@@ -6,16 +6,14 @@ import "./Login.css";
 
 function Login() {
   const history = useNavigate();
-  const [inputs, setInputs] = useState({
+  const [user, setUser] = useState({
     username:"",
     password:""
   });
 
-  const handleChange = (e) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({...prevUser, [name]: value}));
   };
 
   const handleSubmit = async(e) => {
@@ -34,8 +32,8 @@ function Login() {
 
   const sendRequest = async() => {
     return await axios.post("http://localhost:5000/login",{
-      username:inputs.username,
-      password:inputs.password,
+      username: user.username,
+      password: user.password,
       
     }).then(res => res.data);
   }
@@ -46,11 +44,11 @@ function Login() {
       <br/>
       <form onSubmit={handleSubmit}>
         <label>Username</label> 
-        <input type="text" name="username" onChange={handleChange} value={inputs.username} required></input> 
+        <input type="text" name="username" onChange={handleInputChange} value={user.username} required></input> 
         <br />
         <br />
         <label>password</label> 
-        <input type="password" name="password" onChange={handleChange} value={inputs.password} required></input> 
+        <input type="password" name="password" onChange={handleInputChange} value={user.password} required></input> 
         <br /><br />
         <button type="submit">Login</button>
     </form>

@@ -38,8 +38,16 @@ const userSchema = new Schema({
         default: "Pending" 
     },
     profilePic: {
-    type: String, // just store the file path or image URL
-    default: ""   // empty until user uploads
+        type: String, // just store the file path or image URL
+        default: "no pic"   // empty until user uploads
+    },
+    username:{
+        type:String,
+        default: "notyet"
+    },
+    password:{
+        type:String,
+        default: "nptyet"
     }
     
 });

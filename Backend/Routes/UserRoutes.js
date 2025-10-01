@@ -14,14 +14,24 @@ router.get("/:id",UserController.getById);
 router.put("/:id",UserController.updateUser);
 router.delete("/:id",UserController.deleteUser);
 
+
+//udate to login
 router.put("/users/:id", async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body;
+  const { username, password, status } = req.body; // destructure all fields
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(id, { status }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,{ username, password, status }, // update all fields
+      { new: true } // return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     res.json(updatedUser);
-  } catch (err) {
+  }catch (err) {
     res.status(500).json({ error: err.message });
   }
 });

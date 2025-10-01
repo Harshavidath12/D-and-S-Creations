@@ -28,15 +28,14 @@ mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster
 
 
 //call register
-require("./Model/LoginModel");
-const User = mongoose.model("registers");
-app.post("/registers", async(req, res) => {
-    const {username, password, whoareyou} =req.body;
+require("./Model/UserModel");
+const User = mongoose.model("NewUser");
+app.post("/users", async(req, res) => {
+    const {username, password} =req.body;
     try{
         await User.create({
             username,
-            password,
-            whoareyou
+            password
         })
         res.send({status: "ok"});
     }catch (err){
