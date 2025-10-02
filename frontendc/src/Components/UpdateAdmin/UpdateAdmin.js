@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './UpdateAdmin.css';
 import { useParams, useNavigate } from 'react-router';
 
 function UpdateAdmin() {
@@ -103,7 +104,7 @@ function UpdateAdmin() {
   };
 
   return (
-    <div>
+    <div className='div63'>
       <h1>Update Your Profile</h1>
       <br/>
       <form className="register-form" onSubmit={handleSubmit}>

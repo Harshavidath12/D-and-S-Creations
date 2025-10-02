@@ -52,5 +52,15 @@ const userSchema = new Schema({
     
 });
 
+userSchema.pre('save', function (next) {
+  if (this.phonenumber) {
+    // if starts with 0 → strip 0 and add +94
+    if (this.phonenumber.startsWith('0')) {
+      const withoutZero = this.phonenumber.substring(1); // e.g. 753334782
+      this.phonenumber = '+94' + withoutZero;            // e.g. 94753334782
+    } 
+  }
+  next();
+});
 
 module.exports = mongoose.model("NewUser", userSchema);

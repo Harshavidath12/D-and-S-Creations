@@ -1,0 +1,77 @@
+/* Container styling */
+.div63 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f4f4f9;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading */
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Form styling */
+.register-form {
+  background-color: #fff;
+  padding: 2rem 3rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+/* Labels */
+.register-form label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Inputs and selects */
+.register-form input,
+.register-form select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  transition: border 0.3s ease;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Error messages */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+/* Submit button */
+.register-form button {
+  margin-top: 15px;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.register-form button:hover {
+  background-color: #0056b3;
+}

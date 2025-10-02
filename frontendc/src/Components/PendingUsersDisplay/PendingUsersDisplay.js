@@ -9,15 +9,31 @@ function PendingUsersDisplay(props) {
     const history = useNavigate();
 
     const deleteHandler = async () => {
-      await axios.delete(`http://localhost:5000/users/${_id}`)
+      if (status === "Pending") {
+        //send whatsapp message
+        const phoneNumber = phonenumber; // assuming phoneNumber
+        const message = `Hello ${firstname}, your account has not created.\nPlease try again later.`;
+        const WhatsAppUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+        
+        //opne whatsapp
+        window.open(WhatsAppUrl, '_blank');
+
+        //delete user
+        await axios.delete(`http://localhost:5000/users/${_id}`)
         .then(res => res.data)
         .then(() => history("/PendingUsers"));
+    }else{
+        await axios.delete(`http://localhost:5000/users/${_id}`)
+        .then(res => res.data)
+        .then(() => history("/PendingUsers"));
+    }
     };
 
   // Accept handler (update status to Active)
- const acceptHandler = () => {
-  history("/SetLogin", { state: { _id, firstname, lastname, whoareyou } });
-};
+  const acceptHandler = () => {
+  history("/SetLogin", { state: { _id, firstname, lastname, whoareyou, phonenumber } });
+  };
+
 
   return ( 
     <div className="main">

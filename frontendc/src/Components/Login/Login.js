@@ -64,8 +64,8 @@ function Login() {
     }).then(res => res.data);
   }
   return (
-    <div>
-      <HomeNav/>
+    <div> <HomeNav/>
+    <div className='div23'>
         <h1>User Login</h1>
       <br/>
       <form onSubmit={handleSubmit}>
@@ -78,6 +78,7 @@ function Login() {
         <br /><br />
         <button type="submit">Login</button>
     </form>
+    </div>
     </div>
   )
 }

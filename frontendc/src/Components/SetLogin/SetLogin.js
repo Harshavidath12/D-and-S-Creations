@@ -88,6 +88,20 @@ function SetLogin() {
     }).then(res => res.data);
 
   }
+
+
+  //send whatsapp message
+  const sendWhatsAppMessage = async () => {
+    const { phonenumber } = location.state || {};
+    const phoneNumber = phonenumber; // assuming phoneNumber
+    const message = `Hello ${firstname}, your account has been created. Your,\n   username is ${inputs.username}\n   password is ${inputs.password}\nPlease user your username and password to logging in.`;
+    const WhatsAppUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    
+    //opne whatsapp
+    window.open(WhatsAppUrl, '_blank');
+
+  }
+
   return (
     <div>
     <h1 className='header'>User Register</h1>
@@ -126,7 +140,7 @@ function SetLogin() {
         </button>
   
         <br /><br />
-        <button type="submit" className='submit'>Submit</button>
+        <button type="submit" className='submit' onClick={sendWhatsAppMessage}>Submit</button>
     </form>
     </div>
     </div>

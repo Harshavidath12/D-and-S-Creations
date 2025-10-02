@@ -17,13 +17,14 @@ function PendingUsers() {
     fetchHandler().then((data) => setUsers(data.users));
   }, [])
 
-  //download
-  const ComponentsRef = useRef();
+  //download pdf
+  const contentRef = useRef();
+
   const handlePrint = useReactToPrint({
-    content: () => ComponentsRef.current,
-    DocumentTitle: "Users Report",
-    onafterprint: () => alert("User Report Successfully Downloaded!"),
-  });
+  content: () => contentRef.current,
+  documentTitle: "Users Pending Report", 
+  onAfterPrint: () => alert("User Report Successfully Downloaded!"), 
+});
 
   //search
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,15 +42,18 @@ function PendingUsers() {
   }
 
   return (
+
         <div className="fro">
           <AdminNav/>
         <h1>Pending Users List</h1>
+
         <div className='cent'>
         {/* Search Bar */}
         <input onChange={(e) => setSearchQuery(e.target.value)} 
         type = "text" name='search' placeholder='Search Users Details' className="Search"></input>
         <button onClick={handleSearch} className="Searchbutton">Search</button>
         <br/><br/>
+    
         </div>
         {noResult ? (
           <div>
@@ -57,17 +61,17 @@ function PendingUsers() {
           </div>
         ): (
 
-        <div ref={ComponentsRef} className="userlist">
-          {users && users
-            .filter(user => user.status === "Pending")
-            .map((user, i) => (
-              <div key={i}>
-                <PendingUsersDisplay user={user}/>
-              </div>
-          ))}
-        </div>
-        )}
-        <button onClick={handlePrint} className="pdfbutton">Download Report</button>
+        <div ref={contentRef} className="userlist">
+        {users && users
+          .filter(user => user.status === "Pending")
+          .map((user, i) => (
+            <div key={i}>
+              <PendingUsersDisplay user={user}/>
+            </div>
+        ))}
+      </div>
+      )}
+      <button onClick={handlePrint} className="pdfbutton">Download Report</button>
       </div>
   )
 }
