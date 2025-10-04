@@ -30,14 +30,7 @@ app.use("/payments", paymentRoutes); // for payment routes
 app.use("/stock", stockRoutes); // for stock routes
 
 
-mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster0.sp3lpkf.mongodb.net/test")
-.then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(5000, () => {
-        console.log("Server running on http://localhost:5000");
-    });
-})
-.catch((err) => console.log("DB connection error:", err));
+
 
 mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
 .then(() => {
