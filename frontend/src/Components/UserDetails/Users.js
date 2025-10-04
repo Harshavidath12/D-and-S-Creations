@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import "./Users.css"; //Import the CSS file
 
-const URL = "http://localhost:5000/users";
+const URL = "http://localhost:5000/bookings";
 
 const fetchHandler = async () => {
   return await axios.get(URL).then((res) => res.data);

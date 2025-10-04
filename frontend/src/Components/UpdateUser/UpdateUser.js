@@ -11,7 +11,7 @@ function UpdateUser() {
   useEffect(() => {
     const fetchHandler = async () => {
       await axios
-        .get(`http://localhost:5000/users/${id}`)
+        .get(`http://localhost:5000/bookings/${id}`)
         .then((res) => res.data)
         .then((data) => setInputs(data.user));
     };
@@ -19,7 +19,7 @@ function UpdateUser() {
   }, [id]);
 
   const sendRequest = async () => {
-    await axios.put(`http://localhost:5000/users/${id}`, {
+    await axios.put(`http://localhost:5000/bookings/${id}`, {
       name: String(inputs.name),
       ledBoardType: String(inputs.ledBoardType),
       quantity: String(inputs.quantity),

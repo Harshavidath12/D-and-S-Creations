@@ -4,7 +4,7 @@ import "./LedBoard.css";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const USERS_URL = "http://localhost:5000/users";   // Rentals/Bookings
+const USERS_URL = "http://localhost:5000/bookings";   // Rentals/Bookings
 const STOCK_URL = "http://localhost:5000/stock";   // Inventory
 const PRICING_URL = "http://localhost:5000/pricing";
 

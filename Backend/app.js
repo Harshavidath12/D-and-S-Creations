@@ -3,7 +3,7 @@ console.log("Byeeeeee");
 
 const mongoose=require("mongoose");
 const express = require("express");
-const router= require("./Routes/UserRoutes");
+const bookingRoutes= require("./Routes/BookingRoutes");
 const pricingRoutes = require("./Routes/pricingRoutes"); // import pricing routes
 const paymentRoutes = require("./Routes/PaymentRoutes");
 const stockRoutes = require("./Routes/StockRoutes");
@@ -18,7 +18,7 @@ app.use(express.json());//use json data
 //Middleware
 app.use(express.json());//postmon eken insert krna data tika json ekata responsive wenna 
 app.use(cors());
-app.use("/users",router);
+app.use("/bookings",bookingRoutes);
 app.use("/pricing",pricingRoutes); // for pricing routes
 app.use("/payments", paymentRoutes); // for payment routes
 app.use("/stock", stockRoutes); // for stock routes

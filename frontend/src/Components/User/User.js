@@ -22,7 +22,7 @@ function User(props) {
   // Delete Function
   const deleteHandler = async () => {
     await axios
-      .delete(`http://localhost:5000/users/${_id}`)
+      .delete(`http://localhost:5000/bookings/${_id}`)
       .then((res) => res.data)
       .then(() => history("/userdetails"));
   };
