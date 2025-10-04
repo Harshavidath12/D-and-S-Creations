@@ -32,6 +32,10 @@ app.use("/payments", paymentRoutes); // for payment routes
 app.use("/stock", stockRoutes); // for stock routes
 
 //rashali
+app.use("/complaint", complaintRoutes); // ✅ ADD THIS LINE
+app.use("/designer", designerRoutes); 
+
+
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
@@ -173,7 +177,6 @@ app.post("/login", async (req,res)=> {
     res.status(500).json({err:"server error"});
   }
 });
-
 
 
 
