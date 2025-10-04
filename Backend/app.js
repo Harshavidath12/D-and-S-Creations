@@ -8,6 +8,7 @@ const pricingRoutes = require("./Routes/pricingRoutes"); // import pricing route
 const paymentRoutes = require("./Routes/PaymentRoutes");
 const stockRoutes = require("./Routes/StockRoutes");
 
+
 const app=express(); 
 
 const cors=require("cors");//calling the cors package which was installed
