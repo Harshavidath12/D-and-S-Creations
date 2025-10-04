@@ -1,0 +1,86 @@
+/* Main container styling */
+.main {
+  background-color: #ffffff;          /* clean white background */
+  padding: 10px 30px;                 /* inner spacing */
+  margin: 20px auto;                  /* center on page */
+  width: 400px;                       /* fixed width */
+  border-radius: 12px;                /* rounded corners */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1); /* soft shadow */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  transition: transform 0.2s ease;
+}
+
+/* Hover effect for the card */
+.main:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Headings styling */
+h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  padding-left: 8px;
+  border-left: 3px solid #007BFF;
+}
+
+/* Buttons container */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* space between buttons */
+}
+
+/* Button styling */
+.Acceptbutton {
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #28a745; /* green */
+  color: white;
+}
+
+.Acceptbutton:hover {
+  background-color: #218838;
+}
+
+.Acceptbutton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+
+/* Reject button */
+.Rejectbutton {
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #dc3545; /* green */
+  color: white;
+}
+
+.Rejectbutton:hover {
+  background-color: #c82333;
+}

@@ -1,28 +1,43 @@
-console.log("Byeeeeee");   
 //E1gMihrKg842U8Sd
 
-const mongoose=require("mongoose");
 const express = require("express");
+const mongoose=require("mongoose");
+const router = require("./Routes/UserRoutes");
 const bookingRoutes= require("./Routes/BookingRoutes");
 const pricingRoutes = require("./Routes/pricingRoutes"); // import pricing routes
 const paymentRoutes = require("./Routes/PaymentRoutes");
 const stockRoutes = require("./Routes/StockRoutes");
 
 const app=express(); 
+
 const cors=require("cors");//calling the cors package which was installed
 
 //to parse json request bodies
-app.use(express.json());//use json data
+//app.use(express.json());//use json data
 
 
 //Middleware
-app.use(express.json());//postmon eken insert krna data tika json ekata responsive wenna 
+
 app.use(cors());
+app.use("/users",router);
+app.use("/uploads", express.static("uploads"));
+
+app.use(express.json());//postmon eken insert krna data tika json ekata responsive wenna 
+
 app.use("/bookings",bookingRoutes);
 app.use("/pricing",pricingRoutes); // for pricing routes
 app.use("/payments", paymentRoutes); // for payment routes
 app.use("/stock", stockRoutes); // for stock routes
 
+
+mongoose.connect("mongodb+srv://chenulrandiya10_db_user:PqxY5pnLfJSJ6PF3@cluster0.sp3lpkf.mongodb.net/test")
+.then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(5000, () => {
+        console.log("Server running on http://localhost:5000");
+    });
+})
+.catch((err) => console.log("DB connection error:", err));
 
 mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.net/")
 .then(() => {
@@ -32,6 +47,7 @@ mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.
     });
 })
 .catch((err) => console.log("DB connection error:", err));
+
 
 
 
@@ -118,3 +134,41 @@ app.get("/getImage",async(req,res)=>{
     }
 });
 */
+
+
+
+//call register
+require("./Model/UserModel");
+const User = mongoose.model("NewUser");
+app.post("/users", async(req, res) => {
+    const {username, password} =req.body;
+    try{
+        await User.create({
+            username,
+            password
+        })
+        res.send({status: "ok"});
+    }catch (err){
+        res.send({status: "err"});
+    }
+});
+
+
+//call login
+app.post("/login", async (req,res)=> {
+  const {username, password} = req.body;
+  try {
+    const user = await User.findOne({username});
+    if(!user){
+      return res.json({err: "User not Found"})
+    }
+    if(user.password === password){
+      return res.json({status: "ok", user});
+    }else{
+      return res.json({err: "incorrect password"});
+    }
+  }catch (err){
+    console.error(err);
+    res.status(500).json({err:"server error"});
+  }
+});
