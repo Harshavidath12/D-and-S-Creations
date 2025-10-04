@@ -7,7 +7,8 @@ const bookingRoutes= require("./Routes/BookingRoutes");
 const pricingRoutes = require("./Routes/pricingRoutes"); // import pricing routes
 const paymentRoutes = require("./Routes/PaymentRoutes");
 const stockRoutes = require("./Routes/StockRoutes");
-
+const designerRoutes = require('./Routes/designerRoutes');
+const complaintRoutes = require('./Routes/complaintRoutes');
 
 const app=express(); 
 
@@ -29,6 +30,12 @@ app.use("/bookings",bookingRoutes);
 app.use("/pricing",pricingRoutes); // for pricing routes
 app.use("/payments", paymentRoutes); // for payment routes
 app.use("/stock", stockRoutes); // for stock routes
+
+//rashali
+const PORT = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
 
 
 
@@ -166,3 +173,13 @@ app.post("/login", async (req,res)=> {
     res.status(500).json({err:"server error"});
   }
 });
+
+
+
+
+
+
+
+
+
+

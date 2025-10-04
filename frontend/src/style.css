@@ -1,0 +1,663 @@
+/* ---------------------- Global ---------------------- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* ---------------------- Designer & Complaint Forms ---------------------- */
+.form {
+  background-color: #fff;
+  padding: 20px 25px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form input,
+.form select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #007bff;
+}
+
+.form button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn {
+  background-color: #3c35bd;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.cancel-btn:hover {
+  background-color: #e71c30;
+}
+
+.preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-list img,
+.preview-list video {
+  border-radius: 10px;
+  max-width: 120px;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+/* ---------------------- Designer & Complaint Table ---------------------- */
+.designer-table,
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.designer-table th,
+.designer-table td,
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.designer-table thead,
+table thead {
+  background-color: #2d2d56;
+  color: #fff;
+}
+
+.designer-table tbody tr,
+table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.designer-table tbody tr:hover,
+table tbody tr:hover {
+  background-color: #b7b7b9;
+  cursor: pointer;
+}
+
+.clickable {
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.floating-add-btn,
+.floating-btn {
+  position: sticky;
+  bottom: 20px;   /* stick 20px above the bottom of the container */
+  margin-left: auto;  /* push to the right */
+  display: block;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  
+}
+
+.floating-add-btn:hover,
+.floating-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ---------------------- Designer Details Card / Overlay ---------------------- */
+.designer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.designer-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.designer-card h2 {
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.designer-card p {
+  margin: 6px 0;
+}
+
+.previous-works {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.previous-works img,
+.previous-works video {
+  border-radius: 10px;
+  margin: 10px;
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+}
+
+.custom-btn {
+  padding: 10px 20px;
+  background-color: #2f2bac;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 10px 0;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #3897e4;
+}
+
+/* ---------------------- Complaint List Top Actions ---------------------- */
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.download-btn {
+  background-color: #0633fa;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #117a8b;
+}
+
+
+.navbar {
+  position: fixed;     
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  overflow-y: auto;    
+  z-index: 1000;
+}
+
+
+.content {
+  flex: 1;
+  margin-left: 220px;  
+  padding: 20px;
+}
+.app-container {
+  display: flex;
+}
+
+
+.content {
+  flex: 1;
+  margin-left: 220px;  
+  padding: 20px;
+}
+
+
+.page-content {
+  margin-left: 250px; 
+  padding: 2cm 20px 20px 20px; 
+  flex-grow: 1;
+  overflow-y: auto; 
+  height: calc(100vh - 2cm); 
+  box-sizing: border-box;
+}
+
+
+.navbar h2 {
+  margin-bottom: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navbar li {
+  margin: 15px 0;
+}
+
+.navbar a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+
+
+/* ---------------------- Global ---------------------- */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+.app-container {
+  display: flex;
+}
+
+/* Content beside navbar */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* ---------------------- Home Page ---------------------- */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Hero / Header */
+.home-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  color: #060747;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.home-header h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #555;
+  max-width: 900px;
+  margin: 0 auto 20px auto;
+}
+
+.home-banner {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+}
+
+/* Sections */
+.agency-section,
+.selection-section,
+.designers-section {
+  background: #fff;
+  padding: 40px 30px;
+  margin: 30px 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.agency-section:hover,
+.selection-section:hover,
+.designers-section:hover {
+  transform: translateY(-5px);
+}
+
+.agency-section h2,
+.selection-section h2,
+.designers-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #007bff;
+  border-left: 5px solid #19237b;
+  padding-left: 10px;
+}
+
+/* ---------------------- Designer Cards ---------------------- */
+.designer-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.designer-card {
+  background: #e5e4e4;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.designer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.designer-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.designer-card h3 {
+  margin: 10px 0;
+  font-size: 1.3rem;
+  color: #222;
+}
+
+.designer-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* ---------------------- Get Started Button ---------------------- */
+.get-started-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.get-started-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #007bff, #00bfff);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.get-started-button:hover {
+  background: linear-gradient(135deg, #0056b3, #007bff);
+  box-shadow: 0 10px 20px rgba(0, 91, 187, 0.5);
+  transform: scale(1.05);
+}
+
+/* ---------------------- Responsive ---------------------- */
+@media (max-width: 768px) {
+  .home-header h1 {
+    font-size: 2rem;
+  }
+  .home-header h3 {
+    font-size: 1rem;
+  }
+  .designer-image {
+    height: 160px;
+  }
+}
+
+
+/* ---------------------- Designer Search Bar ---------------------- */
+.designer-search {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  margin: 20px auto;
+  display: block;
+  font-size: 1rem;
+  border: 2px solid #007bff;
+  border-radius: 30px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.15);
+}
+
+.designer-search::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+.designer-search:focus {
+  border-color: #0056b3;
+  box-shadow: 0 6px 16px rgba(0, 91, 187, 0.3);
+  transform: scale(1.02);
+}
+
+
+
+
+/* General Page Styles */
+.designer-page {
+  padding: 30px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
+/* Search Input */
+.designer-search {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.designer-search:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Designers Table */
+.designer-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.designer-table th,
+.designer-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.designer-table th {
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: bold;
+}
+
+.designer-table tr {
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;
+}
+
+.designer-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.clickable {
+  cursor: pointer;
+  color: #4caf50;
+  transition: color 0.2s;
+}
+
+.clickable:hover {
+  color: #388e3c;
+  text-decoration: underline;
+}
+
+/* Designer Overlay */
+.designer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Designer Card */
+.designer-card {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 15px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.designer-card h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.designer-card p {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* Previous Works Section */
+.previous-works {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.previous-works img,
+.previous-works video {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Buttons */
+.custom-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  margin: 10px 5px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.custom-btn {
+  background-color: #4caf50;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.custom-btn:hover {
+  background-color: #388e3c;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .previous-works {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .designer-card {
+    padding: 20px;
+  }
+
+  .designer-search {
+    max-width: 100%;
+  }
+}
