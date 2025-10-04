@@ -1,4 +1,4 @@
-const Designer = require('../Models/Designer');
+const Designer = require('../Model/Designer');
 
 exports.getAllDesigners = async (req, res) => {
   try {

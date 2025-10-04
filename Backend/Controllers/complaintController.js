@@ -1,5 +1,5 @@
-const Complaint = require('../Models/Complaint');
-const Designer = require('../Models/Designer');
+const Complaint = require('../Model/Complaint');
+const Designer = require('../Model/Designer');
 const PDFDocument = require('pdfkit');
 
 

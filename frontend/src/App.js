@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import DesignerList from "./components/DesignerList";
-import ComplaintList from "./components/ComplaintList";
-import ClientDesignerList from "./components/ClientDesignerList"; // ✅ new import
+import Navbar from "./Components/Navbar";
+import DesignerList from "./Components/DesignerList";
+import ComplaintList from "./Components/ComplaintList";
+import ClientDesignerList from "./Components/ClientDesignerList"; // ✅ new import
 import "./style.css";
 
 const mockDesigners = [
