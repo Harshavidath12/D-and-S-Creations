@@ -1,29 +1,42 @@
-/* General body / container */
+/* Main container */
 .ledboard-container {
-  max-width: 700px;
-  margin: 50px auto;
-  background: #ccc;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  max-width: 650px;
+  margin: 60px auto;
+  background: linear-gradient(145deg, #f8fbff, #edf3ff);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
 }
 
+/* Title + intro */
 .ledboard-container h1 {
   text-align: center;
   color: #007bff;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
-.ledboard-container .intro-text {
+.intro-text {
   text-align: center;
   color: #555;
-  margin-bottom: 20px;
+  font-size: 15px;
+  margin-bottom: 30px;
+  line-height: 1.4;
 }
 
-/* Labels and Inputs */
+/* Form */
+.ledboard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Label + Input wrapper */
 .ledboard-form label {
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
   margin-bottom: 5px;
   display: block;
 }
@@ -31,87 +44,86 @@
 .ledboard-form input,
 .ledboard-form select {
   width: 100%;
-  max-width: 100%;   /* prevents overflow */
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  border: 1px solid #d0d5dd;
   border-radius: 10px;
   font-size: 15px;
-  transition: border 0.3s, box-shadow 0.3s;
-   box-sizing: border-box; /* ensures padding doesn't affect width */
-}
-
-/* Normalize date/time inputs */
-.ledboard-form input[type="date"],
-.ledboard-form input[type="time"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 100%;
+  background: #fdfdff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .ledboard-form input:focus,
 .ledboard-form select:focus {
   border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
   outline: none;
-}
-
-/* Submit Button */
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.submit-btn:hover {
-  background: #0056b3;
 }
 
 /* Cost Display */
 .cost-display {
-  font-size: 18px;
-  margin-bottom: 20px;
   text-align: center;
+  font-weight: 600;
+  font-size: 17px;
+  color: #0056b3;
+  background: #eaf3ff;
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 5px;
 }
 
-/* LED Board Categories Grid */
+/* Button */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004090);
+  transform: translateY(-2px);
+}
+
+/* LED board categories */
 .ledboard-categories {
   max-width: 1000px;
-  margin: 30px auto;
+  margin: 40px auto;
   padding: 0 15px;
 }
 
 .ledboard-categories h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: #007bff;
+  font-weight: 700;
 }
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
 }
 
 .category-card {
-  background: #f8f9fa;
+  background: #ffffff;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .category-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 .category-card img {
@@ -120,24 +132,11 @@
   margin-bottom: 10px;
 }
 
-/* Optional: for progress steps if multi-step is added later */
-.progress-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.step {
-  width: 30%;
+/* Footer */
+.footer {
+  margin-top: 40px;
   text-align: center;
-  padding: 8px;
-  border-radius: 20px;
-  background: #e0e0e0;
-  color: #333;
-  font-weight: bold;
-}
-
-.step.active {
-  background: #007bff;
-  color: #fff;
+  padding: 15px 0;
+  color: #777;
+  font-size: 14px;
 }

@@ -1,5 +1,5 @@
 /* Main container styling */
-.main {
+.pending-display-card {
   background-color: #ffffff;          /* clean white background */
   padding: 10px 30px;                 /* inner spacing */
   margin: 20px auto;                  /* center on page */
@@ -11,12 +11,13 @@
 }
 
 /* Hover effect for the card */
-.main:hover {
+.pending-display-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
-label {
+/* Labels */
+.pending-display-label {
   display: block;
   font-size: 16px;
   font-weight: 600;
@@ -28,7 +29,7 @@ label {
 }
 
 /* Headings styling */
-h3 {
+.pending-display-value {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
@@ -38,15 +39,15 @@ h3 {
 }
 
 /* Buttons container */
-.buttons {
+.pending-display-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 15px; /* space between buttons */
 }
 
-/* Button styling */
-.Acceptbutton {
+/* Accept button */
+.pending-display-accept {
   padding: 10px 25px;
   font-size: 14px;
   font-weight: 600;
@@ -58,18 +59,18 @@ h3 {
   color: white;
 }
 
-.Acceptbutton:hover {
+.pending-display-accept:hover {
   background-color: #218838;
 }
 
-.Acceptbutton:disabled {
+.pending-display-accept:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   color: #666;
 }
 
 /* Reject button */
-.Rejectbutton {
+.pending-display-reject {
   padding: 10px 25px;
   font-size: 14px;
   font-weight: 600;
@@ -77,10 +78,10 @@ h3 {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #dc3545; /* green */
+  background-color: #dc3545; /* red */
   color: white;
 }
 
-.Rejectbutton:hover {
+.pending-display-reject:hover {
   background-color: #c82333;
 }

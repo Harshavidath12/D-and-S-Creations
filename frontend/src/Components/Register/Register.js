@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import './Register.css'
-import HomeNav from '../HomeNav/HomeNav';
+import HomeNav from '../Home/Home';
+import Nav from "../Nav/Nav";
 import {useNavigate} from "react-router";
 
 
@@ -104,7 +105,9 @@ function Register() {
 
   return (
     <div>
-      <HomeNav />
+      <Nav />
+    <div>
+      
       <div className="register-container">
         <h1>Register</h1>
         <br />
@@ -153,6 +156,7 @@ function Register() {
           <button type="submit">Request</button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

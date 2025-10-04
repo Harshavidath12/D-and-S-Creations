@@ -105,7 +105,7 @@ function UpdateAdmin() {
 
   return (
     <div className='div63'>
-      <h1>Update Your Profile</h1>
+      <h1 className="heading1">Update Your Profile</h1>
       <br/>
       <form className="register-form" onSubmit={handleSubmit}>
 

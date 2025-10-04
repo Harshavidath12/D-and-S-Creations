@@ -1,0 +1,98 @@
+/* Main wrapper */
+.pmWrapper {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9fafc;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Page title */
+.pmTitle {
+  text-align: center;
+  font-size: 26px;
+  color: #007bff;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+/* Grid layout for pricing cards */
+.pmGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* Individual card */
+.pmCard {
+  background: linear-gradient(135deg, #e3e7ff, #f4f2ff);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.pmCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Board title */
+.pmBoardTitle {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Label + input group */
+.pmRateGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.pmRateGroup label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.pmRateGroup input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.pmRateGroup input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+/* Save button */
+.pmSaveBtn {
+  display: block;
+  margin: 25px auto 10px;
+  padding: 12px 50px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pmSaveBtn:hover {
+  background: linear-gradient(135deg, #0056b3, #004090);
+  transform: scale(1.05);
+}

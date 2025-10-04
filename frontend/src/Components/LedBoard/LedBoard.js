@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const USERS_URL = "http://localhost:5000/bookings";   // Rentals/Bookings
-const STOCK_URL = "http://localhost:5000/stock";   // Inventory
+const STOCK_URL = "http://localhost:5000/stock";      // Inventory
 const PRICING_URL = "http://localhost:5000/pricing";
 
 function LedBoard() {
@@ -26,6 +26,7 @@ function LedBoard() {
   const [cost, setCost] = useState(0);
   const [pricing, setPricing] = useState({});
   const [stock, setStock] = useState([]); // ✅ inventory, not rentals
+  const [error, setError] = useState(""); // ✅ runtime validation error
 
   // ✅ Fetch pricing from backend
   useEffect(() => {
@@ -65,6 +66,15 @@ function LedBoard() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", inputs);
+
+    // ✅ Runtime validation for rental dates
+    const start = new Date(inputs.rentalStartDateTime);
+    const end = new Date(inputs.rentalEndDateTime);
+    if (end <= start) {
+      setError("⚠️ Rental end date & time must be after the start date & time.");
+      return;
+    }
+    setError(""); // clear error
 
     try {
       await axios.post(USERS_URL, { ...inputs });
@@ -125,9 +135,9 @@ function LedBoard() {
           {Object.keys(pricing).map((boardType) => (
             <div className="category-card" key={boardType}>
               <img
-               src={`/images/${boardType.toLowerCase().replace(/\s+/g, "-")}-led-board.jpg`}
-               alt={boardType}
-              />
+                src={`/images/${boardType.toLowerCase().replace(/\s+/g, "-")}-led-board.jpg`}
+                alt={boardType}
+              />
               <h3>{boardType}</h3>
               <p>
                 LKR {pricing[boardType]?.daily || 0} per day + LKR{" "}
@@ -153,37 +163,39 @@ function LedBoard() {
             value={inputs.name}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
-<label>Type of LED Board</label>
-<select
-  name="ledBoardType"
-  value={inputs.ledBoardType}
-  onChange={handleChange}
-  required
->
-  <option value="">-- Select Type --</option>
-  {[...new Set(stock.map((s) => s.boardType))].map((boardType) => {
-    const availableStock = stock.filter(
-      (b) => b.boardType === boardType && b.status === "Available"
-    );
 
-    if (availableStock.length > 0) {
-      // Show available with count
-      return (
-        <option key={boardType} value={boardType}>
-          {boardType} ({availableStock.length} Available)
-        </option>
-      );
-    } else {
-      // Show as unavailable (disabled)
-      return (
-        <option key={boardType} value="" disabled>
-          {boardType} (Currently unavailable)
-        </option>
-      );
-    }
-  })}
-</select>
+          <label>Type of LED Board</label>
+          <select
+            name="ledBoardType"
+            value={inputs.ledBoardType}
+            onChange={handleChange}
+            required
+          >
+            <option value="">-- Select Type --</option>
+            {[...new Set(stock.map((s) => s.boardType))].map((boardType) => {
+              const availableStock = stock.filter(
+                (b) => b.boardType === boardType && b.status === "Available"
+              );
+
+              if (availableStock.length > 0) {
+                // Show available with count
+                return (
+                  <option key={boardType} value={boardType}>
+                    {boardType} ({availableStock.length} Available)
+                  </option>
+                );
+              } else {
+                // Show as unavailable (disabled)
+                return (
+                  <option key={boardType} value="" disabled>
+                    {boardType} (Currently unavailable)
+                  </option>
+                );
+              }
+            })}
+          </select>
 
           <label>Quantity</label>
           <input
@@ -192,6 +204,7 @@ function LedBoard() {
             min="1"
             value={inputs.quantity}
             onChange={handleChange}
+            autoComplete="off"         // disables autofill
             required
           />
 
@@ -202,6 +215,7 @@ function LedBoard() {
             value={inputs.location}
             onChange={handleChange}
             required
+            autoComplete="off"
           />
 
           <label>Purpose</label>
@@ -227,6 +241,7 @@ function LedBoard() {
             value={inputs.rentalStartDateTime}
             onChange={handleChange}
             required
+            min={new Date().toISOString().slice(0, 16)}  // prevent past dates
           />
 
           <label>Rental End Date & Time</label>
@@ -236,7 +251,10 @@ function LedBoard() {
             value={inputs.rentalEndDateTime}
             onChange={handleChange}
             required
+            min={inputs.rentalStartDateTime || new Date().toISOString().slice(0, 16)}
           />
+
+          {error && <p className="error-text">{error}</p>}
 
           <label>Payment Method</label>
           <select
@@ -269,4 +287,4 @@ function LedBoard() {
   );
 }
 
-export default LedBoard;
+export default LedBoard;

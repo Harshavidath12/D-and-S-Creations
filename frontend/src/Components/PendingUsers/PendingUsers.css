@@ -1,22 +1,21 @@
 /* Main container */
-.fro {
-
+.pending-users-container {
   font-family: 'Arial', sans-serif;
   background-color: #f5f6fa;
   min-height: 100vh;
 }
 
 /* Page title */
-h1 {
+.pending-users-title {
   font-size: 28px;
   font-weight: 600;
-  justify-self: center; 
+  justify-self: center;
   color: #2c3e50;
   margin-bottom: 20px;
 }
 
 /* Search input */
- .Search{
+.pending-users-search {
   width: 300px;
   padding: 10px 12px;
   font-size: 14px;
@@ -26,13 +25,13 @@ h1 {
   transition: 0.3s;
 }
 
-.Search:focus {
+.pending-users-search:focus {
   border-color: #007BFF;
   box-shadow: 0 0 5px rgba(0,123,255,0.2);
 }
 
 /* Search button */
-.Searchbutton {
+.pending-users-search-button {
   padding: 10px 20px;
   font-size: 14px;
   margin-left: 10px;
@@ -45,32 +44,12 @@ h1 {
   color: white;
 }
 
-
-
-.Searchbutton:hover {
+.pending-users-search-button:hover {
   opacity: 0.9;
-}
-
-.pdfbutton:hover {
-  opacity: 0.9;
-}
-
-/* No results message */
-p {
-  color: #e74c3c;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* Users list container */
-.userlist {
-  margin-top: 0px;
-  display: flex;
-  flex-direction: column;
 }
 
 /* PDF button */
-.pdfbutton {
+.pending-users-pdf-button {
   padding: 10px 20px;
   font-size: 14px;
   margin-left: 10px;
@@ -83,9 +62,26 @@ p {
   color: white;
 }
 
-.cent {
+.pending-users-pdf-button:hover {
+  opacity: 0.9;
+}
+
+/* No results message */
+.pending-users-message {
+  color: #e74c3c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Users list container */
+.pending-users-list {
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Align right container (search bar area) */
+.pending-users-actions {
   justify-self: right;
   padding-right: 30px;
 }
-
-

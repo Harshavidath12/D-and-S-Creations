@@ -17,6 +17,33 @@
   margin-bottom: 20px;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+
+.edit-price-btn {
+  background-color: #ff7f50; /* Coral/orange color for visibility */
+  color: #fff;               /* White text */
+  padding: 10px 20px;        /* Add space inside the button */
+  border: none;              /* Remove default border */
+  border-radius: 25px;       /* Fully rounded corners */
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth hover transition */
+}
+
+.edit-price-btn:hover {
+  background-color: #ff6347; /* Darker coral on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Soft shadow */
+}
+
 .search-input {
   padding: 10px 14px;
   border: 1px solid #ccc;

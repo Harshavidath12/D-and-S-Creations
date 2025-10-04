@@ -41,20 +41,12 @@ function Nav() {
              </Link>
         </li>
 
-        <li className="home-ll">
-          
-            <Link to="/regi" className="active home-a">
-            <button>Register</button>
-             </Link>
-        </li>
-
-        <li className="home-ll">
-          
-            <Link to="/log" className="active home-a">
-            <button>Login</button>
-             </Link>
-        </li>
-
+         <li> 
+                    <Link to="/Login" className="nav-link">Login</Link> 
+                </li>
+                <li> 
+                    <Link to="/Register" className="nav-link">Register</Link> 
+                </li>
         
       </ul>
     </div>

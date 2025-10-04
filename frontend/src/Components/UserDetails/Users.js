@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Nav from '../Nav/Nav';
 import axios from "axios";
 import User from '../User/User';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
 import { useReactToPrint } from "react-to-print";
-import "./Users.css"; //Import the CSS file
+import "./Users.css"; // Import the CSS file
 
 const URL = "http://localhost:5000/bookings";
 
@@ -15,6 +15,7 @@ const fetchHandler = async () => {
 function Users() {
   const [users, setUsers] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     fetchHandler().then((data) => setUsers(data.users));
@@ -52,22 +53,31 @@ function Users() {
     window.open(WhatsAppUrl, "_blank");
   };
 
+  const handleEditPrice = () => {
+    navigate("/pricing-manager"); // Navigate to PricingManager page
+  };
+
   return (
     <div className="users-container">
       <Nav />
       <h1 className="page-title">User Details Display Page</h1>
 
-      {/* Search bar */}
-      <div className="search-section">
-        <input
-          onChange={(e) => setSearchQuery(e.target.value)}
-          type="text"
-          name="search"
-          placeholder="Search Users"
-          className="search-input"
-        />
-        <button onClick={handleSearch} className="btn btn-blue">
-          Search
+      {/* Top bar with search and Edit Price button */}
+      <div className="top-bar">
+        <div className="search-section">
+          <input
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            name="search"
+            placeholder="Search Users"
+            className="search-input"
+          />
+          <button onClick={handleSearch} className="btn btn-blue">
+            Search
+          </button>
+        </div>
+        <button onClick={handleEditPrice} className="edit-price-btn">
+          Edit Price
         </button>
       </div>
 
