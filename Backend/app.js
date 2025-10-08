@@ -11,7 +11,7 @@ dotenv.config();
 const cinemaRoutes = require("./routes/cinemaRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 
-// Import middleware
+// Import middleware 
 const { errorHandler, notFound } = require("./middleware/errorHandler");
 
 const app = express();

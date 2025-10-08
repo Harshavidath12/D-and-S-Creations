@@ -234,7 +234,7 @@ function MyReservations() {
                         </div>
                         
                         <div className="cost-calculation">
-                          <h4>Advertisement Cost Calculation</h4>
+                          <h4>Advertisement Cost Calculations</h4>
                           <div className="calculation-details">
                             <div className="calc-row">
                               <span className="label">Period:</span>
@@ -244,6 +244,7 @@ function MyReservations() {
                               <span className="label">Duration:</span>
                               <span className="value">{adCost.days} days</span>
                             </div>
+                            
                             <div className="calc-row">
                               <span className="label">Daily Cost:</span>
                               <span className="value">LKR {adCost.dailyCost.toLocaleString()}</span>
