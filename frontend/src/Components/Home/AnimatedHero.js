@@ -7,7 +7,7 @@ const AnimatedHero = () => {
   const btnReactRef = useRef(null);
 
   useEffect(() => {
-    // Typed.js effect for the second paragraph
+    
     const typeText = (element, strings, typeSpeed = 50, backSpeed = 10, backDelay = 2000) => {
       let currentStringIndex = 0;
       let currentCharIndex = 0;
