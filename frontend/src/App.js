@@ -25,6 +25,7 @@ import CinemaManagement from "./Components/CinemaManagement/CinemaManagement";
 import Register from "./Components/Register/Register";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
 import AdminProfile2 from "./Components/AdminProfile/AdminProfile2";
+import AdminProfile3 from "./Components/AdminProfile/AdminProfile3";
 import UpdateAdmin from "./Components/UpdateAdmin/UpdateAdmin";
 import Login from "./Components/Login/Login";
 import Client from "./Components/PendingUsers/Client";
@@ -35,7 +36,6 @@ import Admin from "./Components/PendingUsers/Admin";
 import DesignerDash from "./Components/DesignerDash/DesignerDash";
 import LedBoardOwnerDash from "./Components/LedBoardOwnerDash/LedBoardOwnerDash";
 import ClientDash from "./Components/ClientDash/ClientDash";
-import FilmHallOwnerDash from "./Components/FilmHallOwnerDash/FilmHallOwnerDash";
 import AdminDash from "./Components/AdminDash/AdminDash";
 import PendingUsers from "./Components/PendingUsers/PendingUsers";
 import Roll from "./Components/PendingUsers/Roll";
@@ -76,6 +76,7 @@ function App() {
         <Route path="/PendingUsers" element={<PendingUsers />} />
         <Route path="/AdminProfile" element={<AdminProfile />} />
         <Route path="/AdminProfile2" element={<AdminProfile2 />} />
+        <Route path="/AdminProfile3" element={<AdminProfile3 />} />
         <Route path="/PendingUsers/:id" element={<UpdateAdmin />} />
         <Route path="/LedBoardOwners/:id" element={<UpdateAdmin />} />
         <Route path="/FilmhallOwners/:id" element={<UpdateAdmin />} />
@@ -94,7 +95,7 @@ function App() {
         <Route path="/DesignerDash" element={<DesignerDash />} />
         <Route path="/LedBoardOwnerDash" element={<LedBoardOwnerDash />} />
         <Route path="/ClientDash" element={<ClientDash />} />
-        <Route path="/FilmHallOwnerDash" element={<FilmHallOwnerDash />} />
+
         <Route path="/AdminDash" element={<AdminDash />} />
 
         {/* Other Pages */}

@@ -37,7 +37,7 @@ function Login() {
             history("/DesignerDash");
             break;
           case "FilmHall Owner":
-            history("/FilmHallOwnerDash");
+            history("/cinema-management");
             break;
           case "LedBoard Owner":
             history("/LedBoardOwnerDash");

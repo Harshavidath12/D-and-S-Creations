@@ -1,4 +1,4 @@
-const Cinema = require("../models/Cinema");
+const Cinema = require("../Model/Cinema");
 
 // @desc    Get all cinemas
 // @route   GET /api/cinemas

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './CinemaManagement.css';
+import Nav3 from '../Nav/Nav3'
 import ModalForm from './ModalForm';
 
 const CinemaManagement = () => {
@@ -528,6 +529,8 @@ const CinemaManagement = () => {
   };
 
   return (
+    <div>
+    <Nav3 />
     <div className="cinema-management">
       <div className="page-header">
         <div className="container">
@@ -811,6 +814,7 @@ const CinemaManagement = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

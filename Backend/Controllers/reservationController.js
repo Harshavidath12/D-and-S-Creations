@@ -1,5 +1,5 @@
-const Reservation = require("../models/Reservation");
-const Cinema = require("../models/Cinema");
+const Reservation = require("../Model/Reservation");
+const Cinema = require("../Model/Cinema");
 
 // @desc    Create new reservation
 // @route   POST /api/reservations

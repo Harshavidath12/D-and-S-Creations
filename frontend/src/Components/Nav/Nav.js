@@ -67,12 +67,7 @@ function Nav() {
           )}
         </li>
 
-        {/* Cinema Management for Owners */}
-        <li className="home-ll">
-          <Link to="/cinema-management" className="active home-a">
-            <h1>Manage Cinemas</h1>
-          </Link>
-        </li>
+       
 
         {/* User-related links */}
         <li className="home-ll">

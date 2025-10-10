@@ -1,0 +1,143 @@
+/* Payment.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f8;
+}
+
+.payment-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.payment-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.booking-summary {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+}
+
+.booking-summary h2 {
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.booking-summary p {
+  margin: 8px 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.payment-form input,
+.payment-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.payment-form input:focus,
+.payment-form select:focus {
+  border-color: #333;
+}
+
+.confirm-btn {
+  width: 100%;
+  padding: 14px;
+  background: #333;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.confirm-btn:hover {
+  background: #555;
+}
+
+/* Card Payment Section */
+.card-form {
+  background: #fafafa;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.card-form h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+}
+
+.card-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #444;
+}
+
+.card-form input,
+.card-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.card-form input:focus,
+.card-form select:focus {
+  border-color: #333;
+}
+
+.card-inline {
+  display: flex;
+  gap: 10px;
+}
+
+.card-inline input {
+  flex: 1;
+}
+
+/* Footer fixed at bottom */
+.footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: 40px;
+}
