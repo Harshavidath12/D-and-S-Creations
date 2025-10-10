@@ -1,5 +1,5 @@
-const User = require("../Model/RentalModel"); // Rental bookings
-const Stock = require("../Model/StockModel"); // Inventory
+const User = require("../Model/RentalModels"); // Rental bookings
+const Stock = require("../Model/StockModels"); // Inventory
 
 // ===================== USERS / RENTALS ===================== //
 

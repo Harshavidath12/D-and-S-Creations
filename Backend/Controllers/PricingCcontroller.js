@@ -1,5 +1,5 @@
 // Controllers/PricingController.js
-const Pricelist = require("../Model/Pricelist");
+const Pricelist = require("../Model/Pricelists");
 
 // Get all pricing records
 const getAllPrices = async (req, res) => {
