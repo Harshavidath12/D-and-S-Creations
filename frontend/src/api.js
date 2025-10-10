@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api" 
+  baseURL: "http://localhost:5000" 
 });
 
 //get all designers
@@ -12,10 +12,10 @@ export const updateDesigner = (id, data) => API.put(`/designers/${id}`, data);
 export const deleteDesigner = (id) => API.delete(`/designers/${id}`);
 
 
-export const getComplaints = () => API.get("/complaints");
-export const getComplaintById = (id) => API.get(`/complaints/${id}`);
-export const createComplaint = (data) => API.post("/complaints", data);
-export const updateComplaint = (id, data) => API.put(`/complaints/${id}`, data);
-export const deleteComplaint = (id) => API.delete(`/complaints/${id}`);
+export const getComplaints = () => API.get("/complaint");
+export const getComplaintById = (id) => API.get(`/complaint/${id}`);
+export const createComplaint = (data) => API.post("/complaint", data);
+export const updateComplaint = (id, data) => API.put(`/complaint/${id}`, data);
+export const deleteComplaint = (id) => API.delete(`/complaint/${id}`);
 export const downloadComplaintsPDF = () =>
   API.get("/complaints/download/pdf", { responseType: "blob" });

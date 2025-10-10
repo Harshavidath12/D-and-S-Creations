@@ -33,7 +33,7 @@ app.use("/stock", stockRoutes); // for stock routes
 
 //rashali
 app.use("/complaint", complaintRoutes); // ✅ ADD THIS LINE
-app.use("/designer", designerRoutes); 
+app.use("/designers", designerRoutes); 
 
 
 const PORT = process.env.PORT || 5000;
@@ -52,6 +52,10 @@ mongoose.connect("mongodb+srv://admin:E1gMihrKg842U8Sd@cluster0.sp3lpkf.mongodb.
     });
 })
 .catch((err) => console.log("DB connection error:", err));
+
+
+
+
 
 
 
