@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
-import AdminNav from '../AdminNav/AdminNav';
 import './PendingUsers.css';
+import AdminNav from '../AdminNav/AdminNav'
 import PendingUsersDisplay from "../PendingUsersDisplay/PendingUsersDisplay";
 import { useReactToPrint } from "react-to-print";
 

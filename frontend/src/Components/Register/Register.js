@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import './Register.css'
-import HomeNav from '../Home/Home';
+
 import Nav from "../Nav/Nav";
 import {useNavigate} from "react-router";
 

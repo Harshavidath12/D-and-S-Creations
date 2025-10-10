@@ -43,7 +43,7 @@ function Login() {
             history("/LedBoardOwnerDash");
             break;
           case "Client":
-            history("/Home");
+            history("/AfterHome");
             break;
           default:
             history("/"); // fallback

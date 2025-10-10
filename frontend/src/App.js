@@ -2,11 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./Components/Home/Home";
+import AfterHome from "./Components/Home/AfterHome";
 import User from "./Components/User/User";
 import Users from "./Components/UserDetails/Users";
 import AddUser from "./Components/AddUser/AddUser";
 import UpdateUser from "./Components/UpdateUser/UpdateUser";
 import LedBoard from "./Components/LedBoard/LedBoard";
+import LedBoard2 from "./Components/LedBoard/LedBoard2";
 import PricingManager from "./Components/PricingManager/PricingManager";
 import Payment from "./Components/Payment/Payment";
 import InventoryManager from "./Components/Inventory/InventoryManager";
@@ -14,6 +16,7 @@ import InventoryManager from "./Components/Inventory/InventoryManager";
 // Chenul’s components
 import Register from "./Components/Register/Register";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
+import AdminProfile2 from "./Components/AdminProfile/AdminProfile2";
 import UpdateAdmin from "./Components/UpdateAdmin/UpdateAdmin";
 import Login from "./Components/Login/Login";
 import Client from "./Components/PendingUsers/Client";
@@ -35,6 +38,8 @@ import DesignerList from "./Components/DesignerList";
 import ComplaintList from "./Components/ComplaintList";
 import ClientDesignerList from "./Components/ClientDesignerList";
 import "./style.css";
+import ClientDesignerList2 from "./Components/ClientDesignerList2";
+import ComplaintList2 from "./Components/ComplaintList2";
 
 function App() {
   return (
@@ -43,6 +48,7 @@ function App() {
         {/* Home Page */}
         <Route path="/" element={<Home />} />
         <Route path="/mainhome" element={<Home />} />
+        <Route path="/AfterHome" element={<AfterHome />} />
 
         {/* User Management */}
         <Route path="/adduser" element={<AddUser />} />
@@ -52,6 +58,7 @@ function App() {
 
         {/* Dashboard / Inventory / Pricing */}
         <Route path="/ledboard" element={<LedBoard />} />
+        <Route path="/ledboard2" element={<LedBoard2 />} />
         <Route path="/pricing-manager" element={<PricingManager />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/inventory-manager" element={<InventoryManager />} />
@@ -60,6 +67,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/PendingUsers" element={<PendingUsers />} />
         <Route path="/AdminProfile" element={<AdminProfile />} />
+        <Route path="/AdminProfile2" element={<AdminProfile2 />} />
         <Route path="/PendingUsers/:id" element={<UpdateAdmin />} />
         <Route path="/LedBoardOwners/:id" element={<UpdateAdmin />} />
         <Route path="/FilmhallOwners/:id" element={<UpdateAdmin />} />
@@ -84,7 +92,9 @@ function App() {
         {/* Other Pages */}
         <Route path="/designers" element={<DesignerList />} />
         <Route path="/complaints" element={<ComplaintList />} />
+        <Route path="/complaints2" element={<ComplaintList2 />} />
         <Route path="/client-designers" element={<ClientDesignerList />} />
+        <Route path="/client-designers2" element={<ClientDesignerList2 />} />
       </Routes>
     </Router>
   );

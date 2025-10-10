@@ -18,7 +18,7 @@ function AdminNav() {
                 <Link to="/AdminProfile" className="nav-link">View Profile</Link> 
             </li>
             <li> 
-                <Link to="/Home" className="nav-link">Sing Out</Link> 
+                <Link to="/mainhome" className="nav-link">Sing Out</Link> 
             </li>
           </ul>
         </div>
