@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 //E1gMihrKg842U8Sd
 
 const express = require("express");
@@ -190,3 +191,25 @@ app.post("/login", async (req,res)=> {
 
 
 
+=======
+console.log("Byeeeeee");
+
+const mongoose = require("mongoose");
+const express = require("express");
+
+const app = express();
+
+// Middleware
+app.use("/", (req, res, next) => {
+    res.send("Hello from express");
+});
+
+mongoose.connect(
+    "mongodb+srv://vihigum:H4UiHdZM640pbRnI@cluster0.sp3lpkf.mongodb.net/test?retryWrites=true&w=majority&tls=true"
+)
+.then(() => console.log("Connected to MongoDB"))
+.then(() => {
+    app.listen(5000);
+})
+.catch((err) => console.log((err)));
+>>>>>>> Stashed changes
