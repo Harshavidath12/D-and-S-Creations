@@ -3,13 +3,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-<<<<<<< Updated upstream
     "test": "echo \"Error: no test specified\" && exit 1",
      "start": "node app.js",
     "dev": "nodemon app.js"
-=======
-    "start": "nodemon app.js"
->>>>>>> Stashed changes
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +13,6 @@
     "@tailwindcss/vite": "^4.1.14",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-<<<<<<< Updated upstream
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
     "nodemon": "^3.1.10",
@@ -26,10 +21,6 @@
   },
   "keywords": [],
   "description": "",
-=======
-    "mongoose": "^8.18.1"
-  },
->>>>>>> Stashed changes
   "devDependencies": {
     "nodemon": "^3.1.10"
   }
