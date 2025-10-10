@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./nav.css";
 import { Link } from "react-router-dom";
 
 function Nav() {
+  const [isCinemaDropdownOpen, setIsCinemaDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleCinemaDropdown = () => {
+    setIsCinemaDropdownOpen(!isCinemaDropdownOpen);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsCinemaDropdownOpen(false);
+      }
+    };
+
+    if (isCinemaDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isCinemaDropdownOpen]);
+
   return (
     <div>
       <ul className="home-url">
@@ -11,6 +35,38 @@ function Nav() {
             <h1>Home</h1>
           </Link>
         </li>
+
+        {/* Cinema Dropdown */}
+        <li className="home-ll dropdown-container" ref={dropdownRef}>
+          <div className="dropdown-trigger" onClick={toggleCinemaDropdown}>
+            <h1>Cinema</h1>
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {isCinemaDropdownOpen && (
+            <ul className="dropdown-menu">
+              <li className="dropdown-item">
+                <Link
+                  to="/my-reservations"
+                  className="dropdown-link"
+                  onClick={() => setIsCinemaDropdownOpen(false)}
+                >
+                  My Reservations
+                </Link>
+              </li>
+              <li className="dropdown-item">
+                <Link
+                  to="/new-reservation"
+                  className="dropdown-link"
+                  onClick={() => setIsCinemaDropdownOpen(false)}
+                >
+                  New Reservation
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+
+        {/* Original Nav items */}
         <li className="home-ll">
           <Link to="/adduser" className="active home-a">
             <h1>ADD user</h1>
@@ -21,31 +77,21 @@ function Nav() {
             <h1>user details</h1>
           </Link>
         </li>
-
         <li className="home-ll">
           <Link to="/client-designers" className="active home-a">
             <h1>Designers</h1>
           </Link>
         </li>
-
         <li className="home-ll">
           <Link to="/complaints" className="active home-a">
             <h1>Contact Us</h1>
           </Link>
         </li>
-
-        <li className="home-ll">
-          <Link to="/imgpart" className="active home-a">
-            <h1>Photos</h1>
-          </Link>
-        </li>
-
         <li className="home-ll">
           <Link to="/ledboard" className="active home-a">
             <h1>LED Board</h1>
           </Link>
         </li>
-
         <li>
           <Link to="/Login" className="nav-link">
             Login
