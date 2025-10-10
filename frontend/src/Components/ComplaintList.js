@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getComplaints, createComplaint, updateComplaint, deleteComplaint, downloadComplaintsPDF } from "../api";
 import ComplaintForm from "./ComplaintForm";
 import "../style.css";
+import Nav from "../Components/Nav/Nav"
 
 const ComplaintList = () => {
   const [complaints, setComplaints] = useState([]);
@@ -44,6 +45,8 @@ const ComplaintList = () => {
   };
 
   return (
+    <div>
+      <Nav/>
     <div className="page">
      <div className="top-actions">
        <button className="download-btn" onClick={handleDownload}>
@@ -77,6 +80,7 @@ const ComplaintList = () => {
         </tbody>
       </table>
       <button className="floating-btn" onClick={() => setShowForm(true)}>➕ Add Complaint</button>
+    </div>
     </div>
   );
 };
