@@ -281,10 +281,10 @@ const ModalForm = ({
               className={errors.number_of_movies ? 'error' : ''}
               placeholder="Enter number of movies"
               min="1"
-              max="4"
+              max="10"
             />
             {errors.number_of_movies && <span className="error-message">{errors.number_of_movies}</span>}
-            <small>Specify how many ongoing movies (1-4)</small>
+            <small>Specify how many ongoing movies (1-10)</small>
           </div>
           
           <div className="form-group">

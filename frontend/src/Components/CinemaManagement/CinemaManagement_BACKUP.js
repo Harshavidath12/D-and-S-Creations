@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import './CinemaManagement.css';
 import ModalForm from './ModalForm';
 
@@ -23,10 +23,11 @@ const CinemaManagement = () => {
       phone: '',
       email: ''
     },
-    number_of_movies: 2, // Default to 2 movies
     ongoing_movies: {
       movie_1: { name: '', start_date: '', end_date: '', trailer_link: '' },
-      movie_2: { name: '', start_date: '', end_date: '', trailer_link: '' }
+      movie_2: { name: '', start_date: '', end_date: '', trailer_link: '' },
+      movie_3: { name: '', start_date: '', end_date: '', trailer_link: '' },
+      movie_4: { name: '', start_date: '', end_date: '', trailer_link: '' }
     },
     upcoming_movies: {
       movie_1: { name: '', trailer_link: '' },
@@ -34,46 +35,24 @@ const CinemaManagement = () => {
     },
     movie_slot_pricing: {
       movie_1: { starting_price: 0, interval_price: 0, ending_price: 0 },
-      movie_2: { starting_price: 0, interval_price: 0, ending_price: 0 }
+      movie_2: { starting_price: 0, interval_price: 0, ending_price: 0 },
+      movie_3: { starting_price: 0, interval_price: 0, ending_price: 0 },
+      movie_4: { starting_price: 0, interval_price: 0, ending_price: 0 }
     },
     is_active: true
   });
 
-  // Generate steps dynamically based on number of movies
-  const generateSteps = () => {
-    const steps = [
-      { id: 1, title: 'General Details', description: 'Basic cinema information' }
-    ];
-    
-    // Add movie steps based on number_of_movies
-    const numMovies = formData.number_of_movies || 1;
-    for (let i = 1; i <= numMovies; i++) {
-      steps.push({
-        id: i + 1,
-        title: `Movie ${i}`,
-        description: `Movie ${i} - Ongoing`
-      });
-    }
-    
-    // Add upcoming movies step
-    steps.push({
-      id: numMovies + 2,
-      title: 'Upcoming Movies',
-      description: 'Future releases'
-    });
-    
-    // Add review step
-    steps.push({
-      id: numMovies + 3,
-      title: 'Review & Submit',
-      description: 'Final review'
-    });
-    
-    return steps;
-  };
+  const totalSteps = 7;
 
-  const steps = generateSteps();
-  const totalSteps = steps.length;
+  const steps = [
+    { id: 1, title: 'General Details', description: 'Basic cinema information' },
+    { id: 2, title: 'Movie 1', description: 'First ongoing movie' },
+    { id: 3, title: 'Movie 2', description: 'Second ongoing movie' },
+    { id: 4, title: 'Movie 3', description: 'Third ongoing movie' },
+    { id: 5, title: 'Movie 4', description: 'Fourth ongoing movie' },
+    { id: 6, title: 'Upcoming Movies', description: 'Future releases' },
+    { id: 7, title: 'Review & Submit', description: 'Final review' }
+  ];
 
   // Fetch cinemas from API
   const fetchCinemas = async () => {
@@ -178,12 +157,7 @@ const CinemaManagement = () => {
 
   const handleUpdate = (cinema) => {
     setEditingCinema(cinema);
-    // Calculate number of movies from existing data
-    const movieCount = Object.keys(cinema.ongoing_movies || {}).length;
-    setFormData({
-      ...cinema,
-      number_of_movies: movieCount || 2
-    });
+    setFormData(cinema);
     setIsModalOpen(true);
     setCurrentStep(1);
   };
@@ -303,16 +277,7 @@ const CinemaManagement = () => {
       
       const locationError = validateLocation(formData.cinema_location);
       if (locationError) newErrors.cinema_location = locationError;
-      
-      // Validate number of movies
-      if (!formData.number_of_movies || formData.number_of_movies < 1) {
-        newErrors.number_of_movies = 'Please specify at least 1 movie';
-      }
-      if (formData.number_of_movies > 4) {
-        newErrors.number_of_movies = 'Maximum 4 movies allowed';
-      }
-    } else if (currentStep >= 2 && currentStep <= formData.number_of_movies + 1) {
-      // Validate movie steps
+    } else if (currentStep >= 2 && currentStep <= 5) {
       const movieKey = `movie_${currentStep - 1}`;
       const movie = formData.ongoing_movies[movieKey];
       
@@ -324,13 +289,13 @@ const CinemaManagement = () => {
       
       // Always validate movie slot pricing (these are required)
       const pricing = formData.movie_slot_pricing[movieKey];
-      if (pricing && pricing.starting_price < 0) {
+      if (pricing.starting_price < 0) {
         newErrors[`movie_${currentStep - 1}_starting_price`] = 'Starting price cannot be negative';
       }
-      if (pricing && pricing.interval_price < 0) {
+      if (pricing.interval_price < 0) {
         newErrors[`movie_${currentStep - 1}_interval_price`] = 'Interval price cannot be negative';
       }
-      if (pricing && pricing.ending_price < 0) {
+      if (pricing.ending_price < 0) {
         newErrors[`movie_${currentStep - 1}_ending_price`] = 'Ending price cannot be negative';
       }
     }
@@ -341,33 +306,6 @@ const CinemaManagement = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
-    // Handle number_of_movies change specially
-    if (name === 'number_of_movies') {
-      const numMovies = parseInt(value) || 1;
-      const clampedNum = Math.max(1, Math.min(4, numMovies)); // Limit between 1 and 4
-      
-      // Create new ongoing_movies and movie_slot_pricing objects
-      const newOngoingMovies = {};
-      const newMovieSlotPricing = {};
-      
-      for (let i = 1; i <= clampedNum; i++) {
-        const movieKey = `movie_${i}`;
-        // Preserve existing data if available
-        newOngoingMovies[movieKey] = formData.ongoing_movies[movieKey] || 
-          { name: '', start_date: '', end_date: '', trailer_link: '' };
-        newMovieSlotPricing[movieKey] = formData.movie_slot_pricing[movieKey] || 
-          { starting_price: 0, interval_price: 0, ending_price: 0 };
-      }
-      
-      setFormData(prev => ({
-        ...prev,
-        number_of_movies: clampedNum,
-        ongoing_movies: newOngoingMovies,
-        movie_slot_pricing: newMovieSlotPricing
-      }));
-      return;
-    }
     
     if (name.startsWith('ongoing_movies.') || name.startsWith('upcoming_movies.') || name.startsWith('movie_slot_pricing.')) {
       const parts = name.split('.');
@@ -477,7 +415,29 @@ const CinemaManagement = () => {
         );
         setIsModalOpen(false);
         setEditingCinema(null);
-        resetFormData();
+        setFormData({
+          cinema_name: '',
+          cinema_location: '',
+          google_maps_location: '',
+          contact_info: { phone: '', email: '' },
+          ongoing_movies: {
+            movie_1: { name: '', start_date: '', end_date: '', trailer_link: '' },
+            movie_2: { name: '', start_date: '', end_date: '', trailer_link: '' },
+            movie_3: { name: '', start_date: '', end_date: '', trailer_link: '' },
+            movie_4: { name: '', start_date: '', end_date: '', trailer_link: '' }
+          },
+          upcoming_movies: {
+            movie_1: { name: '', trailer_link: '' },
+            movie_2: { name: '', trailer_link: '' }
+          },
+          movie_slot_pricing: {
+            movie_1: { starting_price: 0, interval_price: 0, ending_price: 0 },
+            movie_2: { starting_price: 0, interval_price: 0, ending_price: 0 },
+            movie_3: { starting_price: 0, interval_price: 0, ending_price: 0 },
+            movie_4: { starting_price: 0, interval_price: 0, ending_price: 0 }
+          },
+          is_active: true
+        });
         setCurrentStep(1);
         fetchCinemas();
       } else {
@@ -490,16 +450,21 @@ const CinemaManagement = () => {
     }
   };
 
-  const resetFormData = () => {
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingCinema(null);
+    setCurrentStep(1);
+    setErrors({});
     setFormData({
       cinema_name: '',
       cinema_location: '',
       google_maps_location: '',
       contact_info: { phone: '', email: '' },
-      number_of_movies: 2,
       ongoing_movies: {
         movie_1: { name: '', start_date: '', end_date: '', trailer_link: '' },
-        movie_2: { name: '', start_date: '', end_date: '', trailer_link: '' }
+        movie_2: { name: '', start_date: '', end_date: '', trailer_link: '' },
+        movie_3: { name: '', start_date: '', end_date: '', trailer_link: '' },
+        movie_4: { name: '', start_date: '', end_date: '', trailer_link: '' }
       },
       upcoming_movies: {
         movie_1: { name: '', trailer_link: '' },
@@ -507,18 +472,12 @@ const CinemaManagement = () => {
       },
       movie_slot_pricing: {
         movie_1: { starting_price: 0, interval_price: 0, ending_price: 0 },
-        movie_2: { starting_price: 0, interval_price: 0, ending_price: 0 }
+        movie_2: { starting_price: 0, interval_price: 0, ending_price: 0 },
+        movie_3: { starting_price: 0, interval_price: 0, ending_price: 0 },
+        movie_4: { starting_price: 0, interval_price: 0, ending_price: 0 }
       },
       is_active: true
     });
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingCinema(null);
-    setCurrentStep(1);
-    setErrors({});
-    resetFormData();
   };
 
   const handleCreateNew = () => {
@@ -755,7 +714,7 @@ const CinemaManagement = () => {
                     key={step.id} 
                     className={`progress-step ${currentStep >= step.id ? 'active' : ''} ${currentStep > step.id ? 'completed' : ''}`}
                   >
-                    {currentStep > step.id ? '✓' : step.id}
+                    {currentStep > step.id ? '' : step.id}
                   </div>
                 ))}
               </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Nav from "../Nav/Nav";
 import { VideoCard } from "../Cinema/VideoCard";
+import CinemaMap from "./CinemaMap";
 import "./NewReservation.css";
 
 function NewReservation() {
@@ -521,13 +522,19 @@ function NewReservation() {
             {currentStep === 1 && (
               <div>
                 <h2>Step 1: Select Cinema</h2>
-                
                 {loading ? (
                   <div className="loading-message">
                     <p>Loading cinemas...</p>
                   </div>
                 ) : (
                   <div className="cinemas-grid">
+                    {/* Cinema Map */}
+                    <CinemaMap 
+                      cinemas={filteredCinemas}
+                      onCinemaSelect={handleCinemaSelect}
+                      selectedCinema={selectedCinema}
+                    />
+                    
                     <div className="cinema-search-container">
                       <h3>Available Cinemas ({filteredCinemas.length})</h3>
                       <div className="search-box">

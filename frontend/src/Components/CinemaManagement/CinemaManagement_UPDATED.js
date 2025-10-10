@@ -308,8 +308,8 @@ const CinemaManagement = () => {
       if (!formData.number_of_movies || formData.number_of_movies < 1) {
         newErrors.number_of_movies = 'Please specify at least 1 movie';
       }
-      if (formData.number_of_movies > 4) {
-        newErrors.number_of_movies = 'Maximum 4 movies allowed';
+      if (formData.number_of_movies > 10) {
+        newErrors.number_of_movies = 'Maximum 10 movies allowed';
       }
     } else if (currentStep >= 2 && currentStep <= formData.number_of_movies + 1) {
       // Validate movie steps
@@ -345,7 +345,7 @@ const CinemaManagement = () => {
     // Handle number_of_movies change specially
     if (name === 'number_of_movies') {
       const numMovies = parseInt(value) || 1;
-      const clampedNum = Math.max(1, Math.min(4, numMovies)); // Limit between 1 and 4
+      const clampedNum = Math.max(1, Math.min(10, numMovies)); // Limit between 1 and 10
       
       // Create new ongoing_movies and movie_slot_pricing objects
       const newOngoingMovies = {};
