@@ -113,4 +113,3 @@ const AnimatedHero = () => {
 };
 
 export default AnimatedHero;
-

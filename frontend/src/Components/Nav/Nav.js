@@ -30,6 +30,7 @@ function Nav() {
   return (
     <div>
       <ul className="home-url">
+        {/* Home */}
         <li className="home-ll">
           <Link to="/mainhome" className="active home-a">
             <h1>Home</h1>
@@ -66,32 +67,54 @@ function Nav() {
           )}
         </li>
 
-        {/* Original Nav items */}
+        {/* Cinema Management for Owners */}
+        <li className="home-ll">
+          <Link to="/cinema-management" className="active home-a">
+            <h1>Manage Cinemas</h1>
+          </Link>
+        </li>
+
+        {/* User-related links */}
         <li className="home-ll">
           <Link to="/adduser" className="active home-a">
-            <h1>ADD user</h1>
+            <h1>Add User</h1>
           </Link>
         </li>
         <li className="home-ll">
           <Link to="/userdetails" className="active home-a">
-            <h1>user details</h1>
+            <h1>User Details</h1>
           </Link>
         </li>
+
+        {/* Designers */}
         <li className="home-ll">
           <Link to="/client-designers" className="active home-a">
             <h1>Designers</h1>
           </Link>
         </li>
+
+        {/* Contact Us */}
         <li className="home-ll">
           <Link to="/complaints" className="active home-a">
             <h1>Contact Us</h1>
           </Link>
         </li>
+
+        {/* Photos */}
+        <li className="home-ll">
+          <Link to="/imgpart" className="active home-a">
+            <h1>Photos</h1>
+          </Link>
+        </li>
+
+        {/* LED Board */}
         <li className="home-ll">
           <Link to="/ledboard" className="active home-a">
             <h1>LED Board</h1>
           </Link>
         </li>
+
+        {/* Auth Links */}
         <li>
           <Link to="/Login" className="nav-link">
             Login

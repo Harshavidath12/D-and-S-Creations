@@ -13,6 +13,14 @@ import PricingManager from "./Components/PricingManager/PricingManager";
 import Payment from "./Components/Payment/Payment";
 import InventoryManager from "./Components/Inventory/InventoryManager";
 
+//import {Route, Routes} from "react-router";
+
+//import Nav from "./Components/Nav/Nav";
+
+import MyReservations from "./Components/MyReservations/MyReservations";
+import NewReservation from "./Components/NewReservation/NewReservation";
+import CinemaManagement from "./Components/CinemaManagement/CinemaManagement";
+
 // Chenul’s components
 import Register from "./Components/Register/Register";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
@@ -95,8 +103,14 @@ function App() {
         <Route path="/complaints2" element={<ComplaintList2 />} />
         <Route path="/client-designers" element={<ClientDesignerList />} />
         <Route path="/client-designers2" element={<ClientDesignerList2 />} />
+
+        <Route path="/mainhome" element={<Home/>}/>
+        <Route path="/my-reservations" element={<MyReservations/>}/>
+        <Route path="/new-reservation" element={<NewReservation/>}/>
+        <Route path="/cinema-management" element={<CinemaManagement/>}/>
       </Routes>
     </Router>
+
   );
 }
 
