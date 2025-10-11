@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Nav from '../Nav/Nav';
+import Nav4 from '../Nav/Nav4';
 import axios from "axios";
 import User from '../User/User';
 import { useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
@@ -59,9 +59,8 @@ function Users() {
 
   return (
     <div className="users-container">
-      <Nav />
       <h1 className="page-title">User Details Display Page</h1>
-
+      <Nav4 />
       {/* Top bar with search and Edit Price button */}
       <div className="top-bar">
         <div className="search-section">

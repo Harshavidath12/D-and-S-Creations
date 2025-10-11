@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./InventoryManager.css";
+import Nav5 from "../Nav/Nav5"
 
 const API_URL = "http://localhost:5000/stock";
 
@@ -91,6 +92,8 @@ function InventoryManager() {
   };
 
   return (
+    <div>
+      <Nav5 />
     <div className="inventory-container">
       <h1>Inventory Manager DashBoard</h1>
 
@@ -210,6 +213,7 @@ function InventoryManager() {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }

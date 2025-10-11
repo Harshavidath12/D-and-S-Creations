@@ -33,6 +33,13 @@ function Login() {
           case "Admin":
             history("/AdminDash");
             break;
+            case "LedBoard Manager":
+            history("/userdetails");
+            break;
+            case "Inventory":
+            history("/inventory-manager");
+            break;
+            
           case "Designer":
             history("/DesignerDash");
             break;

@@ -26,6 +26,7 @@ import Register from "./Components/Register/Register";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
 import AdminProfile2 from "./Components/AdminProfile/AdminProfile2";
 import AdminProfile3 from "./Components/AdminProfile/AdminProfile3";
+import AdminProfile4 from "./Components/AdminProfile/AdminProfile4";
 import UpdateAdmin from "./Components/UpdateAdmin/UpdateAdmin";
 import Login from "./Components/Login/Login";
 import Client from "./Components/PendingUsers/Client";
@@ -48,6 +49,7 @@ import ClientDesignerList from "./Components/ClientDesignerList";
 import "./style.css";
 import ClientDesignerList2 from "./Components/ClientDesignerList2";
 import ComplaintList2 from "./Components/ComplaintList2";
+import AdminProfile5 from "./Components/AdminProfile/AdminProfile5";
 
 function App() {
   return (
@@ -77,6 +79,8 @@ function App() {
         <Route path="/AdminProfile" element={<AdminProfile />} />
         <Route path="/AdminProfile2" element={<AdminProfile2 />} />
         <Route path="/AdminProfile3" element={<AdminProfile3 />} />
+        <Route path="/AdminProfile4" element={<AdminProfile4 />} />
+        <Route path="/AdminProfile5" element={<AdminProfile5 />} />
         <Route path="/PendingUsers/:id" element={<UpdateAdmin />} />
         <Route path="/LedBoardOwners/:id" element={<UpdateAdmin />} />
         <Route path="/FilmhallOwners/:id" element={<UpdateAdmin />} />

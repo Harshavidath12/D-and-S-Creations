@@ -9,6 +9,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+.titleLED{
+  margin-bottom: 20px;
+}
+
 /* Title + intro */
 .ledboard-container h1 {
   text-align: center;
@@ -95,7 +99,7 @@
 /* LED board categories */
 .ledboard-categories {
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 60px auto 40px auto;
   padding: 0 15px;
 }
 

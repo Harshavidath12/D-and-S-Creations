@@ -70,16 +70,6 @@ function Nav() {
        
 
         {/* User-related links */}
-        <li className="home-ll">
-          <Link to="/adduser" className="active home-a">
-            <h1>Add User</h1>
-          </Link>
-        </li>
-        <li className="home-ll">
-          <Link to="/userdetails" className="active home-a">
-            <h1>User Details</h1>
-          </Link>
-        </li>
 
         {/* Designers */}
         <li className="home-ll">
@@ -95,12 +85,7 @@ function Nav() {
           </Link>
         </li>
 
-        {/* Photos */}
-        <li className="home-ll">
-          <Link to="/imgpart" className="active home-a">
-            <h1>Photos</h1>
-          </Link>
-        </li>
+        
 
         {/* LED Board */}
         <li className="home-ll">

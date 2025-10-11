@@ -130,7 +130,7 @@ function LedBoard() {
       <Nav />
 
       <div className="ledboard-categories">
-        <h2>LED Boards Categories</h2>
+        <h2 className="titleLED">LED Boards Categories</h2>
         <div className="categories-grid">
           {Object.keys(pricing).map((boardType) => (
             <div className="category-card" key={boardType}>

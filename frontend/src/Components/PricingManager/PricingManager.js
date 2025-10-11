@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Nav from "../Nav/Nav";
+import Nav4 from "../Nav/Nav4";
 //import styles from "./PricingManager.module.css";
 import styles from "./PricingManager.module.css"
 
@@ -51,7 +51,7 @@ const PricingManager = () => {
 
   return (
     <div>
-      <Nav />
+      <Nav4 />
       <div className={styles.pmWrapper}>
         <h1 className={styles.pmTitle}>💡 LED Boards Price Management</h1>
 

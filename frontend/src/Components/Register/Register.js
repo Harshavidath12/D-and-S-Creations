@@ -97,7 +97,7 @@ function Register() {
         birthday: inputs.birthday
       });
       alert("Request completed successfully.\nPlease wait for your username and password. Check your WhatsApp or email.\nThank you!");
-      history("/Home");
+      history("/mainhome");
     } catch (err) {
       alert("Error submitting form: " + err.message);
     }

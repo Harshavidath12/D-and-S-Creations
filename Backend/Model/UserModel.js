@@ -20,7 +20,7 @@ const userSchema = new Schema({
     },
     whoareyou:{
         type:String,
-        enum: ["Client", "FilmHall Owner", "LedBoard Owner", "Designer", "Admin"],
+        enum: ["Client", "FilmHall Owner", "LedBoard Owner", "Designer", "Admin", "LedBoard Manager", "Inventory"],
         required:true,
     },
     gender:{
