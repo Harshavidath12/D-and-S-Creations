@@ -3,8 +3,10 @@ import Nav from "../Nav/Nav";
 import { VideoCard } from "../Cinema/VideoCard";
 import CinemaMap from "./CinemaMap";
 import "./NewReservation.css";
+import { useNavigate } from "react-router";
 
 function NewReservation() {
+  const navigate=useNavigate();
   const [cinemas, setCinemas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCinema, setSelectedCinema] = useState(null);
@@ -468,7 +470,7 @@ function NewReservation() {
 
       if (result.success) {
         alert('Reservation confirmed successfully!');
-        
+        navigate ("/PaymentChirath")
         // Reset the form
         setSelectedCinema(null);
         setSelectedMovie(null);

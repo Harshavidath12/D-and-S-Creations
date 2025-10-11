@@ -18,7 +18,9 @@ import InventoryManager from "./Components/Inventory/InventoryManager";
 //import Nav from "./Components/Nav/Nav";
 
 import MyReservations from "./Components/MyReservations/MyReservations";
+import MyReservations2 from "./Components/MyReservations/MyReservations2";
 import NewReservation from "./Components/NewReservation/NewReservation";
+import NewReservation2 from "./Components/NewReservation/NewReservation2";
 import CinemaManagement from "./Components/CinemaManagement/CinemaManagement";
 
 // Chenul’s components
@@ -41,6 +43,7 @@ import AdminDash from "./Components/AdminDash/AdminDash";
 import PendingUsers from "./Components/PendingUsers/PendingUsers";
 import Roll from "./Components/PendingUsers/Roll";
 import SetLogin from "./Components/SetLogin/SetLogin";
+import PaymentChirath from "./Components/Payment/PaymentChirath";
 
 // Rashali’s components
 import DesignerList from "./Components/DesignerList";
@@ -71,6 +74,7 @@ function App() {
         <Route path="/ledboard2" element={<LedBoard2 />} />
         <Route path="/pricing-manager" element={<PricingManager />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/PaymentChirath" element={<PaymentChirath />} />
         <Route path="/inventory-manager" element={<InventoryManager />} />
 
         {/* Chenul's Components */}
@@ -111,7 +115,9 @@ function App() {
 
         <Route path="/mainhome" element={<Home/>}/>
         <Route path="/my-reservations" element={<MyReservations/>}/>
+        <Route path="/my-reservations2" element={<MyReservations2/>}/>
         <Route path="/new-reservation" element={<NewReservation/>}/>
+        <Route path="/new-reservation2" element={<NewReservation2/>}/>
         <Route path="/cinema-management" element={<CinemaManagement/>}/>
       </Routes>
     </Router>
