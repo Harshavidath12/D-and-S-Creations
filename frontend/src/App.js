@@ -13,6 +13,8 @@ import PricingManager from "./Components/PricingManager/PricingManager";
 import Payment from "./Components/Payment/Payment";
 import InventoryManager from "./Components/Inventory/InventoryManager";
 
+
+
 //import {Route, Routes} from "react-router";
 
 //import Nav from "./Components/Nav/Nav";
@@ -76,6 +78,9 @@ function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/PaymentChirath" element={<PaymentChirath />} />
         <Route path="/inventory-manager" element={<InventoryManager />} />
+        
+       
+
 
         {/* Chenul's Components */}
         <Route path="/Register" element={<Register />} />
