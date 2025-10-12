@@ -73,9 +73,7 @@ function User(props) {
       </table>
 
       <div className="action-buttons">
-        <Link to={`/userdetails/${_id}`} className="update-btn">
-          Update
-        </Link>
+        
         <button onClick={deleteHandler} className="delete-btn">
           Delete
         </button>
