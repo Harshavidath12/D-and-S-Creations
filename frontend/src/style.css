@@ -664,3 +664,29 @@ table tbody tr:hover {
 
 
 
+.edit-btn {
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #ec971f;
+}
+
+.delete-btn:hover {
+  background-color: #c9302c;
+}
