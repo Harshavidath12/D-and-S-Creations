@@ -73,8 +73,15 @@ function User(props) {
       </table>
 
       <div className="action-buttons">
-        
-        <button onClick={deleteHandler} className="delete-btn">
+        <button className="delete-btn"
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to delete this record?")
+            ) {
+              deleteHandler();
+            }
+          }}
+        >
           Delete
         </button>
       </div>

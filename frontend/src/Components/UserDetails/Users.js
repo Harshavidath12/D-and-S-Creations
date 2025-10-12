@@ -25,8 +25,8 @@ function Users() {
 
   const handlePrint = useReactToPrint({
     content: () => ComponentsRef.current,
-    documentTitle: "Users Report",
-    onAfterPrint: () => alert("User report successfully downloaded"),
+    DocumentTitle: "Users Report",
+    onafterprint: () => alert("User report successfully downloaded"),
   });
 
   const [searchQuery, setSearchQuery] = useState("");
