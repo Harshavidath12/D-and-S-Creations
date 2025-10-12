@@ -124,6 +124,7 @@ function InventoryManager() {
       name="purchaseDate"
       value={formData.purchaseDate}
       onChange={handleChange}
+      min={new Date().toISOString().split("T")[0]} // 🔒 restricts past dates
       required
     />
   </div>
@@ -134,6 +135,7 @@ function InventoryManager() {
       name="warrantyExpiry"
       value={formData.warrantyExpiry}
       onChange={handleChange}
+      min={new Date().toISOString().split("T")[0]} // 🔒 restricts past dates
       required
     />
   </div>
