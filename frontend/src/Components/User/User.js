@@ -35,7 +35,7 @@ function User(props) {
         <tbody>
           <tr>
             <th>ID</th>
-            <td>{_id}</td>
+            <td>{props.user.bookingId}</td>
           </tr>
           <tr>
             <th>Name</th>
@@ -76,13 +76,13 @@ function User(props) {
         <button className="delete-btn"
           onClick={() => {
             if (
-              window.confirm("Are you sure you want to delete this record?")
+              window.confirm("Are you sure you want to reject this record?")
             ) {
               deleteHandler();
             }
           }}
         >
-          Delete
+          Reject
         </button>
       </div>
     </div>

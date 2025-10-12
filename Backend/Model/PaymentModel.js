@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema({
+  
   email: {
     type: String,
     required: [true, "Email is required"],

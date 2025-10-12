@@ -20,7 +20,7 @@ function LedBoard() {
     purpose: "",
     rentalStartDateTime: "",
     rentalEndDateTime: "",
-    paymentMethod: "",
+    paymentMethod: "Card",
   });
 
   const [cost, setCost] = useState(0);
@@ -256,18 +256,7 @@ function LedBoard() {
 
           {error && <p className="error-text">{error}</p>}
 
-          <label>Payment Method</label>
-          <select
-            name="paymentMethod"
-            value={inputs.paymentMethod}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Select Payment --</option>
-            <option value="Card">Credit / Debit Card</option>
-            <option value="Bank">Bank Transfer</option>
-            <option value="Cash">Cash</option>
-          </select>
+          
 
           <div className="cost-display">
             <strong>Estimated Costs:</strong>{" "}

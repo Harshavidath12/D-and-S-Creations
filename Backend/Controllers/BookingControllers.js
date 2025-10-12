@@ -65,10 +65,12 @@ const addUsers = async (req, res, next) => {
     }
 
     return res.status(201).json({
-      message: "Booking successful",
-      booking,
-      rentedBoards: availableBoards,
-    });
+  message: "Booking successful",
+  bookingId: booking.bookingId,
+  booking,
+  rentedBoards: availableBoards,
+});
+
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Server error while booking" });

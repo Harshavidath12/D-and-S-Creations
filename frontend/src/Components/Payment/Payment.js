@@ -13,7 +13,7 @@ function Payment() {
   const [userEmail, setUserEmail] = useState("");
   const [userContact, setUserContact] = useState("");
   const [amountToPay, setAmountToPay] = useState(booking ? booking.cost : "");  // ✅ default to booking.cost
-  const [userAddress, setUserAddress] = useState("");
+  //const [userAddress, setUserAddress] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
 
   if (!booking) {
@@ -64,7 +64,7 @@ function Payment() {
         email: userEmail,
         contactNo: userContact,
         amount: Number(amountToPay),
-        address: userAddress,
+      //  address: userAddress,
         paymentMethod: selectedMethod,
         paymentDate: new Date(),
         status: "Pending",
@@ -98,16 +98,17 @@ function Payment() {
           <p><strong>Purpose:</strong> {booking.purpose}</p>
           <p><strong>Rental Start:</strong> {booking.rentalStartDateTime}</p>
           <p><strong>Rental End:</strong> {booking.rentalEndDateTime}</p>
-          <p><strong>Payment Method:</strong> {booking.paymentMethod}</p>
+         
           <p><strong>Estimated Cost:</strong> LKR {booking.cost}</p>
         </div>
-
+         <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
         <div className="payment-form">
           <input
             type="email"
             placeholder="Email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
+            autoComplete="off"
             required
           />
           <input
@@ -115,6 +116,7 @@ function Payment() {
             placeholder="Contact Number"
             value={userContact}
             onChange={(e) => setUserContact(e.target.value)}
+            autoComplete="off"
             required
           />
           <input
@@ -122,24 +124,19 @@ function Payment() {
             placeholder="Amount"
             value={amountToPay}
             onChange={(e) => setAmountToPay(e.target.value)}
+            autoComplete="off"
             required
           />
-          <input
-            type="text"
-            placeholder="Address"
-            value={userAddress}
-            onChange={(e) => setUserAddress(e.target.value)}
-            required
-          />
+          
           <select
             value={selectedMethod}
             onChange={(e) => setSelectedMethod(e.target.value)}
             required
           >
             <option value="">Select Payment Method</option>
-            <option value="Cash">Cash</option>
+            
             <option value="Card">Card</option>
-            <option value="Online">Online</option>
+            
           </select>
         </div>
 
@@ -147,19 +144,20 @@ function Payment() {
           <div className="card-form">
             <h3>Payment Method</h3>
             <label>Card Information</label>
-            <input type="text" placeholder="1234 1234 1234 1234" />
+            <input type="text" placeholder="1234 1234 1234 1234" autoComplete="off" />
             <div className="card-inline">
-              <input type="text" placeholder="MM / YY" />
-              <input type="text" placeholder="CVC" />
+              <input type="text" placeholder="MM / YY" autoComplete="off" />
+              <input type="text" placeholder="CVC" autoComplete="off"/>
             </div>
             <label>Cardholder Name</label>
-            <input type="text" placeholder="Full name on card" />
+            <input type="text" placeholder="Full name on card" autoComplete="off"/>
           </div>
         )}
 
         <button className="confirm-btn" onClick={handleConfirmPayment}>
           Confirm Payment
         </button>
+        </form>
       </div>
 
       <footer className="footer">
