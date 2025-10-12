@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './CinemaMap.css';
@@ -90,6 +90,9 @@ const CinemaMap = ({ cinemas, onCinemaSelect, selectedCinema }) => {
           return null;
         })
         .filter(location => location !== null);
+        console.log("Cinemas received:", cinemas);
+console.log("Cinemas with valid coordinates:", locations);
+
 
       setCinemaLocations(locations);
     }
@@ -125,56 +128,35 @@ const CinemaMap = ({ cinemas, onCinemaSelect, selectedCinema }) => {
         {positions.length > 0 && <MapBounds positions={positions} />}
 
         {cinemaLocations.map((cinema) => (
-          <Marker
-            key={cinema._id}
-            position={[cinema.coordinates.lat, cinema.coordinates.lng]}
-            icon={cinemaIcon}
-            eventHandlers={{
-              click: () => {
-                if (onCinemaSelect) {
-                  onCinemaSelect(cinema);
-                }
-              }
-            }}
-          >
-            <Popup>
-              <div className="cinema-popup">
-                <h4>{cinema.cinema_name}</h4>
-                <p className="location">
-                  <i className="fa fa-map-marker"></i> {cinema.cinema_location}
-                </p>
-                {cinema.contact_info?.phone && (
-                  <p className="contact">
-                    <i className="fa fa-phone"></i> {cinema.contact_info.phone}
-                  </p>
-                )}
-                {cinema.contact_info?.email && (
-                  <p className="contact">
-                    <i className="fa fa-envelope"></i> {cinema.contact_info.email}
-                  </p>
-                )}
-                {cinema.google_maps_location && (
-                  <a
-                    href={cinema.google_maps_location}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="directions-link"
-                  >
-                    <i className="fa fa-directions"></i> Get Directions
-                  </a>
-                )}
-                {onCinemaSelect && (
-                  <button
-                    className="select-btn"
-                    onClick={() => onCinemaSelect(cinema)}
-                  >
-                    Select Cinema
-                  </button>
-                )}
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+  <Marker
+    key={cinema._id}
+    position={[cinema.coordinates.lat, cinema.coordinates.lng]}
+    icon={cinemaIcon}
+    eventHandlers={{
+      click: () => {
+        if (onCinemaSelect) {
+          onCinemaSelect(cinema);
+        }
+      }
+    }}
+  >
+    <Tooltip direction="top" offset={[0, -40]} opacity={0.9}>
+      {cinema.cinema_location || cinema.cinema_name}
+    </Tooltip>
+
+    <Popup>
+      <div className="cinema-popup">
+        <h4>{cinema.cinema_name}</h4>
+        <p className="location">
+          <i className="fa fa-map-marker"></i> {cinema.cinema_location}
+        </p>
+        ...
+      </div>
+    </Popup>
+  </Marker>
+))}
+
+
       </MapContainer>
 
       {cinemaLocations.length === 0 && (
@@ -187,4 +169,4 @@ const CinemaMap = ({ cinemas, onCinemaSelect, selectedCinema }) => {
   );
 };
 
-export default CinemaMap;
+export default CinemaMap;
