@@ -39,7 +39,7 @@ function Login() {
           history("/FilmHallOwnerDash");
           break;
         case "LedBoard Owner":
-          history("/LedBoardOwnerDash");
+          history("/LedOwnerController");
           break;
         case "Client":
           history("/Home");

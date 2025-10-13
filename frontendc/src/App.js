@@ -5,6 +5,7 @@ import PendingUsers from './Components/PendingUsers/PendingUsers';
 import Register from "./Components/Register/Register";
 import Home from "./Components/Home/Home";
 import AdminProfile from "./Components/AdminProfile/AdminProfile";
+import AdminProfileLed from "./Components/AdminProfile/AdminProfileLed";
 import UpdateAdmin from './Components/UpdateAdmin/UpdateAdmin';
 import SetLogin from './Components/SetLogin/SetLogin';
 import Roll from './Components/PendingUsers/Roll';
@@ -19,6 +20,11 @@ import LedBoardOwnerDash from './Components/LedBoardOwnerDash/LedBoardOwnerDash'
 import ClientDash from './Components/ClientDash/ClientDash';
 import FilmHallOwnerDash from './Components/FilmHallOwnerDash/FilmHallOwnerDash';
 import AdminDash from './Components/AdminDash/AdminDash';
+import LedFormDash from './Components/LedBoardOwnerDash/LedFormDash';
+import LedFormDashDisplay from './Components/LedFormDashDisplay/LedFormDashDisplay';  
+import AdminProfileLed2 from './Components/AdminProfile/AdminProfileLed2';
+import LedOwnerController from "./Components/LedBoardOwnerDash/LedOwnerController";
+
 
 
 
@@ -29,6 +35,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/PendingUsers" element={<PendingUsers />} />
         <Route path="/AdminProfile" element={<AdminProfile />} />
+        <Route path="/AdminProfileLed" element={<AdminProfileLed />} />
         <Route path="/PendingUsers/:id" element={<UpdateAdmin />} />
         <Route path="/LedBoardOwners/:id" element={<UpdateAdmin />} />
         <Route path="/FilmhallOwners/:id" element={<UpdateAdmin />} />
@@ -49,6 +56,11 @@ function App() {
         <Route path="/ClientDash" element={<ClientDash />} />
         <Route path="/FilmHallOwnerDash" element={<FilmHallOwnerDash />} />
         <Route path="/AdminDash" element={<AdminDash />} />
+        <Route path="/LedFormDash" element={<LedFormDash />} />
+        <Route path="/LedFormDashDisplay" element={<LedFormDashDisplay />} />
+        <Route path="/AdminProfileLed2" element={<AdminProfileLed2 />} />
+        <Route path="/LedOwnerController" element={<LedOwnerController />} />
+       
 
       </Routes>
   );

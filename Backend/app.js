@@ -3,6 +3,7 @@
 const express = require("express");
 const mongoose=require("mongoose");
 const router = require("./Routes/UserRoutes");
+const LedRoutes = require("./Routes/LedRoutes");
 
 
 
@@ -15,7 +16,9 @@ const cors = require("cors")
 app.use(express.json());
 app.use(cors());
 app.use("/users",router);
+app.use("/ledboards", LedRoutes);
 app.use("/uploads", express.static("uploads"));
+
 
 
 
