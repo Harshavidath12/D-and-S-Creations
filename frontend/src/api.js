@@ -18,4 +18,8 @@ export const createComplaint = (data) => API.post("/complaint", data);
 export const updateComplaint = (id, data) => API.put(`/complaint/${id}`, data);
 export const deleteComplaint = (id) => API.delete(`/complaint/${id}`);
 export const downloadComplaintsPDF = () =>
-  API.get("/complaints/download/pdf", { responseType: "blob" });
+  API.get("/complaint/download/pdf", { responseType: "blob" });
+
+export const downloadUsersPDF = () =>
+  API.get("/bookings/download/pdf", { responseType: "blob" });
+
