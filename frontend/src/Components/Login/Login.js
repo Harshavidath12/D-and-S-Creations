@@ -41,7 +41,7 @@ function Login() {
             break;
             
           case "Designer":
-            history("/DesignerDash");
+            history("/DesignerBackend");
             break;
           case "FilmHall Owner":
             history("/cinema-management");

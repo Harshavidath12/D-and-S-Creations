@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getComplaints, createComplaint, updateComplaint, deleteComplaint, downloadComplaintsPDF } from "../api";
 import ComplaintForm from "./ComplaintForm";
+import Nav2 from "./Nav/Nav2"
 import "../style.css";
-import Nav2 from "../Components/Nav/Nav2"
 
 const ComplaintList2 = () => {
   const [complaints, setComplaints] = useState([]);
@@ -46,11 +46,12 @@ const ComplaintList2 = () => {
 
   return (
     <div>
-      <Nav2/>
+      <Nav2 />
+  
     <div className="page">
      <div className="top-actions">
        <button className="download-btn" onClick={handleDownload}>
-       ⬇️ Download PDF
+       ⬇ Download PDF
        </button>
     </div>
 
@@ -72,8 +73,8 @@ const ComplaintList2 = () => {
               <td>{c.description}</td>
               <td>{new Date(c.date).toDateString()}</td>
               <td>
-                <button onClick={() => { setEditing(c); setShowForm(true); }}>✏️</button>
-                <button onClick={() => handleDelete(c._id)}>🗑️</button>
+                <button onClick={() => { setEditing(c); setShowForm(true); }}>✏</button>
+                <button onClick={() => handleDelete(c._id)}>🗑</button>
               </td>
             </tr>
           ))}
@@ -85,4 +86,4 @@ const ComplaintList2 = () => {
   );
 };
 
-export default ComplaintList2;
+export default ComplaintList2;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getComplaints, createComplaint, updateComplaint, deleteComplaint, downloadComplaintsPDF } from "../api";
 import ComplaintForm from "./ComplaintForm";
+import Nav2 from "./Nav/Nav2"
 import "../style.css";
-import Nav from "../Components/Nav/Nav"
 
 const ComplaintList = () => {
   const [complaints, setComplaints] = useState([]);
@@ -46,13 +46,10 @@ const ComplaintList = () => {
 
   return (
     <div>
-      <Nav/>
+      <Nav2 />
+  
     <div className="page">
-     <div className="top-actions">
-       <button className="download-btn" onClick={handleDownload}>
-       ⬇️ Download PDF
-       </button>
-    </div>
+     
 
       {showForm && (
         <ComplaintForm onSubmit={handleAdd} existingData={editing} onCancel={() => { setEditing(null); setShowForm(false); }} />
@@ -72,8 +69,8 @@ const ComplaintList = () => {
               <td>{c.description}</td>
               <td>{new Date(c.date).toDateString()}</td>
               <td>
-                <button onClick={() => { setEditing(c); setShowForm(true); }}>✏️</button>
-                <button onClick={() => handleDelete(c._id)}>🗑️</button>
+                <button onClick={() => { setEditing(c); setShowForm(true); }}>✏</button>
+                <button onClick={() => handleDelete(c._id)}>🗑</button>
               </td>
             </tr>
           ))}
@@ -81,8 +78,13 @@ const ComplaintList = () => {
       </table>
       <button className="floating-btn" onClick={() => setShowForm(true)}>➕ Add Complaint</button>
     </div>
+    <div className="top-actions">
+       <button className="download-btn" onClick={handleDownload}>
+       ⬇ Download PDF
+       </button>
+    </div>
     </div>
   );
 };
 
-export default ComplaintList;
+export default ComplaintList;

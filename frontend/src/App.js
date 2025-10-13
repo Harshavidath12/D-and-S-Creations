@@ -46,6 +46,7 @@ import PendingUsers from "./Components/PendingUsers/PendingUsers";
 import Roll from "./Components/PendingUsers/Roll";
 import SetLogin from "./Components/SetLogin/SetLogin";
 import PaymentChirath from "./Components/Payment/PaymentChirath";
+import DesignerBackend from "./Components/DesignerBackend"
 
 // Rashali’s components
 import DesignerList from "./Components/DesignerList";
@@ -55,6 +56,7 @@ import "./style.css";
 import ClientDesignerList2 from "./Components/ClientDesignerList2";
 import ComplaintList2 from "./Components/ComplaintList2";
 import AdminProfile5 from "./Components/AdminProfile/AdminProfile5";
+import AdminProfile6 from "./Components/AdminProfile/AdminProfile6";
 
 function App() {
   return (
@@ -124,6 +126,8 @@ function App() {
         <Route path="/new-reservation" element={<NewReservation/>}/>
         <Route path="/new-reservation2" element={<NewReservation2/>}/>
         <Route path="/cinema-management" element={<CinemaManagement/>}/>
+        <Route path="/DesignerBackend" element={<DesignerBackend/>}/>
+        <Route path="/AdminProfile6" element={<AdminProfile6/>}/>
       </Routes>
     </Router>
 
