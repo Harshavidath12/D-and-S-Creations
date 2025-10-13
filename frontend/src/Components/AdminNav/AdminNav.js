@@ -6,7 +6,7 @@ import '../Home/Home'
 
 function AdminNav() {
   return (
-    <div class="navbar">
+    <div class="navbar123">
           <ul className="nav-list">
             <li> 
                 <Link to="/PendingUsers" className="nav-link">Pending Users</Link> 

@@ -66,16 +66,17 @@ function PendingUsers() {
           <p className="pending-users-message">No User Found...</p>
         </div>
       ) : (
-        <div ref={contentRef} className="pending-users-list">
-          {users &&
-            users
-              .filter((user) => user.status === "Pending")
-              .map((user, i) => (
-                <div key={i}>
-                  <PendingUsersDisplay user={user} />
-                </div>
-              ))}
+        <div className="pending-users-list" ref={contentRef}>
+  {users &&
+    users
+      .filter((user) => user.status === "Pending")
+      .map((user, i) => (
+        <div key={i}>
+          <PendingUsersDisplay user={user} />
         </div>
+      ))}
+</div>
+
       )}
 
       <button onClick={handlePrint} className="pending-users-pdf-button">
