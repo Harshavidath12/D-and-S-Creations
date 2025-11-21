@@ -68,6 +68,13 @@ function Nav2() {
         </li>
 
         {/* Original Nav items */}
+
+        <li className="home-ll">
+          <Link to="/ledboard2" className="active home-a">
+            <h1>LED Board</h1>
+          </Link>
+        </li>
+        
         <li className="home-ll">
           <Link to="/client-designers2" className="active home-a">
             <h1>Designers</h1>
@@ -78,11 +85,7 @@ function Nav2() {
             <h1>Contact Us</h1>
           </Link>
         </li>
-        <li className="home-ll">
-          <Link to="/ledboard2" className="active home-a">
-            <h1>LED Board</h1>
-          </Link>
-        </li>
+        
         <li>
           <Link to="/AdminProfile2" className="nav-link">
             View Profile
