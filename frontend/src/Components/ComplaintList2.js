@@ -62,7 +62,7 @@ const ComplaintList2 = () => {
       <table>
         <thead>
           <tr>
-            <th>Client</th><th>Designer</th><th>Description</th><th>Date</th><th>Actions</th>
+            <th>Client</th><th>Designer</th><th>Description</th><th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -72,10 +72,7 @@ const ComplaintList2 = () => {
               <td>{c.designerId?.name}</td>
               <td>{c.description}</td>
               <td>{new Date(c.date).toDateString()}</td>
-              <td>
-                <button onClick={() => { setEditing(c); setShowForm(true); }}>✏</button>
-                <button onClick={() => handleDelete(c._id)}>🗑</button>
-              </td>
+             
             </tr>
           ))}
         </tbody>

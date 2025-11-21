@@ -79,7 +79,7 @@ const ClientDesignerList2 = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Type</th>
-              <th>Actions</th>
+             
             </tr>
           </thead>
           <tbody>
@@ -88,10 +88,7 @@ const ClientDesignerList2 = () => {
                 <td className="clickable" onClick={() => setSelectedDesigner(d)}>{d.name}</td>
                 <td>{d.email}</td>
                 <td>{d.type}</td>
-                <td>
-                  <button className="edit-btn" onClick={() => handleEdit(d)}>Edit</button>
-                  <button className="delete-btn" onClick={() => handleDelete(d._id)}>Delete</button>
-                </td>
+               
               </tr>
             ))}
           </tbody>
