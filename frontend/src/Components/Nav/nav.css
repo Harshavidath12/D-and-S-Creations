@@ -101,3 +101,9 @@
 }
 
 /* Remove hover behavior to avoid conflicts with click behavior */
+
+/* Remove default link styles (blue/purple colors and underlines) */
+.home-url a, .home-url a:visited {
+  text-decoration: none;
+  color: white;
+}
